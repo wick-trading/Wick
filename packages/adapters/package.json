@@ -29,6 +29,26 @@
     "./okx": {
       "types": "./dist/okx.d.ts",
       "default": "./dist/okx.js"
+    },
+    "./dydx": {
+      "types": "./dist/dydx.d.ts",
+      "default": "./dist/dydx.js"
+    },
+    "./bitfinex": {
+      "types": "./dist/bitfinex.d.ts",
+      "default": "./dist/bitfinex.js"
+    },
+    "./gateio": {
+      "types": "./dist/gateio.d.ts",
+      "default": "./dist/gateio.js"
+    },
+    "./mexc": {
+      "types": "./dist/mexc.d.ts",
+      "default": "./dist/mexc.js"
+    },
+    "./kucoin": {
+      "types": "./dist/kucoin.d.ts",
+      "default": "./dist/kucoin.js"
     }
   },
   "files": ["dist"],

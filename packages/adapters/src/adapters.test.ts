@@ -4,6 +4,11 @@ import { coinbaseAdapter } from './coinbase.js';
 import { krakenAdapter } from './kraken.js';
 import { bybitAdapter } from './bybit.js';
 import { okxAdapter } from './okx.js';
+import { dydxAdapter } from './dydx.js';
+import { bitfinexAdapter } from './bitfinex.js';
+import { gateioAdapter } from './gateio.js';
+import { mexcAdapter } from './mexc.js';
+import { kucoinAdapter } from './kucoin.js';
 
 describe('Binance adapter', () => {
   it('parses depth snapshot', () => {
@@ -455,6 +460,274 @@ describe('OKX adapter', () => {
   it('returns null for non-data messages', () => {
     expect(okxAdapter.parse({ event: 'subscribe' })).toBeNull();
     expect(okxAdapter.parse({ arg: { channel: 'unknown' } })).toBeNull();
+  });
+});
+
+describe('dYdX adapter', () => {
+  it('parses orderbook snapshot', () => {
+    const msg = {
+      type: 'subscribed',
+      channel: 'v4_orderbook',
+      contents: {
+        bids: [{ price: '67400', size: '1.5' }],
+        asks: [{ price: '67401', size: '0.8' }],
+      },
+    };
+    const result = dydxAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_snapshot');
+    if (result?.type === 'orderbook_snapshot') {
+      expect(result.data.bids[0]).toEqual({ price: 67400, size: 1.5 });
+    }
+  });
+
+  it('parses orderbook delta batch', () => {
+    const msg = {
+      type: 'channel_batch_data',
+      channel: 'v4_orderbook',
+      contents: [{ bids: [['67400', '2.0']], asks: [['67401', '0']] }],
+    };
+    const result = dydxAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_delta');
+    if (result?.type === 'orderbook_delta') {
+      expect(result.data).toHaveLength(2);
+    }
+  });
+
+  it('parses trades', () => {
+    const msg = {
+      type: 'channel_data',
+      channel: 'v4_trades',
+      contents: {
+        trades: [{ id: '1', price: '67432.50', size: '0.5', side: 'BUY', createdAt: '2026-01-15T14:30:00.000Z' }],
+      },
+    };
+    const result = dydxAdapter.parse(msg);
+    expect(result?.type).toBe('trades');
+    if (result?.type === 'trades') {
+      expect(result.data[0].side).toBe('buy');
+    }
+  });
+
+  it('returns null for unknown channels', () => {
+    expect(dydxAdapter.parse({ type: 'connected' })).toBeNull();
+  });
+});
+
+describe('Bitfinex adapter', () => {
+  it('parses book snapshot', () => {
+    const msg = [0, [[67400, 3, 1.5], [67401, 2, -0.8]]];
+    const result = bitfinexAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_snapshot');
+    if (result?.type === 'orderbook_snapshot') {
+      expect(result.data.bids[0]).toEqual({ price: 67400, size: 1.5 });
+      expect(result.data.asks[0]).toEqual({ price: 67401, size: 0.8 });
+    }
+  });
+
+  it('parses book update', () => {
+    const msg = [0, [67400, 1, 2.0]];
+    const result = bitfinexAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_delta');
+    if (result?.type === 'orderbook_delta') {
+      expect(result.data[0]).toEqual({ side: 'bid', price: 67400, size: 2.0 });
+    }
+  });
+
+  it('parses trade executed', () => {
+    const msg = [0, 'te', [12345, 1712345678000, 0.5, 67432.50]];
+    const result = bitfinexAdapter.parse(msg);
+    expect(result?.type).toBe('trade');
+    if (result?.type === 'trade') {
+      expect(result.data.price).toBe(67432.50);
+      expect(result.data.side).toBe('buy');
+    }
+  });
+
+  it('parses ticker', () => {
+    const msg = [0, [67400, 10, 67401, 5, 1432, 0.0217, 67432.50, 42150, 68000, 66000]];
+    const result = bitfinexAdapter.parse(msg);
+    expect(result?.type).toBe('ticker');
+    if (result?.type === 'ticker') {
+      expect(result.data.price).toBe(67432.50);
+      expect(result.data.change24h).toBeCloseTo(2.17, 1);
+    }
+  });
+
+  it('ignores heartbeats', () => {
+    expect(bitfinexAdapter.parse([0, 'hb'])).toBeNull();
+  });
+});
+
+describe('Gate.io adapter', () => {
+  it('parses order book', () => {
+    const msg = {
+      channel: 'spot.order_book',
+      event: 'update',
+      result: {
+        current: 1, update: 1,
+        bids: [['67400', '1.5']],
+        asks: [['67401', '0.8']],
+      },
+    };
+    const result = gateioAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_snapshot');
+    if (result?.type === 'orderbook_snapshot') {
+      expect(result.data.bids[0]).toEqual({ price: 67400, size: 1.5 });
+    }
+  });
+
+  it('parses trade', () => {
+    const msg = {
+      channel: 'spot.trades',
+      event: 'update',
+      result: {
+        id: 99, create_time: 1712345678, side: 'buy',
+        amount: '0.5', price: '67432.50', currency_pair: 'BTC_USDT',
+      },
+    };
+    const result = gateioAdapter.parse(msg);
+    expect(result?.type).toBe('trade');
+    if (result?.type === 'trade') {
+      expect(result.data.price).toBe(67432.5);
+    }
+  });
+
+  it('parses ticker', () => {
+    const msg = {
+      channel: 'spot.tickers',
+      event: 'update',
+      result: {
+        currency_pair: 'BTC_USDT', last: '67432.50',
+        high_24h: '68000', low_24h: '66000',
+        base_volume: '42150', change_percentage: '2.17',
+      },
+    };
+    const result = gateioAdapter.parse(msg);
+    expect(result?.type).toBe('ticker');
+    if (result?.type === 'ticker') {
+      expect(result.data.symbol).toBe('BTC/USDT');
+    }
+  });
+
+  it('ignores non-update events', () => {
+    expect(gateioAdapter.parse({ channel: 'spot.trades', event: 'subscribe' })).toBeNull();
+  });
+});
+
+describe('MEXC adapter', () => {
+  it('parses depth', () => {
+    const msg = {
+      c: 'spot@public.limit.depth.v3.api@BTCUSDT@5',
+      d: {
+        bids: [{ p: '67400', v: '1.5' }],
+        asks: [{ p: '67401', v: '0.8' }],
+      },
+      t: 1712345678000,
+    };
+    const result = mexcAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_snapshot');
+    if (result?.type === 'orderbook_snapshot') {
+      expect(result.data.bids[0]).toEqual({ price: 67400, size: 1.5 });
+    }
+  });
+
+  it('parses trades', () => {
+    const msg = {
+      c: 'spot@public.deals.v3.api@BTCUSDT',
+      d: {
+        deals: [{ p: '67432.50', v: '0.5', S: 1, t: 1712345678000 }],
+      },
+    };
+    const result = mexcAdapter.parse(msg);
+    expect(result?.type).toBe('trades');
+    if (result?.type === 'trades') {
+      expect(result.data[0].side).toBe('buy');
+    }
+  });
+
+  it('parses ticker', () => {
+    const msg = {
+      c: 'spot@public.miniTicker.v3.api@BTCUSDT',
+      d: {
+        s: 'BTCUSDT', p: '67432.50', r: '0.0217',
+        h: '68000', l: '66000', v: '42150', tr: '2840000000',
+      },
+    };
+    const result = mexcAdapter.parse(msg);
+    expect(result?.type).toBe('ticker');
+    if (result?.type === 'ticker') {
+      expect(result.data.price).toBe(67432.5);
+    }
+  });
+
+  it('returns null for unknown channels', () => {
+    expect(mexcAdapter.parse({ c: 'unknown' })).toBeNull();
+    expect(mexcAdapter.parse({})).toBeNull();
+  });
+});
+
+describe('KuCoin adapter', () => {
+  it('parses L2 book update', () => {
+    const msg = {
+      topic: '/market/level2:BTC-USDT',
+      type: 'message',
+      subject: 'trade.l2update',
+      data: {
+        sequenceStart: 1, sequenceEnd: 2,
+        changes: {
+          bids: [['67400', '1.5', '1']],
+          asks: [['67401', '0.8', '2']],
+        },
+      },
+    };
+    const result = kucoinAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_delta');
+    if (result?.type === 'orderbook_delta') {
+      expect(result.data[0]).toEqual({ side: 'bid', price: 67400, size: 1.5 });
+    }
+  });
+
+  it('parses trade match', () => {
+    const msg = {
+      topic: '/market/match:BTC-USDT',
+      type: 'message',
+      subject: 'trade.l3match',
+      data: {
+        tradeId: '12345', price: '67432.50', size: '0.5',
+        side: 'buy', time: '1712345678000000000', symbol: 'BTC-USDT',
+      },
+    };
+    const result = kucoinAdapter.parse(msg);
+    expect(result?.type).toBe('trade');
+    if (result?.type === 'trade') {
+      expect(result.data.price).toBe(67432.5);
+      expect(result.data.side).toBe('buy');
+    }
+  });
+
+  it('parses snapshot ticker', () => {
+    const msg = {
+      topic: '/market/snapshot:BTC-USDT',
+      type: 'message',
+      subject: 'trade.snapshot',
+      data: {
+        data: {
+          symbol: 'BTC-USDT', lastTradedPrice: '67432.50',
+          high: '68000', low: '66000', vol: '42150', changeRate: '0.0217',
+        },
+      },
+    };
+    const result = kucoinAdapter.parse(msg);
+    expect(result?.type).toBe('ticker');
+    if (result?.type === 'ticker') {
+      expect(result.data.symbol).toBe('BTC/USDT');
+      expect(result.data.change24h).toBeCloseTo(2.17, 1);
+    }
+  });
+
+  it('returns null for non-message types', () => {
+    expect(kucoinAdapter.parse({ type: 'welcome' })).toBeNull();
+    expect(kucoinAdapter.parse({ type: 'pong' })).toBeNull();
   });
 });
 

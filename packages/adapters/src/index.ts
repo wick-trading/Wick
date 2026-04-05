@@ -4,3 +4,8 @@ export { coinbaseAdapter, parseSnapshot, parseL2Update, parseMatch, parseTicker 
 export { krakenAdapter, parseBookSnapshot, parseBookUpdate, parseTrades, parseTicker as parseKrakenTicker } from './kraken.js';
 export { bybitAdapter } from './bybit.js';
 export { okxAdapter } from './okx.js';
+export { dydxAdapter } from './dydx.js';
+export { bitfinexAdapter } from './bitfinex.js';
+export { gateioAdapter } from './gateio.js';
+export { mexcAdapter } from './mexc.js';
+export { kucoinAdapter } from './kucoin.js';
