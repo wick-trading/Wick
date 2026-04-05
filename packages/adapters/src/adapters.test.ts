@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { binanceAdapter } from './binance.js';
 import { coinbaseAdapter } from './coinbase.js';
 import { krakenAdapter } from './kraken.js';
+import { bybitAdapter } from './bybit.js';
+import { okxAdapter } from './okx.js';
 
 describe('Binance adapter', () => {
   it('parses depth snapshot', () => {
@@ -274,3 +276,185 @@ describe('Kraken adapter', () => {
     expect(krakenAdapter.parse({ method: 'subscribe' })).toBeNull();
   });
 });
+
+describe('Bybit adapter', () => {
+  it('parses orderbook snapshot', () => {
+    const msg = {
+      topic: 'orderbook.50.BTCUSDT',
+      type: 'snapshot',
+      data: {
+        s: 'BTCUSDT',
+        b: [['67400.00', '1.5']],
+        a: [['67401.00', '0.8']],
+        u: 123,
+      },
+    };
+
+    const result = bybitAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_snapshot');
+    if (result?.type === 'orderbook_snapshot') {
+      expect(result.data.bids[0]).toEqual({ price: 67400, size: 1.5 });
+      expect(result.data.asks[0]).toEqual({ price: 67401, size: 0.8 });
+    }
+  });
+
+  it('parses orderbook delta', () => {
+    const msg = {
+      topic: 'orderbook.50.BTCUSDT',
+      type: 'delta',
+      data: {
+        s: 'BTCUSDT',
+        b: [['67400.00', '2.0']],
+        a: [['67401.00', '0']],
+        u: 124,
+      },
+    };
+
+    const result = bybitAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_delta');
+    if (result?.type === 'orderbook_delta') {
+      expect(result.data).toHaveLength(2);
+      expect(result.data[0]).toEqual({ side: 'bid', price: 67400, size: 2 });
+    }
+  });
+
+  it('parses trades', () => {
+    const msg = {
+      topic: 'publicTrade.BTCUSDT',
+      type: 'snapshot',
+      data: [{
+        T: 1712345678000,
+        s: 'BTCUSDT',
+        S: 'Buy',
+        v: '0.5',
+        p: '67432.50',
+        i: '12345',
+      }],
+    };
+
+    const result = bybitAdapter.parse(msg);
+    expect(result?.type).toBe('trades');
+    if (result?.type === 'trades') {
+      expect(result.data[0].side).toBe('buy');
+      expect(result.data[0].price).toBe(67432.5);
+    }
+  });
+
+  it('parses ticker', () => {
+    const msg = {
+      topic: 'tickers.BTCUSDT',
+      type: 'snapshot',
+      data: {
+        symbol: 'BTCUSDT',
+        lastPrice: '67432.50',
+        highPrice24h: '68000.00',
+        lowPrice24h: '66000.00',
+        volume24h: '42150.00',
+        price24hPcnt: '0.0234',
+        turnover24h: '2840000000',
+      },
+    };
+
+    const result = bybitAdapter.parse(msg);
+    expect(result?.type).toBe('ticker');
+    if (result?.type === 'ticker') {
+      expect(result.data.price).toBe(67432.5);
+      expect(result.data.change24h).toBeCloseTo(2.34, 1);
+    }
+  });
+
+  it('returns null for unknown messages', () => {
+    expect(bybitAdapter.parse({ op: 'subscribe' })).toBeNull();
+    expect(bybitAdapter.parse({ topic: 'unknown', type: 'snapshot' })).toBeNull();
+  });
+});
+
+describe('OKX adapter', () => {
+  it('parses book snapshot', () => {
+    const msg = {
+      arg: { channel: 'books', instId: 'BTC-USDT' },
+      action: 'snapshot',
+      data: [{
+        bids: [['67400', '1.5', '0', '3']],
+        asks: [['67401', '0.8', '0', '2']],
+        ts: '1712345678000',
+      }],
+    };
+
+    const result = okxAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_snapshot');
+    if (result?.type === 'orderbook_snapshot') {
+      expect(result.data.bids[0]).toEqual({ price: 67400, size: 1.5 });
+    }
+  });
+
+  it('parses book update', () => {
+    const msg = {
+      arg: { channel: 'books', instId: 'BTC-USDT' },
+      action: 'update',
+      data: [{
+        bids: [['67400', '2.0', '0', '4']],
+        asks: [['67401', '0', '0', '0']],
+        ts: '1712345679000',
+      }],
+    };
+
+    const result = okxAdapter.parse(msg);
+    expect(result?.type).toBe('orderbook_delta');
+    if (result?.type === 'orderbook_delta') {
+      expect(result.data[0]).toEqual({ side: 'bid', price: 67400, size: 2 });
+      expect(result.data[1]).toEqual({ side: 'ask', price: 67401, size: 0 });
+    }
+  });
+
+  it('parses trades', () => {
+    const msg = {
+      arg: { channel: 'trades', instId: 'BTC-USDT' },
+      data: [{
+        instId: 'BTC-USDT',
+        tradeId: '99999',
+        px: '67432.50',
+        sz: '0.5',
+        side: 'buy',
+        ts: '1712345678000',
+      }],
+    };
+
+    const result = okxAdapter.parse(msg);
+    expect(result?.type).toBe('trades');
+    if (result?.type === 'trades') {
+      expect(result.data[0].price).toBe(67432.5);
+      expect(result.data[0].side).toBe('buy');
+      expect(result.data[0].id).toBe('99999');
+    }
+  });
+
+  it('parses ticker', () => {
+    const msg = {
+      arg: { channel: 'tickers', instId: 'BTC-USDT' },
+      data: [{
+        instId: 'BTC-USDT',
+        last: '67432.50',
+        high24h: '68000.00',
+        low24h: '66000.00',
+        vol24h: '42150.00',
+        open24h: '66000.00',
+        ts: '1712345678000',
+      }],
+    };
+
+    const result = okxAdapter.parse(msg);
+    expect(result?.type).toBe('ticker');
+    if (result?.type === 'ticker') {
+      expect(result.data.symbol).toBe('BTC/USDT');
+      expect(result.data.price).toBe(67432.5);
+      expect(result.data.change24h).toBeCloseTo(2.17, 1);
+    }
+  });
+
+  it('returns null for non-data messages', () => {
+    expect(okxAdapter.parse({ event: 'subscribe' })).toBeNull();
+    expect(okxAdapter.parse({ arg: { channel: 'unknown' } })).toBeNull();
+  });
+});
+

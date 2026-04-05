@@ -12,9 +12,14 @@
     "dev": "npm run dev -w demo",
     "build": "npm run build -w @vela-trading/core && npm run build -w @vela-trading/order-book && npm run build -w @vela-trading/price-ticker && npm run build -w @vela-trading/trade-feed && npm run build -w @vela-trading/adapters && npm run build -w @vela-trading/depth-chart && npm run build -w @vela-trading/candlestick-chart && tsc --build",
     "test": "vitest",
-    "lint": "eslint packages/*/src/**/*.ts"
+    "lint": "eslint packages/*/src/**/*.ts",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
     "eslint": "^9.0.0",
     "happy-dom": "^20.8.9",
     "typescript": "^5.4.0",

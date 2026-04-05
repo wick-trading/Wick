@@ -21,6 +21,14 @@
     "./kraken": {
       "types": "./dist/kraken.d.ts",
       "default": "./dist/kraken.js"
+    },
+    "./bybit": {
+      "types": "./dist/bybit.d.ts",
+      "default": "./dist/bybit.js"
+    },
+    "./okx": {
+      "types": "./dist/okx.d.ts",
+      "default": "./dist/okx.js"
     }
   },
   "files": ["dist"],

@@ -2,3 +2,5 @@ export type { ExchangeAdapter, AdapterMessage } from './types.js';
 export { binanceAdapter, parseDepthSnapshot, parseDepthUpdate, parseTrade as parseBinanceTrade, parseTicker as parseBinanceTicker } from './binance.js';
 export { coinbaseAdapter, parseSnapshot, parseL2Update, parseMatch, parseTicker as parseCoinbaseTicker } from './coinbase.js';
 export { krakenAdapter, parseBookSnapshot, parseBookUpdate, parseTrades, parseTicker as parseKrakenTicker } from './kraken.js';
+export { bybitAdapter } from './bybit.js';
+export { okxAdapter } from './okx.js';

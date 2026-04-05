@@ -9,6 +9,8 @@ export default defineConfig({
         binance: resolve(__dirname, 'src/binance.ts'),
         coinbase: resolve(__dirname, 'src/coinbase.ts'),
         kraken: resolve(__dirname, 'src/kraken.ts'),
+        bybit: resolve(__dirname, 'src/bybit.ts'),
+        okx: resolve(__dirname, 'src/okx.ts'),
       },
       formats: ['es'],
     },
