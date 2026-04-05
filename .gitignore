@@ -15,3 +15,7 @@ demo/src/main.js
 demo/src/main.js.map
 demo/src/main.d.ts
 demo/src/main.d.ts.map
+
+# Next.js site build
+site/.next/
+site/out/
