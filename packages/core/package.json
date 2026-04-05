@@ -1,5 +1,5 @@
 {
-  "name": "@vela-trading/core",
+  "name": "@wick/core",
   "version": "0.0.1",
   "description": "Shared types and utilities for Vela trading components",
   "type": "module",

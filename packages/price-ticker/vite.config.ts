@@ -9,7 +9,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['lit', /^lit\//, '@vela-trading/core'],
+      external: ['lit', /^lit\//, '@wick/core'],
     },
   },
 });

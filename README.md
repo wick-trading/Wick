@@ -1,4 +1,4 @@
-# Vela
+# Wick
 
 Headless Web Components for trading interfaces. Framework-agnostic, unstyled, real-time ready.
 
@@ -8,9 +8,9 @@ Headless Web Components for trading interfaces. Framework-agnostic, unstyled, re
 |---|---|
 | [Getting Started](docs/wiki/Getting-Started.md) | Installation, basic usage, framework integration |
 | [Components](docs/wiki/Components.md) | Overview of all components and design principles |
-| [Order Book](docs/wiki/Order-Book.md) | `<vela-order-book>` — full API reference |
-| [Price Ticker](docs/wiki/Price-Ticker.md) | `<vela-price-ticker>` — full API reference |
-| [Trade Feed](docs/wiki/Trade-Feed.md) | `<vela-trade-feed>` — full API reference |
+| [Order Book](docs/wiki/Order-Book.md) | `<wick-order-book>` — full API reference |
+| [Price Ticker](docs/wiki/Price-Ticker.md) | `<wick-price-ticker>` — full API reference |
+| [Trade Feed](docs/wiki/Trade-Feed.md) | `<wick-trade-feed>` — full API reference |
 | [Styling Guide](docs/wiki/Styling-Guide.md) | Dark/light themes, Tailwind, CSS parts |
 | [Data Contracts](docs/wiki/Data-Contracts.md) | TypeScript types, exchange mapping examples |
 | [Architecture](docs/wiki/Architecture.md) | Project structure, build pipeline, design decisions |
@@ -21,27 +21,27 @@ Headless Web Components for trading interfaces. Framework-agnostic, unstyled, re
 
 | Package | Description | Size (gzip) |
 |---------|-------------|-------------|
-| `@vela-trading/core` | Shared types & utilities | ~0.5 KB |
-| `@vela-trading/order-book` | `<vela-order-book>` | ~1.8 KB |
-| `@vela-trading/price-ticker` | `<vela-price-ticker>` | ~1.2 KB |
-| `@vela-trading/trade-feed` | `<vela-trade-feed>` | ~1.4 KB |
-| `@vela-trading/adapters` | Binance, Coinbase, Kraken adapters | ~0.6 KB each |
+| `@wick/core` | Shared types & utilities | ~0.5 KB |
+| `@wick/order-book` | `<wick-order-book>` | ~1.8 KB |
+| `@wick/price-ticker` | `<wick-price-ticker>` | ~1.2 KB |
+| `@wick/trade-feed` | `<wick-trade-feed>` | ~1.4 KB |
+| `@wick/adapters` | Binance, Coinbase, Kraken adapters | ~0.6 KB each |
 
 ## Quick Start
 
 ```bash
-npm install @vela-trading/order-book @vela-trading/price-ticker @vela-trading/trade-feed
+npm install @wick/order-book @wick/price-ticker @wick/trade-feed
 ```
 
 ### Order Book
 
 ```html
-<vela-order-book depth="15" show-total show-depth></vela-order-book>
+<wick-order-book depth="15" show-total show-depth></wick-order-book>
 
 <script type="module">
-  import '@vela-trading/order-book';
+  import '@wick/order-book';
 
-  const ob = document.querySelector('vela-order-book');
+  const ob = document.querySelector('wick-order-book');
 
   // Set full snapshot
   ob.data = {
@@ -62,7 +62,7 @@ npm install @vela-trading/order-book @vela-trading/price-ticker @vela-trading/tr
   };
 
   // Listen for clicks
-  ob.addEventListener('vela-order-book-level-click', (e) => {
+  ob.addEventListener('wick-order-book-level-click', (e) => {
     console.log(e.detail); // { price: 67400, side: 'bid' }
   });
 </script>
@@ -71,12 +71,12 @@ npm install @vela-trading/order-book @vela-trading/price-ticker @vela-trading/tr
 ### Price Ticker
 
 ```html
-<vela-price-ticker show-details></vela-price-ticker>
+<wick-price-ticker show-details></wick-price-ticker>
 
 <script type="module">
-  import '@vela-trading/price-ticker';
+  import '@wick/price-ticker';
 
-  const ticker = document.querySelector('vela-price-ticker');
+  const ticker = document.querySelector('wick-price-ticker');
 
   ticker.data = {
     symbol: 'BTC/USD',
@@ -89,7 +89,7 @@ npm install @vela-trading/order-book @vela-trading/price-ticker @vela-trading/tr
   };
 
   // Flash-on-change: listen for direction
-  ticker.addEventListener('vela-price-change', (e) => {
+  ticker.addEventListener('wick-price-change', (e) => {
     console.log(e.detail.direction); // 'up' or 'down'
   });
 </script>
@@ -98,12 +98,12 @@ npm install @vela-trading/order-book @vela-trading/price-ticker @vela-trading/tr
 ### Trade Feed
 
 ```html
-<vela-trade-feed max-trades="50" time-format="time"></vela-trade-feed>
+<wick-trade-feed max-trades="50" time-format="time"></wick-trade-feed>
 
 <script type="module">
-  import '@vela-trading/trade-feed';
+  import '@wick/trade-feed';
 
-  const feed = document.querySelector('vela-trade-feed');
+  const feed = document.querySelector('wick-trade-feed');
 
   // Stream trades
   ws.onmessage = (e) => {
@@ -120,21 +120,21 @@ All components are **headless** — no built-in styles. Use CSS parts and custom
 
 ```css
 /* Order book */
-vela-order-book [part~="bid-row"] [part="price"] { color: #4dff88; }
-vela-order-book [part~="ask-row"] [part="price"] { color: #ff4d4d; }
---vela-ob-bid-depth-color: rgba(77, 255, 77, 0.15);
---vela-ob-ask-depth-color: rgba(255, 77, 77, 0.15);
---vela-ob-row-height: 24px;
+wick-order-book [part~="bid-row"] [part="price"] { color: #4dff88; }
+wick-order-book [part~="ask-row"] [part="price"] { color: #ff4d4d; }
+--wick-ob-bid-depth-color: rgba(77, 255, 77, 0.15);
+--wick-ob-ask-depth-color: rgba(255, 77, 77, 0.15);
+--wick-ob-row-height: 24px;
 
 /* Price ticker */
---vela-ticker-up-color: #4dff88;
---vela-ticker-down-color: #ff4d4d;
---vela-ticker-flash-duration: 300ms;
+--wick-ticker-up-color: #4dff88;
+--wick-ticker-down-color: #ff4d4d;
+--wick-ticker-flash-duration: 300ms;
 
 /* Trade feed */
---vela-tf-buy-color: #4dff88;
---vela-tf-sell-color: #ff4d4d;
---vela-tf-max-height: 400px;
+--wick-tf-buy-color: #4dff88;
+--wick-tf-sell-color: #ff4d4d;
+--wick-tf-max-height: 400px;
 ```
 
 ## Data Types

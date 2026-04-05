@@ -8,19 +8,19 @@ import { createElement } from 'react';
 import { usePropertySync, useCustomEvent } from './create-wrapper.js';
 
 // Side-effect: register custom elements
-import '@vela-trading/order-book';
-import '@vela-trading/price-ticker';
-import '@vela-trading/trade-feed';
-import '@vela-trading/depth-chart';
-import '@vela-trading/candlestick-chart';
+import '@wick/order-book';
+import '@wick/price-ticker';
+import '@wick/trade-feed';
+import '@wick/depth-chart';
+import '@wick/candlestick-chart';
 
-import type { OrderBookData, OrderBookDelta, PriceFormatOptions, TickerData, Trade, Candle } from '@vela-trading/core';
-import type { VelaOrderBook as OrderBookElement } from '@vela-trading/order-book';
-import type { VelaPriceTicker as PriceTickerElement } from '@vela-trading/price-ticker';
-import type { VelaTradeFeed as TradeFeedElement } from '@vela-trading/trade-feed';
-import type { VelaDepthChart as DepthChartElement } from '@vela-trading/depth-chart';
-import type { VelaCandlestickChart as CandlestickChartElement } from '@vela-trading/candlestick-chart';
-import type { DepthChartTheme } from '@vela-trading/depth-chart';
+import type { OrderBookData, OrderBookDelta, PriceFormatOptions, TickerData, Trade, Candle } from '@wick/core';
+import type { WickOrderBook as OrderBookElement } from '@wick/order-book';
+import type { WickPriceTicker as PriceTickerElement } from '@wick/price-ticker';
+import type { WickTradeFeed as TradeFeedElement } from '@wick/trade-feed';
+import type { WickDepthChart as DepthChartElement } from '@wick/depth-chart';
+import type { WickCandlestickChart as CandlestickChartElement } from '@wick/candlestick-chart';
+import type { DepthChartTheme } from '@wick/depth-chart';
 
 // Re-export hooks for custom usage
 export { usePropertySync, useCustomEvent } from './create-wrapper.js';
@@ -44,9 +44,9 @@ export const OrderBook = forwardRef<OrderBookElement, OrderBookProps>(
     useImperativeHandle(fwdRef, () => ref.current!, []);
 
     usePropertySync(ref, { data, priceFormat });
-    useCustomEvent(ref, 'vela-order-book-level-click', onLevelClick);
+    useCustomEvent(ref, 'wick-order-book-level-click', onLevelClick);
 
-    return createElement('vela-order-book', {
+    return createElement('wick-order-book', {
       ref,
       depth,
       'size-precision': sizePrecision,
@@ -74,9 +74,9 @@ export const PriceTicker = forwardRef<PriceTickerElement, PriceTickerProps>(
     useImperativeHandle(fwdRef, () => ref.current!, []);
 
     usePropertySync(ref, { data, priceFormat });
-    useCustomEvent(ref, 'vela-price-change', onPriceChange);
+    useCustomEvent(ref, 'wick-price-change', onPriceChange);
 
-    return createElement('vela-price-ticker', {
+    return createElement('wick-price-ticker', {
       ref,
       'show-details': showDetails ? '' : undefined,
       ...attrs,
@@ -102,9 +102,9 @@ export const TradeFeed = forwardRef<TradeFeedElement, TradeFeedProps>(
     useImperativeHandle(fwdRef, () => ref.current!, []);
 
     usePropertySync(ref, { trades, priceFormat });
-    useCustomEvent(ref, 'vela-trade-click', onTradeClick);
+    useCustomEvent(ref, 'wick-trade-click', onTradeClick);
 
-    return createElement('vela-trade-feed', {
+    return createElement('wick-trade-feed', {
       ref,
       'max-trades': maxTrades,
       'size-precision': sizePrecision,
@@ -134,10 +134,10 @@ export const DepthChart = forwardRef<DepthChartElement, DepthChartProps>(
     useImperativeHandle(fwdRef, () => ref.current!, []);
 
     usePropertySync(ref, { data, theme });
-    useCustomEvent(ref, 'vela-depth-chart-hover', onHover);
-    useCustomEvent(ref, 'vela-depth-chart-click', onChartClick);
+    useCustomEvent(ref, 'wick-depth-chart-hover', onHover);
+    useCustomEvent(ref, 'wick-depth-chart-click', onChartClick);
 
-    return createElement('vela-depth-chart', {
+    return createElement('wick-depth-chart', {
       ref,
       depth,
       width,
@@ -167,10 +167,10 @@ export const CandlestickChart = forwardRef<CandlestickChartElement, CandlestickC
     useImperativeHandle(fwdRef, () => ref.current!, []);
 
     usePropertySync(ref, { candles });
-    useCustomEvent(ref, 'vela-candlestick-crosshair', onCrosshair);
-    useCustomEvent(ref, 'vela-candlestick-click', onChartClick);
+    useCustomEvent(ref, 'wick-candlestick-crosshair', onCrosshair);
+    useCustomEvent(ref, 'wick-candlestick-click', onChartClick);
 
-    return createElement('vela-candlestick-chart', {
+    return createElement('wick-candlestick-chart', {
       ref,
       width,
       height,

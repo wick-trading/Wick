@@ -1,15 +1,15 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { TickerData, PriceFormatOptions } from '@vela-trading/core';
-import { formatPrice } from '@vela-trading/core';
+import type { TickerData, PriceFormatOptions } from '@wick/core';
+import { formatPrice } from '@wick/core';
 
 /**
- * `<vela-price-ticker>` — Headless price ticker component.
+ * `<wick-price-ticker>` — Headless price ticker component.
  *
  * Displays a single instrument's price with flash-on-change behavior.
  * Fully unstyled — use CSS parts and custom properties to theme.
  *
- * @fires vela-price-change - When the price changes, includes direction
+ * @fires wick-price-change - When the price changes, includes direction
  *
  * @csspart container - Outer wrapper
  * @csspart symbol - Symbol/instrument name
@@ -19,12 +19,12 @@ import { formatPrice } from '@vela-trading/core';
  * @csspart low - 24h low
  * @csspart volume - 24h volume
  *
- * @cssprop --vela-ticker-up-color - Color for price increase (default: inherit)
- * @cssprop --vela-ticker-down-color - Color for price decrease (default: inherit)
- * @cssprop --vela-ticker-flash-duration - Flash animation duration (default: 300ms)
+ * @cssprop --wick-ticker-up-color - Color for price increase (default: inherit)
+ * @cssprop --wick-ticker-down-color - Color for price decrease (default: inherit)
+ * @cssprop --wick-ticker-flash-duration - Flash animation duration (default: 300ms)
  */
-@customElement('vela-price-ticker')
-export class VelaPriceTicker extends LitElement {
+@customElement('wick-price-ticker')
+export class WickPriceTicker extends LitElement {
   /** Ticker data to display */
   @property({ type: Object })
   data: TickerData = { symbol: '', price: 0, timestamp: 0 };
@@ -68,7 +68,7 @@ export class VelaPriceTicker extends LitElement {
   protected override updated(changedProps: Map<string, unknown>): void {
     if (changedProps.has('data') && this._prevPrice !== 0) {
       this.dispatchEvent(
-        new CustomEvent('vela-price-change', {
+        new CustomEvent('wick-price-change', {
           detail: {
             price: this.data.price,
             prevPrice: (changedProps.get('data') as typeof this.data)?.price ?? 0,
@@ -91,15 +91,15 @@ export class VelaPriceTicker extends LitElement {
   }
 
   private _priceColor(): string {
-    if (this._direction === 'up') return 'var(--vela-ticker-up-color, inherit)';
-    if (this._direction === 'down') return 'var(--vela-ticker-down-color, inherit)';
+    if (this._direction === 'up') return 'var(--wick-ticker-up-color, inherit)';
+    if (this._direction === 'down') return 'var(--wick-ticker-down-color, inherit)';
     return 'inherit';
   }
 
   private _changeColor(): string {
     const change = this.data.change24h ?? 0;
-    if (change > 0) return 'var(--vela-ticker-up-color, inherit)';
-    if (change < 0) return 'var(--vela-ticker-down-color, inherit)';
+    if (change > 0) return 'var(--wick-ticker-up-color, inherit)';
+    if (change < 0) return 'var(--wick-ticker-down-color, inherit)';
     return 'inherit';
   }
 
@@ -137,6 +137,6 @@ export class VelaPriceTicker extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vela-price-ticker': VelaPriceTicker;
+    'wick-price-ticker': WickPriceTicker;
   }
 }

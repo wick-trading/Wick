@@ -1,4 +1,4 @@
-import type { OrderBookData } from '@vela-trading/core';
+import type { OrderBookData } from '@wick/core';
 
 /**
  * Depth chart rendering engine.

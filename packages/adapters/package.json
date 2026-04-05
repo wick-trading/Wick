@@ -1,5 +1,5 @@
 {
-  "name": "@vela-trading/adapters",
+  "name": "@wick/adapters",
   "version": "0.0.1",
   "description": "Exchange adapters that map WebSocket feeds to Vela data types",
   "type": "module",
@@ -79,7 +79,7 @@
   ],
   "author": "astralchemist",
   "dependencies": {
-    "@vela-trading/core": "0.0.1"
+    "@wick/core": "0.0.1"
   },
   "license": "MIT"
 }

@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vela — Headless Trading Components</title>
+    <title>Wick — Headless Trading Components</title>
     <style>
       /* ── Base reset ── */
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background: var(--vela-bg, #0b0e11);
-        color: var(--vela-text, #eaecef);
+        background: var(--wick-bg, #0b0e11);
+        color: var(--wick-text, #eaecef);
         min-height: 100vh;
         transition: background 400ms ease;
       }
@@ -45,7 +45,7 @@
 
       .header .tagline {
         font-size: 13px;
-        color: var(--vela-text-muted, #5e6673);
+        color: var(--wick-text-muted, #5e6673);
         margin-top: 2px;
       }
 
@@ -53,8 +53,8 @@
       .theme-switcher {
         display: flex;
         gap: 4px;
-        background: var(--vela-surface, #12161c);
-        border: 1px solid var(--vela-border, #252932);
+        background: var(--wick-surface, #12161c);
+        border: 1px solid var(--wick-border, #252932);
         border-radius: 10px;
         padding: 4px;
       }
@@ -68,7 +68,7 @@
       .theme-switcher button {
         background: none;
         border: none;
-        color: var(--vela-text-muted, #5e6673);
+        color: var(--wick-text-muted, #5e6673);
         font-size: 12px;
         font-weight: 500;
         padding: 8px 16px;
@@ -79,12 +79,12 @@
       }
 
       .theme-switcher button:hover {
-        color: var(--vela-text, #eaecef);
+        color: var(--wick-text, #eaecef);
       }
 
       .theme-switcher button.active {
-        background: var(--vela-surface-hover, #1e2530);
-        color: var(--vela-text, #eaecef);
+        background: var(--wick-surface-hover, #1e2530);
+        color: var(--wick-text, #eaecef);
         font-weight: 600;
       }
 
@@ -116,7 +116,7 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: var(--vela-text-muted, #5e6673);
+        color: var(--wick-text-muted, #5e6673);
         margin-bottom: 10px;
         padding-left: 4px;
       }
@@ -125,8 +125,8 @@
         height: 320px;
       }
 
-      .chart-panel vela-depth-chart,
-      .chart-panel vela-candlestick-chart {
+      .chart-panel wick-depth-chart,
+      .chart-panel wick-candlestick-chart {
         width: 100%;
         height: 280px;
         display: block;
@@ -145,7 +145,7 @@
     <div class="app">
       <div class="header">
         <div>
-          <h1>Vela</h1>
+          <h1>Wick</h1>
           <div class="tagline">Headless trading components for the web</div>
         </div>
         <div class="theme-switcher">
@@ -156,30 +156,30 @@
       </div>
 
       <div class="ticker-row">
-        <vela-price-ticker id="ticker" show-details></vela-price-ticker>
+        <wick-price-ticker id="ticker" show-details></wick-price-ticker>
       </div>
 
       <div class="main-grid">
         <div>
           <div class="panel-label">Order Book</div>
-          <vela-order-book id="orderbook" depth="14" show-total show-depth></vela-order-book>
+          <wick-order-book id="orderbook" depth="14" show-total show-depth></wick-order-book>
         </div>
 
         <div>
           <div class="panel-label">Recent Trades</div>
-          <vela-trade-feed id="tradefeed" max-trades="14"></vela-trade-feed>
+          <wick-trade-feed id="tradefeed" max-trades="14"></wick-trade-feed>
         </div>
       </div>
 
       <div class="charts-grid">
         <div class="chart-panel">
           <div class="panel-label">Market Depth</div>
-          <vela-depth-chart id="depthchart" enable-crosshair></vela-depth-chart>
+          <wick-depth-chart id="depthchart" enable-crosshair></wick-depth-chart>
         </div>
 
         <div class="chart-panel">
           <div class="panel-label">BTC/USD · 1m</div>
-          <vela-candlestick-chart id="candlechart" show-volume auto-scroll></vela-candlestick-chart>
+          <wick-candlestick-chart id="candlechart" show-volume auto-scroll></wick-candlestick-chart>
         </div>
       </div>
     </div>
@@ -190,9 +190,9 @@
       const buttons = document.querySelectorAll('.theme-switcher button');
       const themeLink = document.getElementById('theme-css');
       const themeMap = {
-        dark: '/node_modules/@vela-trading/theme/src/dark.css',
-        minimal: '/node_modules/@vela-trading/theme/src/minimal.css',
-        glass: '/node_modules/@vela-trading/theme/src/glass.css',
+        dark: '/node_modules/@wick/theme/src/dark.css',
+        minimal: '/node_modules/@wick/theme/src/minimal.css',
+        glass: '/node_modules/@wick/theme/src/glass.css',
       };
 
       // Load default theme

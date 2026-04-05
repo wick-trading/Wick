@@ -1,5 +1,5 @@
 /**
- * @vela-trading/angular — Angular directives for Vela Web Components.
+ * @wick/angular — Angular directives for Wick Web Components.
  *
  * Angular's Web Component support requires:
  * 1. CUSTOM_ELEMENTS_SCHEMA on the module/component
@@ -11,41 +11,41 @@
  * @example
  * ```typescript
  * // In your component:
- * import { VelaOrderBookDirective, VelaPriceTickerDirective } from '@vela-trading/angular';
+ * import { WickOrderBookDirective, WickPriceTickerDirective } from '@wick/angular';
  *
  * @Component({
  *   selector: 'app-trading',
  *   standalone: true,
- *   imports: [VelaOrderBookDirective, VelaPriceTickerDirective],
+ *   imports: [WickOrderBookDirective, WickPriceTickerDirective],
  *   schemas: [CUSTOM_ELEMENTS_SCHEMA],
  *   template: `
- *     <vela-order-book
- *       velaOrderBook
- *       [velaData]="bookData"
- *       [velaPriceFormat]="priceFormat"
- *       (velaLevelClick)="onLevelClick($event)"
+ *     <wick-order-book
+ *       wickOrderBook
+ *       [wickData]="bookData"
+ *       [wickPriceFormat]="priceFormat"
+ *       (wickLevelClick)="onLevelClick($event)"
  *       depth="15"
  *       show-total
  *       show-depth
- *     ></vela-order-book>
+ *     ></wick-order-book>
  *
- *     <vela-price-ticker
- *       velaPriceTicker
- *       [velaData]="tickerData"
- *       (velaPriceChange)="onPriceChange($event)"
+ *     <wick-price-ticker
+ *       wickPriceTicker
+ *       [wickData]="tickerData"
+ *       (wickPriceChange)="onPriceChange($event)"
  *       show-details
- *     ></vela-price-ticker>
+ *     ></wick-price-ticker>
  *   `
  * })
  * ```
  */
 
 // Register custom elements
-import '@vela-trading/order-book';
-import '@vela-trading/price-ticker';
-import '@vela-trading/trade-feed';
-import '@vela-trading/depth-chart';
-import '@vela-trading/candlestick-chart';
+import '@wick/order-book';
+import '@wick/price-ticker';
+import '@wick/trade-feed';
+import '@wick/depth-chart';
+import '@wick/candlestick-chart';
 
 import type {
   OrderBookData,
@@ -54,13 +54,13 @@ import type {
   Trade,
   Candle,
   PriceFormatOptions,
-} from '@vela-trading/core';
+} from '@wick/core';
 
-import type { VelaOrderBook } from '@vela-trading/order-book';
-import type { VelaPriceTicker } from '@vela-trading/price-ticker';
-import type { VelaTradeFeed } from '@vela-trading/trade-feed';
-import type { VelaDepthChart, DepthChartTheme } from '@vela-trading/depth-chart';
-import type { VelaCandlestickChart } from '@vela-trading/candlestick-chart';
+import type { WickOrderBook } from '@wick/order-book';
+import type { WickPriceTicker } from '@wick/price-ticker';
+import type { WickTradeFeed } from '@wick/trade-feed';
+import type { WickDepthChart, DepthChartTheme } from '@wick/depth-chart';
+import type { WickCandlestickChart } from '@wick/candlestick-chart';
 
 // ── Lightweight directive factories ──────────────────────
 // These are plain classes with Angular-compatible metadata.
@@ -111,40 +111,40 @@ function createEmitter<T>(): SimpleEmitter<T> {
 // ── Order Book Directive ─────────────────────────────────
 
 /**
- * Directive for `<vela-order-book velaOrderBook>`.
+ * Directive for `<wick-order-book wickOrderBook>`.
  *
  * Binds:
- * - [velaData] → OrderBookData
- * - [velaPriceFormat] → PriceFormatOptions
- * - (velaLevelClick) → { price, side }
+ * - [wickData] → OrderBookData
+ * - [wickPriceFormat] → PriceFormatOptions
+ * - (wickLevelClick) → { price, side }
  */
-export class VelaOrderBookDirective {
-  private _el: VelaOrderBook;
+export class WickOrderBookDirective {
+  private _el: WickOrderBook;
   private _listener: ((e: Event) => void) | null = null;
 
-  velaData: OrderBookData | undefined;
-  velaPriceFormat: PriceFormatOptions | undefined;
-  velaLevelClick = createEmitter<{ price: number; side: 'bid' | 'ask' }>();
+  wickData: OrderBookData | undefined;
+  wickPriceFormat: PriceFormatOptions | undefined;
+  wickLevelClick = createEmitter<{ price: number; side: 'bid' | 'ask' }>();
 
-  constructor(el: { nativeElement: VelaOrderBook }) {
+  constructor(el: { nativeElement: WickOrderBook }) {
     this._el = el.nativeElement;
   }
 
   ngOnChanges(): void {
-    if (this.velaData) syncProperty(this._el, 'data', this.velaData);
-    if (this.velaPriceFormat) syncProperty(this._el, 'priceFormat', this.velaPriceFormat);
+    if (this.wickData) syncProperty(this._el, 'data', this.wickData);
+    if (this.wickPriceFormat) syncProperty(this._el, 'priceFormat', this.wickPriceFormat);
   }
 
   ngOnInit(): void {
     this._listener = (e: Event) => {
-      this.velaLevelClick.emit((e as CustomEvent).detail);
+      this.wickLevelClick.emit((e as CustomEvent).detail);
     };
-    this._el.addEventListener('vela-order-book-level-click', this._listener);
+    this._el.addEventListener('wick-order-book-level-click', this._listener);
   }
 
   ngOnDestroy(): void {
     if (this._listener) {
-      this._el.removeEventListener('vela-order-book-level-click', this._listener);
+      this._el.removeEventListener('wick-order-book-level-click', this._listener);
     }
   }
 
@@ -162,40 +162,40 @@ export class VelaOrderBookDirective {
 // ── Price Ticker Directive ───────────────────────────────
 
 /**
- * Directive for `<vela-price-ticker velaPriceTicker>`.
+ * Directive for `<wick-price-ticker wickPriceTicker>`.
  *
  * Binds:
- * - [velaData] → TickerData
- * - [velaPriceFormat] → PriceFormatOptions
- * - (velaPriceChange) → { price, prevPrice, direction }
+ * - [wickData] → TickerData
+ * - [wickPriceFormat] → PriceFormatOptions
+ * - (wickPriceChange) → { price, prevPrice, direction }
  */
-export class VelaPriceTickerDirective {
-  private _el: VelaPriceTicker;
+export class WickPriceTickerDirective {
+  private _el: WickPriceTicker;
   private _listener: ((e: Event) => void) | null = null;
 
-  velaData: TickerData | undefined;
-  velaPriceFormat: PriceFormatOptions | undefined;
-  velaPriceChange = createEmitter<{ price: number; prevPrice: number; direction: string }>();
+  wickData: TickerData | undefined;
+  wickPriceFormat: PriceFormatOptions | undefined;
+  wickPriceChange = createEmitter<{ price: number; prevPrice: number; direction: string }>();
 
-  constructor(el: { nativeElement: VelaPriceTicker }) {
+  constructor(el: { nativeElement: WickPriceTicker }) {
     this._el = el.nativeElement;
   }
 
   ngOnChanges(): void {
-    if (this.velaData) syncProperty(this._el, 'data', this.velaData);
-    if (this.velaPriceFormat) syncProperty(this._el, 'priceFormat', this.velaPriceFormat);
+    if (this.wickData) syncProperty(this._el, 'data', this.wickData);
+    if (this.wickPriceFormat) syncProperty(this._el, 'priceFormat', this.wickPriceFormat);
   }
 
   ngOnInit(): void {
     this._listener = (e: Event) => {
-      this.velaPriceChange.emit((e as CustomEvent).detail);
+      this.wickPriceChange.emit((e as CustomEvent).detail);
     };
-    this._el.addEventListener('vela-price-change', this._listener);
+    this._el.addEventListener('wick-price-change', this._listener);
   }
 
   ngOnDestroy(): void {
     if (this._listener) {
-      this._el.removeEventListener('vela-price-change', this._listener);
+      this._el.removeEventListener('wick-price-change', this._listener);
     }
   }
 }
@@ -203,40 +203,40 @@ export class VelaPriceTickerDirective {
 // ── Trade Feed Directive ─────────────────────────────────
 
 /**
- * Directive for `<vela-trade-feed velaTradeFeed>`.
+ * Directive for `<wick-trade-feed wickTradeFeed>`.
  *
  * Binds:
- * - [velaTrades] → Trade[]
- * - [velaPriceFormat] → PriceFormatOptions
- * - (velaTradeClick) → Trade
+ * - [wickTrades] → Trade[]
+ * - [wickPriceFormat] → PriceFormatOptions
+ * - (wickTradeClick) → Trade
  */
-export class VelaTradeFeedDirective {
-  private _el: VelaTradeFeed;
+export class WickTradeFeedDirective {
+  private _el: WickTradeFeed;
   private _listener: ((e: Event) => void) | null = null;
 
-  velaTrades: Trade[] | undefined;
-  velaPriceFormat: PriceFormatOptions | undefined;
-  velaTradeClick = createEmitter<Trade>();
+  wickTrades: Trade[] | undefined;
+  wickPriceFormat: PriceFormatOptions | undefined;
+  wickTradeClick = createEmitter<Trade>();
 
-  constructor(el: { nativeElement: VelaTradeFeed }) {
+  constructor(el: { nativeElement: WickTradeFeed }) {
     this._el = el.nativeElement;
   }
 
   ngOnChanges(): void {
-    if (this.velaTrades) syncProperty(this._el, 'trades', this.velaTrades);
-    if (this.velaPriceFormat) syncProperty(this._el, 'priceFormat', this.velaPriceFormat);
+    if (this.wickTrades) syncProperty(this._el, 'trades', this.wickTrades);
+    if (this.wickPriceFormat) syncProperty(this._el, 'priceFormat', this.wickPriceFormat);
   }
 
   ngOnInit(): void {
     this._listener = (e: Event) => {
-      this.velaTradeClick.emit((e as CustomEvent).detail);
+      this.wickTradeClick.emit((e as CustomEvent).detail);
     };
-    this._el.addEventListener('vela-trade-click', this._listener);
+    this._el.addEventListener('wick-trade-click', this._listener);
   }
 
   ngOnDestroy(): void {
     if (this._listener) {
-      this._el.removeEventListener('vela-trade-click', this._listener);
+      this._el.removeEventListener('wick-trade-click', this._listener);
     }
   }
 
@@ -254,83 +254,83 @@ export class VelaTradeFeedDirective {
 // ── Depth Chart Directive ────────────────────────────────
 
 /**
- * Directive for `<vela-depth-chart velaDepthChart>`.
+ * Directive for `<wick-depth-chart wickDepthChart>`.
  *
  * Binds:
- * - [velaData] → OrderBookData
- * - [velaTheme] → Partial<DepthChartTheme>
- * - (velaHover) → { price, total, side }
- * - (velaChartClick) → { price, total, side }
+ * - [wickData] → OrderBookData
+ * - [wickTheme] → Partial<DepthChartTheme>
+ * - (wickHover) → { price, total, side }
+ * - (wickChartClick) → { price, total, side }
  */
-export class VelaDepthChartDirective {
-  private _el: VelaDepthChart;
+export class WickDepthChartDirective {
+  private _el: WickDepthChart;
   private _hoverListener: ((e: Event) => void) | null = null;
   private _clickListener: ((e: Event) => void) | null = null;
 
-  velaData: OrderBookData | undefined;
-  velaTheme: Partial<DepthChartTheme> | undefined;
-  velaHover = createEmitter<{ price: number; total: number; side: string }>();
-  velaChartClick = createEmitter<{ price: number; total: number; side: string }>();
+  wickData: OrderBookData | undefined;
+  wickTheme: Partial<DepthChartTheme> | undefined;
+  wickHover = createEmitter<{ price: number; total: number; side: string }>();
+  wickChartClick = createEmitter<{ price: number; total: number; side: string }>();
 
-  constructor(el: { nativeElement: VelaDepthChart }) {
+  constructor(el: { nativeElement: WickDepthChart }) {
     this._el = el.nativeElement;
   }
 
   ngOnChanges(): void {
-    if (this.velaData) syncProperty(this._el, 'data', this.velaData);
-    if (this.velaTheme) syncProperty(this._el, 'theme', this.velaTheme);
+    if (this.wickData) syncProperty(this._el, 'data', this.wickData);
+    if (this.wickTheme) syncProperty(this._el, 'theme', this.wickTheme);
   }
 
   ngOnInit(): void {
-    this._hoverListener = (e: Event) => this.velaHover.emit((e as CustomEvent).detail);
-    this._clickListener = (e: Event) => this.velaChartClick.emit((e as CustomEvent).detail);
-    this._el.addEventListener('vela-depth-chart-hover', this._hoverListener);
-    this._el.addEventListener('vela-depth-chart-click', this._clickListener);
+    this._hoverListener = (e: Event) => this.wickHover.emit((e as CustomEvent).detail);
+    this._clickListener = (e: Event) => this.wickChartClick.emit((e as CustomEvent).detail);
+    this._el.addEventListener('wick-depth-chart-hover', this._hoverListener);
+    this._el.addEventListener('wick-depth-chart-click', this._clickListener);
   }
 
   ngOnDestroy(): void {
-    if (this._hoverListener) this._el.removeEventListener('vela-depth-chart-hover', this._hoverListener);
-    if (this._clickListener) this._el.removeEventListener('vela-depth-chart-click', this._clickListener);
+    if (this._hoverListener) this._el.removeEventListener('wick-depth-chart-hover', this._hoverListener);
+    if (this._clickListener) this._el.removeEventListener('wick-depth-chart-click', this._clickListener);
   }
 }
 
 // ── Candlestick Chart Directive ──���───────────────────────
 
 /**
- * Directive for `<vela-candlestick-chart velaCandlestickChart>`.
+ * Directive for `<wick-candlestick-chart wickCandlestickChart>`.
  *
  * Binds:
- * - [velaCandles] → Candle[]
- * - (velaCrosshair) → crosshair event data
- * - (velaChartClick) → click event data
+ * - [wickCandles] → Candle[]
+ * - (wickCrosshair) → crosshair event data
+ * - (wickChartClick) → click event data
  */
-export class VelaCandlestickChartDirective {
-  private _el: VelaCandlestickChart;
+export class WickCandlestickChartDirective {
+  private _el: WickCandlestickChart;
   private _crosshairListener: ((e: Event) => void) | null = null;
   private _clickListener: ((e: Event) => void) | null = null;
 
-  velaCandles: Candle[] | undefined;
-  velaCrosshair = createEmitter<unknown>();
-  velaChartClick = createEmitter<unknown>();
+  wickCandles: Candle[] | undefined;
+  wickCrosshair = createEmitter<unknown>();
+  wickChartClick = createEmitter<unknown>();
 
-  constructor(el: { nativeElement: VelaCandlestickChart }) {
+  constructor(el: { nativeElement: WickCandlestickChart }) {
     this._el = el.nativeElement;
   }
 
   ngOnChanges(): void {
-    if (this.velaCandles) syncProperty(this._el, 'candles', this.velaCandles);
+    if (this.wickCandles) syncProperty(this._el, 'candles', this.wickCandles);
   }
 
   ngOnInit(): void {
-    this._crosshairListener = (e: Event) => this.velaCrosshair.emit((e as CustomEvent).detail);
-    this._clickListener = (e: Event) => this.velaChartClick.emit((e as CustomEvent).detail);
-    this._el.addEventListener('vela-candlestick-crosshair', this._crosshairListener);
-    this._el.addEventListener('vela-candlestick-click', this._clickListener);
+    this._crosshairListener = (e: Event) => this.wickCrosshair.emit((e as CustomEvent).detail);
+    this._clickListener = (e: Event) => this.wickChartClick.emit((e as CustomEvent).detail);
+    this._el.addEventListener('wick-candlestick-crosshair', this._crosshairListener);
+    this._el.addEventListener('wick-candlestick-click', this._clickListener);
   }
 
   ngOnDestroy(): void {
-    if (this._crosshairListener) this._el.removeEventListener('vela-candlestick-crosshair', this._crosshairListener);
-    if (this._clickListener) this._el.removeEventListener('vela-candlestick-click', this._clickListener);
+    if (this._crosshairListener) this._el.removeEventListener('wick-candlestick-crosshair', this._crosshairListener);
+    if (this._clickListener) this._el.removeEventListener('wick-candlestick-click', this._clickListener);
   }
 
   /** Imperative: update or append a candle */
@@ -353,4 +353,4 @@ export type {
   Trade,
   Candle,
   PriceFormatOptions,
-} from '@vela-trading/core';
+} from '@wick/core';

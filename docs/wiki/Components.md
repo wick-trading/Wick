@@ -1,16 +1,16 @@
 # Components
 
-Vela ships three core components for v1. Each is a standalone Web Component that can be used independently.
+Wick ships three core components for v1. Each is a standalone Web Component that can be used independently.
 
 ## Overview
 
 | Component | Tag | Package | Size |
 |-----------|-----|---------|------|
-| [Order Book](Order-Book.md) | `<vela-order-book>` | `@vela-trading/order-book` | ~1.8 KB gzip |
-| [Price Ticker](Price-Ticker.md) | `<vela-price-ticker>` | `@vela-trading/price-ticker` | ~1.2 KB gzip |
-| [Trade Feed](Trade-Feed.md) | `<vela-trade-feed>` | `@vela-trading/trade-feed` | ~1.4 KB gzip |
+| [Order Book](Order-Book.md) | `<wick-order-book>` | `@wick/order-book` | ~1.8 KB gzip |
+| [Price Ticker](Price-Ticker.md) | `<wick-price-ticker>` | `@wick/price-ticker` | ~1.2 KB gzip |
+| [Trade Feed](Trade-Feed.md) | `<wick-trade-feed>` | `@wick/trade-feed` | ~1.4 KB gzip |
 
-All components share `@vela-trading/core` (~0.5 KB gzip) for types and utilities.
+All components share `@wick/core` (~0.5 KB gzip) for types and utilities.
 
 ## Design Principles
 
@@ -18,7 +18,7 @@ All components share `@vela-trading/core` (~0.5 KB gzip) for types and utilities
 No built-in styles. Components render semantic HTML and expose CSS parts and custom properties for theming. You have full control over the visual appearance.
 
 ### Data-Agnostic
-Components accept standardized data types (see [Data Contracts](Data-Contracts.md)). You bring your own data source — REST API, WebSocket, mock data, whatever. Vela doesn't care where the data comes from.
+Components accept standardized data types (see [Data Contracts](Data-Contracts.md)). You bring your own data source — REST API, WebSocket, mock data, whatever. Wick doesn't care where the data comes from.
 
 ### Real-Time First
 Every component is optimized for high-frequency updates:

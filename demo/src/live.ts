@@ -1,26 +1,26 @@
 /**
- * Vela Live Demo — Real Binance WebSocket data.
+ * Wick Live Demo — Real Binance WebSocket data.
  * Uses public streams (no API key needed).
  */
-import '@vela-trading/order-book';
-import '@vela-trading/price-ticker';
-import '@vela-trading/trade-feed';
-import '@vela-trading/depth-chart';
+import '@wick/order-book';
+import '@wick/price-ticker';
+import '@wick/trade-feed';
+import '@wick/depth-chart';
 
-import { binanceAdapter } from '@vela-trading/adapters/binance';
-import { parseDepthSnapshot } from '@vela-trading/adapters/binance';
-import type { OrderBookData } from '@vela-trading/core';
-import type { VelaOrderBook } from '@vela-trading/order-book';
-import type { VelaPriceTicker } from '@vela-trading/price-ticker';
-import type { VelaTradeFeed } from '@vela-trading/trade-feed';
-import type { VelaDepthChart } from '@vela-trading/depth-chart';
+import { binanceAdapter } from '@wick/adapters/binance';
+import { parseDepthSnapshot } from '@wick/adapters/binance';
+import type { OrderBookData } from '@wick/core';
+import type { WickOrderBook } from '@wick/order-book';
+import type { WickPriceTicker } from '@wick/price-ticker';
+import type { WickTradeFeed } from '@wick/trade-feed';
+import type { WickDepthChart } from '@wick/depth-chart';
 
 // --- DOM refs ---
 
-const orderBook = document.getElementById('orderbook') as VelaOrderBook;
-const ticker = document.getElementById('ticker') as VelaPriceTicker;
-const tradeFeed = document.getElementById('tradefeed') as VelaTradeFeed;
-const depthChart = document.getElementById('depthchart') as VelaDepthChart;
+const orderBook = document.getElementById('orderbook') as WickOrderBook;
+const ticker = document.getElementById('ticker') as WickPriceTicker;
+const tradeFeed = document.getElementById('tradefeed') as WickTradeFeed;
+const depthChart = document.getElementById('depthchart') as WickDepthChart;
 const symbolSelect = document.getElementById('symbolSelect') as HTMLSelectElement;
 const reconnectBtn = document.getElementById('reconnectBtn') as HTMLButtonElement;
 const statusDot = document.getElementById('statusDot') as HTMLElement;
@@ -156,10 +156,10 @@ reconnectBtn.addEventListener('click', () => {
 connect(currentSymbol);
 
 // Log events
-orderBook.addEventListener('vela-order-book-level-click', (e) => {
+orderBook.addEventListener('wick-order-book-level-click', (e) => {
   console.log('Level clicked:', (e as CustomEvent).detail);
 });
 
-depthChart.addEventListener('vela-depth-chart-click', (e) => {
+depthChart.addEventListener('wick-depth-chart-click', (e) => {
   console.log('Depth clicked:', (e as CustomEvent).detail);
 });

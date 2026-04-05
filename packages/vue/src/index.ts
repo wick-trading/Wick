@@ -1,16 +1,16 @@
 /**
- * @vela-trading/vue — Vue 3 composables and type helpers for Vela Web Components.
+ * @wick/vue — Vue 3 composables and type helpers for Wick Web Components.
  *
  * Vue 3 has native Web Component support via `app.config.compilerOptions.isCustomElement`.
  * This package provides:
- * 1. A composable `useVelaComponent` for syncing reactive data to Web Component refs
- * 2. Type declarations so `<vela-order-book>` etc. are recognized in Vue templates
+ * 1. A composable `useWickComponent` for syncing reactive data to Web Component refs
+ * 2. Type declarations so `<wick-order-book>` etc. are recognized in Vue templates
  * 3. Side-effect imports to register all custom elements
  *
  * @example
  * ```vue
  * <script setup>
- * import { useOrderBook } from '@vela-trading/vue';
+ * import { useOrderBook } from '@wick/vue';
  * import { ref } from 'vue';
  *
  * const data = ref({ bids: [], asks: [] });
@@ -18,30 +18,30 @@
  * </script>
  *
  * <template>
- *   <vela-order-book ref="elRef" :depth="15" show-total show-depth />
+ *   <wick-order-book ref="elRef" :depth="15" show-total show-depth />
  * </template>
  * ```
  */
 
 // Register custom elements
-import '@vela-trading/order-book';
-import '@vela-trading/price-ticker';
-import '@vela-trading/trade-feed';
-import '@vela-trading/depth-chart';
-import '@vela-trading/candlestick-chart';
+import '@wick/order-book';
+import '@wick/price-ticker';
+import '@wick/trade-feed';
+import '@wick/depth-chart';
+import '@wick/candlestick-chart';
 
 import type { Ref } from 'vue';
-import type { OrderBookData, TickerData, Trade, Candle, PriceFormatOptions } from '@vela-trading/core';
-import type { VelaOrderBook } from '@vela-trading/order-book';
-import type { VelaPriceTicker } from '@vela-trading/price-ticker';
-import type { VelaTradeFeed } from '@vela-trading/trade-feed';
-import type { VelaDepthChart, DepthChartTheme } from '@vela-trading/depth-chart';
-import type { VelaCandlestickChart } from '@vela-trading/candlestick-chart';
+import type { OrderBookData, TickerData, Trade, Candle, PriceFormatOptions } from '@wick/core';
+import type { WickOrderBook } from '@wick/order-book';
+import type { WickPriceTicker } from '@wick/price-ticker';
+import type { WickTradeFeed } from '@wick/trade-feed';
+import type { WickDepthChart, DepthChartTheme } from '@wick/depth-chart';
+import type { WickCandlestickChart } from '@wick/candlestick-chart';
 
 /**
  * Generic composable that syncs a reactive value to a Web Component property.
  */
-export function useVelaSync<T extends HTMLElement>(
+export function useWickSync<T extends HTMLElement>(
   elRef: Ref<T | null>,
   propName: string,
   value: Ref<unknown>,
@@ -57,10 +57,10 @@ export function useVelaSync<T extends HTMLElement>(
 }
 
 /**
- * Composable for `<vela-order-book>`.
+ * Composable for `<wick-order-book>`.
  */
 export function useOrderBook(data: Ref<OrderBookData>, priceFormat?: Ref<PriceFormatOptions>) {
-  const elRef = {} as Ref<VelaOrderBook | null>;
+  const elRef = {} as Ref<WickOrderBook | null>;
 
   // Will be connected when Vue assigns the template ref
   import('vue').then(({ ref, watch, onMounted }) => {
@@ -79,10 +79,10 @@ export function useOrderBook(data: Ref<OrderBookData>, priceFormat?: Ref<PriceFo
 }
 
 /**
- * Composable for `<vela-price-ticker>`.
+ * Composable for `<wick-price-ticker>`.
  */
 export function usePriceTicker(data: Ref<TickerData>, priceFormat?: Ref<PriceFormatOptions>) {
-  const elRef = {} as Ref<VelaPriceTicker | null>;
+  const elRef = {} as Ref<WickPriceTicker | null>;
 
   import('vue').then(({ watch }) => {
     watch(data, (val) => {
@@ -100,10 +100,10 @@ export function usePriceTicker(data: Ref<TickerData>, priceFormat?: Ref<PriceFor
 }
 
 /**
- * Composable for `<vela-trade-feed>`.
+ * Composable for `<wick-trade-feed>`.
  */
 export function useTradeFeed(trades: Ref<Trade[]>, priceFormat?: Ref<PriceFormatOptions>) {
-  const elRef = {} as Ref<VelaTradeFeed | null>;
+  const elRef = {} as Ref<WickTradeFeed | null>;
 
   import('vue').then(({ watch }) => {
     watch(trades, (val) => {
@@ -125,10 +125,10 @@ export function useTradeFeed(trades: Ref<Trade[]>, priceFormat?: Ref<PriceFormat
 }
 
 /**
- * Composable for `<vela-depth-chart>`.
+ * Composable for `<wick-depth-chart>`.
  */
 export function useDepthChart(data: Ref<OrderBookData>, theme?: Ref<Partial<DepthChartTheme>>) {
-  const elRef = {} as Ref<VelaDepthChart | null>;
+  const elRef = {} as Ref<WickDepthChart | null>;
 
   import('vue').then(({ watch }) => {
     watch(data, (val) => {
@@ -146,10 +146,10 @@ export function useDepthChart(data: Ref<OrderBookData>, theme?: Ref<Partial<Dept
 }
 
 /**
- * Composable for `<vela-candlestick-chart>`.
+ * Composable for `<wick-candlestick-chart>`.
  */
 export function useCandlestickChart(candles: Ref<Candle[]>) {
-  const elRef = {} as Ref<VelaCandlestickChart | null>;
+  const elRef = {} as Ref<WickCandlestickChart | null>;
 
   import('vue').then(({ watch }) => {
     watch(candles, (val) => {
@@ -170,15 +170,15 @@ export function useCandlestickChart(candles: Ref<Candle[]>) {
  * @example
  * ```ts
  * import { createApp } from 'vue';
- * import { VelaPlugin } from '@vela-trading/vue';
+ * import { WickPlugin } from '@wick/vue';
  * const app = createApp(App);
- * app.use(VelaPlugin);
+ * app.use(WickPlugin);
  * ```
  */
-export const VelaPlugin = {
+export const WickPlugin = {
   install(app: { config: { compilerOptions: { isCustomElement: (tag: string) => boolean } } }) {
     const prev = app.config.compilerOptions.isCustomElement;
     app.config.compilerOptions.isCustomElement = (tag: string) =>
-      tag.startsWith('vela-') || (prev ? prev(tag) : false);
+      tag.startsWith('wick-') || (prev ? prev(tag) : false);
   },
 };

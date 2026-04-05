@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@wick/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**
@@ -55,7 +55,7 @@ interface KrakenTicker {
 }
 
 /**
- * Parse a Kraken book snapshot into Vela OrderBookData.
+ * Parse a Kraken book snapshot into Wick OrderBookData.
  */
 export function parseBookSnapshot(msg: KrakenBookSnapshot): OrderBookData {
   const snap = msg.data[0];
@@ -66,7 +66,7 @@ export function parseBookSnapshot(msg: KrakenBookSnapshot): OrderBookData {
 }
 
 /**
- * Parse a Kraken book update into Vela OrderBookDelta[].
+ * Parse a Kraken book update into Wick OrderBookDelta[].
  */
 export function parseBookUpdate(msg: KrakenBookUpdate): OrderBookDelta[] {
   const update = msg.data[0];
@@ -83,7 +83,7 @@ export function parseBookUpdate(msg: KrakenBookUpdate): OrderBookDelta[] {
 }
 
 /**
- * Parse Kraken trade messages into Vela Trade[].
+ * Parse Kraken trade messages into Wick Trade[].
  */
 export function parseTrades(msg: KrakenTrade): Trade[] {
   return msg.data.map((t) => ({
@@ -96,7 +96,7 @@ export function parseTrades(msg: KrakenTrade): Trade[] {
 }
 
 /**
- * Parse a Kraken ticker update into Vela TickerData.
+ * Parse a Kraken ticker update into Wick TickerData.
  */
 export function parseTicker(msg: KrakenTicker): TickerData {
   const t = msg.data[0];
@@ -116,7 +116,7 @@ export function parseTicker(msg: KrakenTicker): TickerData {
  *
  * @example
  * ```ts
- * import { krakenAdapter } from '@vela-trading/adapters/kraken';
+ * import { krakenAdapter } from '@wick/adapters/kraken';
  *
  * const ws = new WebSocket('wss://ws.kraken.com/v2');
  * ws.onopen = () => {

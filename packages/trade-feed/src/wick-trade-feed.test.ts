@@ -1,13 +1,13 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import { VelaTradeFeed } from './vela-trade-feed.js';
-import type { Trade } from '@vela-trading/core';
+import { WickTradeFeed } from './wick-trade-feed.js';
+import type { Trade } from '@wick/core';
 
-if (!customElements.get('vela-trade-feed')) {
-  customElements.define('vela-trade-feed', VelaTradeFeed);
+if (!customElements.get('wick-trade-feed')) {
+  customElements.define('wick-trade-feed', WickTradeFeed);
 }
 
-function createElement(): VelaTradeFeed {
-  const el = document.createElement('vela-trade-feed') as VelaTradeFeed;
+function createElement(): WickTradeFeed {
+  const el = document.createElement('wick-trade-feed') as WickTradeFeed;
   document.body.appendChild(el);
   return el;
 }
@@ -23,15 +23,15 @@ function makeTrade(overrides: Partial<Trade> = {}): Trade {
   };
 }
 
-describe('VelaTradeFeed', () => {
-  let el: VelaTradeFeed;
+describe('WickTradeFeed', () => {
+  let el: WickTradeFeed;
 
   afterEach(() => {
     el?.remove();
   });
 
   it('registers as a custom element', () => {
-    expect(customElements.get('vela-trade-feed')).toBeDefined();
+    expect(customElements.get('wick-trade-feed')).toBeDefined();
   });
 
   it('renders with empty trades', async () => {
@@ -122,14 +122,14 @@ describe('VelaTradeFeed', () => {
     expect(el.trades[2].id).toBe('1');
   });
 
-  it('fires vela-trade-click on row click', async () => {
+  it('fires wick-trade-click on row click', async () => {
     el = createElement();
     const trade = makeTrade({ id: 'click-test', price: 99999 });
     el.trades = [trade];
     await el.updateComplete;
 
     let detail: any = null;
-    el.addEventListener('vela-trade-click', (e: Event) => {
+    el.addEventListener('wick-trade-click', (e: Event) => {
       detail = (e as CustomEvent).detail;
     });
 

@@ -1,12 +1,12 @@
-# Vela — Headless Trading Components
+# Wick — Headless Trading Components
 
-Welcome to the Vela wiki. Vela is an open-source library of headless Web Components for building trading interfaces.
+Welcome to the Wick wiki. Wick is an open-source library of headless Web Components for building trading interfaces.
 
-## What is Vela?
+## What is Wick?
 
-Vela provides unstyled, framework-agnostic Web Components designed for real-time trading UIs. Think of it as **Radix/shadcn for trading** — you bring your own styles, we handle the data logic, performance, and accessibility.
+Wick provides unstyled, framework-agnostic Web Components designed for real-time trading UIs. Think of it as **Radix/shadcn for trading** — you bring your own styles, we handle the data logic, performance, and accessibility.
 
-## Why Vela?
+## Why Wick?
 
 Most existing trading UI libraries are:
 - **Framework-locked** — tied to React, Vue, or Angular
@@ -14,7 +14,7 @@ Most existing trading UI libraries are:
 - **Slow** — choke on real-time tick data (10-50+ updates/sec)
 - **Abandoned** — last commit 2+ years ago
 
-Vela is different:
+Wick is different:
 - **Framework-agnostic** — Web Components work everywhere (React, Vue, Svelte, vanilla JS)
 - **Headless** — zero built-in styles, full CSS control via parts and custom properties
 - **Real-time first** — keyed rendering, efficient DOM recycling, designed for streaming WebSocket data

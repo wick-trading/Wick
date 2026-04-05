@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@wick/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**
@@ -41,7 +41,7 @@ interface CoinbaseTicker {
 }
 
 /**
- * Parse a Coinbase L2 snapshot into Vela OrderBookData.
+ * Parse a Coinbase L2 snapshot into Wick OrderBookData.
  */
 export function parseSnapshot(msg: CoinbaseSnapshot): OrderBookData {
   return {
@@ -57,7 +57,7 @@ export function parseSnapshot(msg: CoinbaseSnapshot): OrderBookData {
 }
 
 /**
- * Parse a Coinbase L2 update into Vela OrderBookDelta[].
+ * Parse a Coinbase L2 update into Wick OrderBookDelta[].
  */
 export function parseL2Update(msg: CoinbaseL2Update): OrderBookDelta[] {
   return msg.changes.map(([side, price, size]) => ({
@@ -68,7 +68,7 @@ export function parseL2Update(msg: CoinbaseL2Update): OrderBookDelta[] {
 }
 
 /**
- * Parse a Coinbase match/trade into a Vela Trade.
+ * Parse a Coinbase match/trade into a Wick Trade.
  */
 export function parseMatch(msg: CoinbaseMatch): Trade {
   return {
@@ -82,7 +82,7 @@ export function parseMatch(msg: CoinbaseMatch): Trade {
 }
 
 /**
- * Parse a Coinbase ticker into Vela TickerData.
+ * Parse a Coinbase ticker into Wick TickerData.
  */
 export function parseTicker(msg: CoinbaseTicker): TickerData {
   const price = parseFloat(msg.price);
@@ -105,7 +105,7 @@ export function parseTicker(msg: CoinbaseTicker): TickerData {
  *
  * @example
  * ```ts
- * import { coinbaseAdapter } from '@vela-trading/adapters/coinbase';
+ * import { coinbaseAdapter } from '@wick/adapters/coinbase';
  *
  * const ws = new WebSocket('wss://ws-feed.exchange.coinbase.com');
  * ws.onopen = () => {

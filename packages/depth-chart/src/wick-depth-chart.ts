@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { OrderBookData } from '@vela-trading/core';
+import type { OrderBookData } from '@wick/core';
 import {
   render as renderChart,
   buildDepthLevels,
@@ -13,28 +13,28 @@ import {
 } from './renderer.js';
 
 /**
- * `<vela-depth-chart>` — Headless Canvas-based depth chart component.
+ * `<wick-depth-chart>` — Headless Canvas-based depth chart component.
  *
  * Renders cumulative bid/ask depth as filled step curves on a Canvas element.
  * High-performance: Canvas 2D rendering handles 60fps updates without DOM overhead.
  *
- * @fires vela-depth-chart-hover - When hovering over a price level
- * @fires vela-depth-chart-click - When clicking on a price level
+ * @fires wick-depth-chart-hover - When hovering over a price level
+ * @fires wick-depth-chart-click - When clicking on a price level
  *
  * @csspart container - The outer wrapper div
  * @csspart canvas - The canvas element
  *
- * @cssprop --vela-dc-bid-line - Bid curve stroke color (default: #4dff88)
- * @cssprop --vela-dc-ask-line - Ask curve stroke color (default: #ff4d4d)
- * @cssprop --vela-dc-bid-fill - Bid area fill color (default: rgba(77,255,136,0.12))
- * @cssprop --vela-dc-ask-fill - Ask area fill color (default: rgba(255,77,77,0.12))
- * @cssprop --vela-dc-crosshair - Crosshair color (default: rgba(255,255,255,0.3))
- * @cssprop --vela-dc-text - Axis text color (default: rgba(255,255,255,0.5))
- * @cssprop --vela-dc-grid - Grid line color (default: rgba(255,255,255,0.06))
- * @cssprop --vela-dc-line-width - Curve line width (default: 1.5)
+ * @cssprop --wick-dc-bid-line - Bid curve stroke color (default: #4dff88)
+ * @cssprop --wick-dc-ask-line - Ask curve stroke color (default: #ff4d4d)
+ * @cssprop --wick-dc-bid-fill - Bid area fill color (default: rgba(77,255,136,0.12))
+ * @cssprop --wick-dc-ask-fill - Ask area fill color (default: rgba(255,77,77,0.12))
+ * @cssprop --wick-dc-crosshair - Crosshair color (default: rgba(255,255,255,0.3))
+ * @cssprop --wick-dc-text - Axis text color (default: rgba(255,255,255,0.5))
+ * @cssprop --wick-dc-grid - Grid line color (default: rgba(255,255,255,0.06))
+ * @cssprop --wick-dc-line-width - Curve line width (default: 1.5)
  */
-@customElement('vela-depth-chart')
-export class VelaDepthChart extends LitElement {
+@customElement('wick-depth-chart')
+export class WickDepthChart extends LitElement {
   /** Order book data to visualize */
   @property({ type: Object })
   data: OrderBookData = { bids: [], asks: [] };
@@ -165,7 +165,7 @@ export class VelaDepthChart extends LitElement {
 
       if (hit) {
         this.dispatchEvent(
-          new CustomEvent('vela-depth-chart-click', {
+          new CustomEvent('wick-depth-chart-click', {
             detail: { price: hit.level.price, total: hit.level.total, side: hit.side },
             bubbles: true,
             composed: true,
@@ -188,7 +188,7 @@ export class VelaDepthChart extends LitElement {
 
     if (hit) {
       this.dispatchEvent(
-        new CustomEvent('vela-depth-chart-hover', {
+        new CustomEvent('wick-depth-chart-hover', {
           detail: { price: hit.level.price, total: hit.level.total, side: hit.side },
           bubbles: true,
           composed: true,
@@ -212,13 +212,13 @@ export class VelaDepthChart extends LitElement {
 
     return {
       ...DEFAULT_THEME,
-      bidLineColor: cssVar('--vela-dc-bid-line', DEFAULT_THEME.bidLineColor),
-      askLineColor: cssVar('--vela-dc-ask-line', DEFAULT_THEME.askLineColor),
-      bidFillColor: cssVar('--vela-dc-bid-fill', DEFAULT_THEME.bidFillColor),
-      askFillColor: cssVar('--vela-dc-ask-fill', DEFAULT_THEME.askFillColor),
-      crosshairColor: cssVar('--vela-dc-crosshair', DEFAULT_THEME.crosshairColor),
-      textColor: cssVar('--vela-dc-text', DEFAULT_THEME.textColor),
-      gridColor: cssVar('--vela-dc-grid', DEFAULT_THEME.gridColor),
+      bidLineColor: cssVar('--wick-dc-bid-line', DEFAULT_THEME.bidLineColor),
+      askLineColor: cssVar('--wick-dc-ask-line', DEFAULT_THEME.askLineColor),
+      bidFillColor: cssVar('--wick-dc-bid-fill', DEFAULT_THEME.bidFillColor),
+      askFillColor: cssVar('--wick-dc-ask-fill', DEFAULT_THEME.askFillColor),
+      crosshairColor: cssVar('--wick-dc-crosshair', DEFAULT_THEME.crosshairColor),
+      textColor: cssVar('--wick-dc-text', DEFAULT_THEME.textColor),
+      gridColor: cssVar('--wick-dc-grid', DEFAULT_THEME.gridColor),
       ...this.theme,
     };
   }
@@ -247,6 +247,6 @@ export class VelaDepthChart extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vela-depth-chart': VelaDepthChart;
+    'wick-depth-chart': WickDepthChart;
   }
 }

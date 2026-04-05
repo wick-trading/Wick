@@ -1,128 +1,128 @@
 /**
- * @vela-trading/theme — Minimal Monochrome
+ * @wick/theme — Minimal Monochrome
  *
  * Ultra-clean, mostly neutrals with subtle color accents.
  * Inspired by Linear, Vercel, and Stripe's design language.
  *
  * Usage:
- *   import '@vela-trading/theme/minimal';
+ *   import '@wick/theme/minimal';
  */
 
 /* ── Tokens ─────────────────────────────────────────────── */
 
 :root {
-  --vela-bg: #09090b;
-  --vela-surface: #111113;
-  --vela-surface-2: #18181b;
-  --vela-surface-hover: #1f1f23;
-  --vela-border: #27272a;
-  --vela-text: #fafafa;
-  --vela-text-2: #a1a1aa;
-  --vela-text-muted: #52525b;
-  --vela-green: #22c55e;
-  --vela-green-bg: rgba(34, 197, 94, 0.06);
-  --vela-green-depth: rgba(34, 197, 94, 0.10);
-  --vela-red: #ef4444;
-  --vela-red-bg: rgba(239, 68, 68, 0.06);
-  --vela-red-depth: rgba(239, 68, 68, 0.10);
-  --vela-accent: #fafafa;
-  --vela-font-mono: 'Geist Mono', 'SF Mono', 'JetBrains Mono', monospace;
-  --vela-font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --vela-radius: 10px;
-  --vela-radius-sm: 6px;
+  --wick-bg: #09090b;
+  --wick-surface: #111113;
+  --wick-surface-2: #18181b;
+  --wick-surface-hover: #1f1f23;
+  --wick-border: #27272a;
+  --wick-text: #fafafa;
+  --wick-text-2: #a1a1aa;
+  --wick-text-muted: #52525b;
+  --wick-green: #22c55e;
+  --wick-green-bg: rgba(34, 197, 94, 0.06);
+  --wick-green-depth: rgba(34, 197, 94, 0.10);
+  --wick-red: #ef4444;
+  --wick-red-bg: rgba(239, 68, 68, 0.06);
+  --wick-red-depth: rgba(239, 68, 68, 0.10);
+  --wick-accent: #fafafa;
+  --wick-font-mono: 'Geist Mono', 'SF Mono', 'JetBrains Mono', monospace;
+  --wick-font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --wick-radius: 10px;
+  --wick-radius-sm: 6px;
 }
 
 /* ── Order Book ─────────────────────────────────────────── */
 
-vela-order-book {
-  --vela-ob-bid-color: var(--vela-green);
-  --vela-ob-ask-color: var(--vela-red);
-  --vela-ob-bid-depth-color: var(--vela-green-depth);
-  --vela-ob-ask-depth-color: var(--vela-red-depth);
-  --vela-ob-row-height: 32px;
-  --vela-ob-font-size: 13px;
-  font-family: var(--vela-font-mono);
-  color: var(--vela-text);
+wick-order-book {
+  --wick-ob-bid-color: var(--wick-green);
+  --wick-ob-ask-color: var(--wick-red);
+  --wick-ob-bid-depth-color: var(--wick-green-depth);
+  --wick-ob-ask-depth-color: var(--wick-red-depth);
+  --wick-ob-row-height: 32px;
+  --wick-ob-font-size: 13px;
+  font-family: var(--wick-font-mono);
+  color: var(--wick-text);
 }
 
-vela-order-book [part="container"] {
-  background: var(--vela-surface);
-  border: 1px solid var(--vela-border);
-  border-radius: var(--vela-radius);
+wick-order-book [part="container"] {
+  background: var(--wick-surface);
+  border: 1px solid var(--wick-border);
+  border-radius: var(--wick-radius);
   overflow: hidden;
 }
 
-vela-order-book [part="table"] { width: 100%; border-collapse: collapse; }
+wick-order-book [part="table"] { width: 100%; border-collapse: collapse; }
 
-vela-order-book [part="header"] th {
-  font-family: var(--vela-font-sans);
+wick-order-book [part="header"] th {
+  font-family: var(--wick-font-sans);
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: var(--vela-text-muted);
+  color: var(--wick-text-muted);
   padding: 14px 16px 10px;
   text-align: right;
-  border-bottom: 1px solid var(--vela-border);
+  border-bottom: 1px solid var(--wick-border);
 }
 
-vela-order-book [part="header"] th:first-child { text-align: left; }
+wick-order-book [part="header"] th:first-child { text-align: left; }
 
-vela-order-book td {
+wick-order-book td {
   padding: 0 16px;
   font-variant-numeric: tabular-nums;
   text-align: right;
-  line-height: var(--vela-ob-row-height);
-  font-size: var(--vela-ob-font-size);
+  line-height: var(--wick-ob-row-height);
+  font-size: var(--wick-ob-font-size);
 }
 
-vela-order-book td:first-child { text-align: left; }
+wick-order-book td:first-child { text-align: left; }
 
-vela-order-book [part~="row"] {
+wick-order-book [part~="row"] {
   cursor: pointer;
   transition: background-color 100ms ease;
   border-bottom: 1px solid rgba(39, 39, 42, 0.3);
 }
 
-vela-order-book [part~="row"]:hover { background: var(--vela-surface-hover) !important; }
-vela-order-book [part~="row"]:focus-visible {
-  outline: 2px solid var(--vela-accent);
+wick-order-book [part~="row"]:hover { background: var(--wick-surface-hover) !important; }
+wick-order-book [part~="row"]:focus-visible {
+  outline: 2px solid var(--wick-accent);
   outline-offset: -2px;
 }
 
-vela-order-book [part~="bid-row"] [part="price"] { color: var(--vela-green); }
-vela-order-book [part~="ask-row"] [part="price"] { color: var(--vela-red); }
-vela-order-book [part="size"] { color: var(--vela-text-2); }
-vela-order-book [part="total"] { color: var(--vela-text-muted); }
+wick-order-book [part~="bid-row"] [part="price"] { color: var(--wick-green); }
+wick-order-book [part~="ask-row"] [part="price"] { color: var(--wick-red); }
+wick-order-book [part="size"] { color: var(--wick-text-2); }
+wick-order-book [part="total"] { color: var(--wick-text-muted); }
 
 /* ── Price Ticker ───────────────────────────────────────── */
 
-vela-price-ticker {
-  --vela-ticker-up-color: var(--vela-green);
-  --vela-ticker-down-color: var(--vela-red);
-  font-family: var(--vela-font-sans);
-  color: var(--vela-text);
+wick-price-ticker {
+  --wick-ticker-up-color: var(--wick-green);
+  --wick-ticker-down-color: var(--wick-red);
+  font-family: var(--wick-font-sans);
+  color: var(--wick-text);
 }
 
-vela-price-ticker [part="container"] {
+wick-price-ticker [part="container"] {
   display: flex;
   align-items: center;
   gap: 24px;
   padding: 20px 24px;
-  background: var(--vela-surface);
-  border: 1px solid var(--vela-border);
-  border-radius: var(--vela-radius);
+  background: var(--wick-surface);
+  border: 1px solid var(--wick-border);
+  border-radius: var(--wick-radius);
 }
 
-vela-price-ticker [part="symbol"] {
+wick-price-ticker [part="symbol"] {
   font-size: 15px;
   font-weight: 600;
-  color: var(--vela-text-2);
+  color: var(--wick-text-2);
   letter-spacing: 0.02em;
 }
 
-vela-price-ticker [part="price"] {
-  font-family: var(--vela-font-mono);
+wick-price-ticker [part="price"] {
+  font-family: var(--wick-font-mono);
   font-size: 32px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
@@ -130,36 +130,36 @@ vela-price-ticker [part="price"] {
   transition: color 200ms ease;
 }
 
-vela-price-ticker [part="change"] {
-  font-family: var(--vela-font-mono);
+wick-price-ticker [part="change"] {
+  font-family: var(--wick-font-mono);
   font-size: 13px;
   font-weight: 500;
   padding: 5px 12px;
   border-radius: 100px;
 }
 
-vela-price-ticker [data-direction="up"] [part="price"] { color: var(--vela-green); }
-vela-price-ticker [data-direction="down"] [part="price"] { color: var(--vela-red); }
-vela-price-ticker [part="container"][data-direction="up"] [part="change"] {
-  background: var(--vela-green-bg); color: var(--vela-green);
+wick-price-ticker [data-direction="up"] [part="price"] { color: var(--wick-green); }
+wick-price-ticker [data-direction="down"] [part="price"] { color: var(--wick-red); }
+wick-price-ticker [part="container"][data-direction="up"] [part="change"] {
+  background: var(--wick-green-bg); color: var(--wick-green);
 }
-vela-price-ticker [part="container"][data-direction="down"] [part="change"] {
-  background: var(--vela-red-bg); color: var(--vela-red);
+wick-price-ticker [part="container"][data-direction="down"] [part="change"] {
+  background: var(--wick-red-bg); color: var(--wick-red);
 }
 
-vela-price-ticker [part="high"],
-vela-price-ticker [part="low"],
-vela-price-ticker [part="volume"] {
-  font-family: var(--vela-font-mono);
+wick-price-ticker [part="high"],
+wick-price-ticker [part="low"],
+wick-price-ticker [part="volume"] {
+  font-family: var(--wick-font-mono);
   font-size: 12px;
-  color: var(--vela-text-muted);
+  color: var(--wick-text-muted);
 }
 
-vela-price-ticker [data-flashing] [part="price"] {
-  animation: vela-flash-minimal 400ms ease-out;
+wick-price-ticker [data-flashing] [part="price"] {
+  animation: wick-flash-minimal 400ms ease-out;
 }
 
-@keyframes vela-flash-minimal {
+@keyframes wick-flash-minimal {
   0% { opacity: 1; }
   25% { opacity: 0.4; }
   100% { opacity: 1; }
@@ -167,88 +167,88 @@ vela-price-ticker [data-flashing] [part="price"] {
 
 /* ── Trade Feed ─────────────────────────────────────────── */
 
-vela-trade-feed {
-  --vela-tf-buy-color: var(--vela-green);
-  --vela-tf-sell-color: var(--vela-red);
-  --vela-tf-row-height: 32px;
-  --vela-tf-font-size: 13px;
-  --vela-tf-max-height: 100%;
-  font-family: var(--vela-font-mono);
-  color: var(--vela-text);
+wick-trade-feed {
+  --wick-tf-buy-color: var(--wick-green);
+  --wick-tf-sell-color: var(--wick-red);
+  --wick-tf-row-height: 32px;
+  --wick-tf-font-size: 13px;
+  --wick-tf-max-height: 100%;
+  font-family: var(--wick-font-mono);
+  color: var(--wick-text);
 }
 
-vela-trade-feed [part="container"] {
-  background: var(--vela-surface);
-  border: 1px solid var(--vela-border);
-  border-radius: var(--vela-radius);
+wick-trade-feed [part="container"] {
+  background: var(--wick-surface);
+  border: 1px solid var(--wick-border);
+  border-radius: var(--wick-radius);
   overflow: hidden;
 }
 
-vela-trade-feed [part="table"] { width: 100%; border-collapse: collapse; }
+wick-trade-feed [part="table"] { width: 100%; border-collapse: collapse; }
 
-vela-trade-feed [part="header"] th {
-  font-family: var(--vela-font-sans);
+wick-trade-feed [part="header"] th {
+  font-family: var(--wick-font-sans);
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: var(--vela-text-muted);
+  color: var(--wick-text-muted);
   padding: 14px 16px 10px;
   text-align: right;
-  border-bottom: 1px solid var(--vela-border);
+  border-bottom: 1px solid var(--wick-border);
 }
 
-vela-trade-feed [part="header"] th:first-child { text-align: left; }
+wick-trade-feed [part="header"] th:first-child { text-align: left; }
 
-vela-trade-feed td {
+wick-trade-feed td {
   padding: 0 16px;
   font-variant-numeric: tabular-nums;
   text-align: right;
-  line-height: var(--vela-tf-row-height);
+  line-height: var(--wick-tf-row-height);
 }
 
-vela-trade-feed td:first-child { text-align: left; }
+wick-trade-feed td:first-child { text-align: left; }
 
-vela-trade-feed [part~="buy-row"] [part="price"] { color: var(--vela-green); }
-vela-trade-feed [part~="sell-row"] [part="price"] { color: var(--vela-red); }
-vela-trade-feed [part="size"] { color: var(--vela-text-2); }
-vela-trade-feed [part="time"] { color: var(--vela-text-muted); font-size: 11px; }
-vela-trade-feed [part~="row"]:hover { background: var(--vela-surface-hover); }
+wick-trade-feed [part~="buy-row"] [part="price"] { color: var(--wick-green); }
+wick-trade-feed [part~="sell-row"] [part="price"] { color: var(--wick-red); }
+wick-trade-feed [part="size"] { color: var(--wick-text-2); }
+wick-trade-feed [part="time"] { color: var(--wick-text-muted); font-size: 11px; }
+wick-trade-feed [part~="row"]:hover { background: var(--wick-surface-hover); }
 
-vela-trade-feed [part="list"] { scrollbar-width: none; }
-vela-trade-feed [part="list"]::-webkit-scrollbar { display: none; }
+wick-trade-feed [part="list"] { scrollbar-width: none; }
+wick-trade-feed [part="list"]::-webkit-scrollbar { display: none; }
 
 /* ── Depth Chart ────────────────────────────────────────── */
 
-vela-depth-chart {
-  --vela-dc-bid-line: var(--vela-green);
-  --vela-dc-ask-line: var(--vela-red);
-  --vela-dc-bid-fill: var(--vela-green-depth);
-  --vela-dc-ask-fill: var(--vela-red-depth);
-  --vela-dc-crosshair: rgba(250, 250, 250, 0.1);
-  --vela-dc-text: var(--vela-text-muted);
-  --vela-dc-grid: rgba(250, 250, 250, 0.02);
+wick-depth-chart {
+  --wick-dc-bid-line: var(--wick-green);
+  --wick-dc-ask-line: var(--wick-red);
+  --wick-dc-bid-fill: var(--wick-green-depth);
+  --wick-dc-ask-fill: var(--wick-red-depth);
+  --wick-dc-crosshair: rgba(250, 250, 250, 0.1);
+  --wick-dc-text: var(--wick-text-muted);
+  --wick-dc-grid: rgba(250, 250, 250, 0.02);
 }
 
-vela-depth-chart [part="container"] {
-  background: var(--vela-surface);
-  border: 1px solid var(--vela-border);
-  border-radius: var(--vela-radius);
+wick-depth-chart [part="container"] {
+  background: var(--wick-surface);
+  border: 1px solid var(--wick-border);
+  border-radius: var(--wick-radius);
 }
 
 /* ── Candlestick Chart ──────────────────────────────────── */
 
-vela-candlestick-chart {
-  --vela-cc-bg: var(--vela-surface);
-  --vela-cc-text: var(--vela-text-muted);
-  --vela-cc-grid: rgba(250, 250, 250, 0.02);
-  --vela-cc-up-color: var(--vela-green);
-  --vela-cc-down-color: var(--vela-red);
+wick-candlestick-chart {
+  --wick-cc-bg: var(--wick-surface);
+  --wick-cc-text: var(--wick-text-muted);
+  --wick-cc-grid: rgba(250, 250, 250, 0.02);
+  --wick-cc-up-color: var(--wick-green);
+  --wick-cc-down-color: var(--wick-red);
 }
 
-vela-candlestick-chart [part="container"] {
-  background: var(--vela-surface);
-  border: 1px solid var(--vela-border);
-  border-radius: var(--vela-radius);
+wick-candlestick-chart [part="container"] {
+  background: var(--wick-surface);
+  border: 1px solid var(--wick-border);
+  border-radius: var(--wick-radius);
   overflow: hidden;
 }

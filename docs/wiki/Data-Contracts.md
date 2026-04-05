@@ -1,6 +1,6 @@
 # Data Contracts
 
-All Vela components consume standardized TypeScript types from `@vela-trading/core`. These types are exchange-agnostic — you map your exchange's data format to these types.
+All Wick components consume standardized TypeScript types from `@wick/core`. These types are exchange-agnostic — you map your exchange's data format to these types.
 
 ## Types
 
@@ -91,7 +91,7 @@ interface PriceFormatOptions {
 ws.onmessage = (e) => {
   const msg = JSON.parse(e.data);
 
-  // Map Binance format to Vela format
+  // Map Binance format to Wick format
   const delta = {
     side: msg.s === 'BUY' ? 'bid' : 'ask',
     price: parseFloat(msg.p),
@@ -123,7 +123,7 @@ ws.onmessage = (e) => {
 
 ## Utilities
 
-`@vela-trading/core` exports utility functions:
+`@wick/core` exports utility functions:
 
 ```javascript
 import {
@@ -131,7 +131,7 @@ import {
   formatSize,           // Format size (with K/M abbreviations)
   applyOrderBookDelta,  // Immutably apply delta to order book
   cumulativeTotals,     // Calculate running totals for depth bars
-} from '@vela-trading/core';
+} from '@wick/core';
 
 formatPrice(67432.5, { precision: 2, currencySymbol: '$' });
 // → "$67,432.50"

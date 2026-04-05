@@ -1,10 +1,10 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createChart, CandlestickSeries, HistogramSeries, type IChartApi, type ISeriesApi } from 'lightweight-charts';
-import type { Candle } from '@vela-trading/core';
+import type { Candle } from '@wick/core';
 
 /**
- * Map a Vela Candle to a Lightweight Charts data point.
+ * Map a Wick Candle to a Lightweight Charts data point.
  */
 function toChartCandle(c: Candle) {
   return {
@@ -17,27 +17,27 @@ function toChartCandle(c: Candle) {
 }
 
 /**
- * `<vela-candlestick-chart>` — Headless candlestick chart Web Component.
+ * `<wick-candlestick-chart>` — Headless candlestick chart Web Component.
  *
  * Wraps TradingView Lightweight Charts (~35KB) in a Web Component with a clean API.
  * Supports real-time candle updates, volume overlay, and theming via CSS custom properties.
  *
- * @fires vela-candlestick-crosshair - When crosshair moves, includes price/time
- * @fires vela-candlestick-click - When chart is clicked
+ * @fires wick-candlestick-crosshair - When crosshair moves, includes price/time
+ * @fires wick-candlestick-click - When chart is clicked
  *
  * @csspart container - The outer wrapper div
  * @csspart chart - The chart container div
  *
- * @cssprop --vela-cc-bg - Chart background color (default: transparent)
- * @cssprop --vela-cc-text - Text/label color (default: rgba(255,255,255,0.5))
- * @cssprop --vela-cc-grid - Grid line color (default: rgba(255,255,255,0.06))
- * @cssprop --vela-cc-up-color - Bullish candle color (default: #4dff88)
- * @cssprop --vela-cc-down-color - Bearish candle color (default: #ff4d4d)
- * @cssprop --vela-cc-wick-up - Bullish wick color (default: #4dff88)
- * @cssprop --vela-cc-wick-down - Bearish wick color (default: #ff4d4d)
+ * @cssprop --wick-cc-bg - Chart background color (default: transparent)
+ * @cssprop --wick-cc-text - Text/label color (default: rgba(255,255,255,0.5))
+ * @cssprop --wick-cc-grid - Grid line color (default: rgba(255,255,255,0.06))
+ * @cssprop --wick-cc-up-color - Bullish candle color (default: #4dff88)
+ * @cssprop --wick-cc-down-color - Bearish candle color (default: #ff4d4d)
+ * @cssprop --wick-cc-wick-up - Bullish wick color (default: #4dff88)
+ * @cssprop --wick-cc-wick-down - Bearish wick color (default: #ff4d4d)
  */
-@customElement('vela-candlestick-chart')
-export class VelaCandlestickChart extends LitElement {
+@customElement('wick-candlestick-chart')
+export class WickCandlestickChart extends LitElement {
   /** Array of OHLCV candles (must be sorted by time ascending) */
   @property({ type: Array })
   candles: Candle[] = [];
@@ -109,13 +109,13 @@ export class VelaCandlestickChart extends LitElement {
       style.getPropertyValue(name).trim() || fallback;
 
     return {
-      bg: css('--vela-cc-bg', 'transparent'),
-      text: css('--vela-cc-text', 'rgba(255,255,255,0.5)'),
-      grid: css('--vela-cc-grid', 'rgba(255,255,255,0.06)'),
-      upColor: css('--vela-cc-up-color', '#4dff88'),
-      downColor: css('--vela-cc-down-color', '#ff4d4d'),
-      wickUp: css('--vela-cc-wick-up', '#4dff88'),
-      wickDown: css('--vela-cc-wick-down', '#ff4d4d'),
+      bg: css('--wick-cc-bg', 'transparent'),
+      text: css('--wick-cc-text', 'rgba(255,255,255,0.5)'),
+      grid: css('--wick-cc-grid', 'rgba(255,255,255,0.06)'),
+      upColor: css('--wick-cc-up-color', '#4dff88'),
+      downColor: css('--wick-cc-down-color', '#ff4d4d'),
+      wickUp: css('--wick-cc-wick-up', '#4dff88'),
+      wickDown: css('--wick-cc-wick-down', '#ff4d4d'),
     };
   }
 
@@ -167,7 +167,7 @@ export class VelaCandlestickChart extends LitElement {
       const data = param.seriesData.get(this._candleSeries!);
       if (data) {
         this.dispatchEvent(
-          new CustomEvent('vela-candlestick-crosshair', {
+          new CustomEvent('wick-candlestick-crosshair', {
             detail: { time: param.time, point: param.point, data },
             bubbles: true,
             composed: true,
@@ -181,7 +181,7 @@ export class VelaCandlestickChart extends LitElement {
       if (!param.time) return;
       const data = param.seriesData.get(this._candleSeries!);
       this.dispatchEvent(
-        new CustomEvent('vela-candlestick-click', {
+        new CustomEvent('wick-candlestick-click', {
           detail: { time: param.time, point: param.point, data },
           bubbles: true,
           composed: true,
@@ -304,6 +304,6 @@ export class VelaCandlestickChart extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vela-candlestick-chart': VelaCandlestickChart;
+    'wick-candlestick-chart': WickCandlestickChart;
   }
 }

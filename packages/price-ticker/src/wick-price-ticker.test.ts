@@ -1,25 +1,25 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import { VelaPriceTicker } from './vela-price-ticker.js';
+import { WickPriceTicker } from './wick-price-ticker.js';
 
-if (!customElements.get('vela-price-ticker')) {
-  customElements.define('vela-price-ticker', VelaPriceTicker);
+if (!customElements.get('wick-price-ticker')) {
+  customElements.define('wick-price-ticker', WickPriceTicker);
 }
 
-function createElement(): VelaPriceTicker {
-  const el = document.createElement('vela-price-ticker') as VelaPriceTicker;
+function createElement(): WickPriceTicker {
+  const el = document.createElement('wick-price-ticker') as WickPriceTicker;
   document.body.appendChild(el);
   return el;
 }
 
-describe('VelaPriceTicker', () => {
-  let el: VelaPriceTicker;
+describe('WickPriceTicker', () => {
+  let el: WickPriceTicker;
 
   afterEach(() => {
     el?.remove();
   });
 
   it('registers as a custom element', () => {
-    expect(customElements.get('vela-price-ticker')).toBeDefined();
+    expect(customElements.get('wick-price-ticker')).toBeDefined();
   });
 
   it('renders with empty data', async () => {
@@ -140,7 +140,7 @@ describe('VelaPriceTicker', () => {
     expect(container?.getAttribute('data-direction')).toBe('down');
   });
 
-  it('fires vela-price-change event', async () => {
+  it('fires wick-price-change event', async () => {
     el = createElement();
     el.data = {
       symbol: 'BTC/USD',
@@ -150,7 +150,7 @@ describe('VelaPriceTicker', () => {
     await el.updateComplete;
 
     let detail: any = null;
-    el.addEventListener('vela-price-change', (e: Event) => {
+    el.addEventListener('wick-price-change', (e: Event) => {
       detail = (e as CustomEvent).detail;
     });
 

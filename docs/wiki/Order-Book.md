@@ -1,23 +1,23 @@
-# Order Book — `<vela-order-book>`
+# Order Book — `<wick-order-book>`
 
 Displays bids and asks with depth visualization. Supports streaming delta updates, price grouping, and configurable depth.
 
 ## Usage
 
 ```html
-<vela-order-book
+<wick-order-book
   depth="15"
   show-total
   show-depth
   size-precision="4"
   grouping="0.01"
-></vela-order-book>
+></wick-order-book>
 ```
 
 ```javascript
-import '@vela-trading/order-book';
+import '@wick/order-book';
 
-const ob = document.querySelector('vela-order-book');
+const ob = document.querySelector('wick-order-book');
 
 // Set full snapshot
 ob.data = {
@@ -58,7 +58,7 @@ ob.applyDeltas([
 
 | Event | Detail | Description |
 |-------|--------|-------------|
-| `vela-order-book-level-click` | `{ price: number, side: 'bid' \| 'ask' }` | Fired when a price level row is clicked |
+| `wick-order-book-level-click` | `{ price: number, side: 'bid' \| 'ask' }` | Fired when a price level row is clicked |
 
 ## CSS Parts
 
@@ -83,12 +83,12 @@ ob.applyDeltas([
 
 | Property | Default | Description |
 |----------|---------|-------------|
-| `--vela-ob-ask-color` | `inherit` | Ask price text color |
-| `--vela-ob-bid-color` | `inherit` | Bid price text color |
-| `--vela-ob-ask-depth-color` | `rgba(255,77,77,0.15)` | Ask depth bar fill |
-| `--vela-ob-bid-depth-color` | `rgba(77,255,77,0.15)` | Bid depth bar fill |
-| `--vela-ob-row-height` | `24px` | Row height |
-| `--vela-ob-font-size` | `13px` | Font size |
+| `--wick-ob-ask-color` | `inherit` | Ask price text color |
+| `--wick-ob-bid-color` | `inherit` | Bid price text color |
+| `--wick-ob-ask-depth-color` | `rgba(255,77,77,0.15)` | Ask depth bar fill |
+| `--wick-ob-bid-depth-color` | `rgba(77,255,77,0.15)` | Bid depth bar fill |
+| `--wick-ob-row-height` | `24px` | Row height |
+| `--wick-ob-font-size` | `13px` | Font size |
 
 ## Price Grouping
 

@@ -3,25 +3,25 @@
 ## Project Structure
 
 ```
-Vela/
+Wick/
 ├── packages/
-│   ├── core/                    # @vela-trading/core
+│   ├── core/                    # @wick/core
 │   │   └── src/
 │   ��       ├── types.ts         # All shared TypeScript types
 │   │       ├── utils.ts         # Formatting, delta application, cumulative totals
 │   │       ├── utils.test.ts    # Unit tests
 │   │       └── index.ts         # Public API barrel export
-│   ├── order-book/              # @vela-trading/order-book
+│   ├── order-book/              # @wick/order-book
 │   │   └── src/
-│   │       ├── vela-order-book.ts
+│   │       ├── wick-order-book.ts
 │   │       └── index.ts
-│   ├── price-ticker/            # @vela-trading/price-ticker
+│   ├── price-ticker/            # @wick/price-ticker
 │   │   └── src/
-│   │       ├── vela-price-ticker.ts
+│   │       ├── wick-price-ticker.ts
 │   │       └── index.ts
-│   └── trade-feed/              # @vela-trading/trade-feed
+│   └── trade-feed/              # @wick/trade-feed
 │       └── src/
-│           ├── vela-trade-feed.ts
+│           ├── wick-trade-feed.ts
 │           └── index.ts
 ├── demo/                        # Dev playground with mock data
 ├── docs/
@@ -41,10 +41,10 @@ Vela/
 npm run build
   │
   ├─ 1. vite build (per package) → dist/index.js (optimized ESM bundle)
-  │     ├── @vela-trading/core
-  │     ├���─ @vela-trading/order-book
-  │     ├── @vela-trading/price-ticker
-  │     └── @vela-trading/trade-feed
+  │     ├── @wick/core
+  │     ├���─ @wick/order-book
+  │     ├── @wick/price-ticker
+  │     └── @wick/trade-feed
   │
   └─ 2. tsc --build → dist/*.d.ts (type declarations)
          Uses project references to build in dependency order
@@ -94,11 +94,11 @@ This means at 50 updates/sec, Lit only patches changed cells instead of recreati
 ## Dependency Graph
 
 ```
-@vela-trading/core          (0 deps, just lit)
+@wick/core          (0 deps, just lit)
     ↑
-    ├── @vela-trading/order-book
-    ├── @vela-trading/price-ticker
-    └── @vela-trading/trade-feed
+    ├── @wick/order-book
+    ├── @wick/price-ticker
+    └── @wick/trade-feed
 ```
 
 Each component depends only on `core` and `lit`. No cross-dependencies between components.

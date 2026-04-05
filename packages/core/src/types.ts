@@ -1,5 +1,5 @@
 /**
- * Core data types for Vela trading components.
+ * Core data types for Wick trading components.
  * These define the standardized data contracts that all components consume.
  */
 

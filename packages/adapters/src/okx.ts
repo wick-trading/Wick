@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@wick/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**
@@ -109,7 +109,7 @@ export function parseTicker(msg: OkxTicker): TickerData {
  *
  * @example
  * ```ts
- * import { okxAdapter } from '@vela-trading/adapters/okx';
+ * import { okxAdapter } from '@wick/adapters/okx';
  *
  * const ws = new WebSocket('wss://ws.okx.com:8443/ws/v5/public');
  * ws.onopen = () => {

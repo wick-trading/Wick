@@ -1,5 +1,5 @@
 {
-  "name": "@vela-trading/theme",
+  "name": "@wick/theme",
   "version": "0.0.1",
   "description": "Professional themes for Vela trading components — Binance/Bybit Modern, Minimal Monochrome, Glassmorphism",
   "type": "module",

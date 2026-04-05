@@ -1,1 +1,1 @@
-export { VelaPriceTicker } from './vela-price-ticker.js';
+export { WickPriceTicker } from './wick-price-ticker.js';

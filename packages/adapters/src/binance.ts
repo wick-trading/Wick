@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@wick/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**
@@ -41,7 +41,7 @@ interface BinanceTicker {
 }
 
 /**
- * Parse a Binance depth snapshot (REST or initial WS message) into Vela OrderBookData.
+ * Parse a Binance depth snapshot (REST or initial WS message) into Wick OrderBookData.
  */
 export function parseDepthSnapshot(msg: BinanceDepthSnapshot): OrderBookData {
   return {
@@ -57,7 +57,7 @@ export function parseDepthSnapshot(msg: BinanceDepthSnapshot): OrderBookData {
 }
 
 /**
- * Parse a Binance depth update into Vela OrderBookDelta[].
+ * Parse a Binance depth update into Wick OrderBookDelta[].
  */
 export function parseDepthUpdate(msg: BinanceDepthUpdate): OrderBookDelta[] {
   const deltas: OrderBookDelta[] = [];
@@ -73,7 +73,7 @@ export function parseDepthUpdate(msg: BinanceDepthUpdate): OrderBookDelta[] {
 }
 
 /**
- * Parse a Binance trade message into a Vela Trade.
+ * Parse a Binance trade message into a Wick Trade.
  */
 export function parseTrade(msg: BinanceTrade): Trade {
   return {
@@ -86,7 +86,7 @@ export function parseTrade(msg: BinanceTrade): Trade {
 }
 
 /**
- * Parse a Binance 24hr ticker into Vela TickerData.
+ * Parse a Binance 24hr ticker into Wick TickerData.
  */
 export function parseTicker(msg: BinanceTicker): TickerData {
   return {
@@ -105,7 +105,7 @@ export function parseTicker(msg: BinanceTicker): TickerData {
  *
  * @example
  * ```ts
- * import { binanceAdapter } from '@vela-trading/adapters/binance';
+ * import { binanceAdapter } from '@wick/adapters/binance';
  *
  * const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@depth@100ms');
  * ws.onmessage = (event) => {

@@ -33,9 +33,9 @@ jobs:
       - name: Verify .d.ts generation
         run: |
           test -f packages/core/dist/index.d.ts || (echo "Missing core .d.ts" && exit 1)
-          test -f packages/order-book/dist/vela-order-book.d.ts || (echo "Missing order-book .d.ts" && exit 1)
-          test -f packages/price-ticker/dist/vela-price-ticker.d.ts || (echo "Missing price-ticker .d.ts" && exit 1)
-          test -f packages/trade-feed/dist/vela-trade-feed.d.ts || (echo "Missing trade-feed .d.ts" && exit 1)
+          test -f packages/order-book/dist/wick-order-book.d.ts || (echo "Missing order-book .d.ts" && exit 1)
+          test -f packages/price-ticker/dist/wick-price-ticker.d.ts || (echo "Missing price-ticker .d.ts" && exit 1)
+          test -f packages/trade-feed/dist/wick-trade-feed.d.ts || (echo "Missing trade-feed .d.ts" && exit 1)
           test -f packages/adapters/dist/binance.d.ts || (echo "Missing adapters .d.ts" && exit 1)
           echo "All declaration files present"
 
@@ -47,7 +47,7 @@ jobs:
           echo "## Bundle Sizes (gzip)"
           for pkg in core order-book price-ticker trade-feed adapters; do
             size=$(gzip -c packages/$pkg/dist/index.js | wc -c)
-            echo "  @vela-trading/$pkg: ${size} bytes"
+            echo "  @wick/$pkg: ${size} bytes"
           done
 
   typecheck:

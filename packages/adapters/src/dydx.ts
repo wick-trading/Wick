@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade } from '@wick/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**

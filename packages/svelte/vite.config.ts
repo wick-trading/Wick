@@ -11,12 +11,12 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'lit', /^lit\//,
-        '@vela-trading/core',
-        '@vela-trading/order-book',
-        '@vela-trading/price-ticker',
-        '@vela-trading/trade-feed',
-        '@vela-trading/depth-chart',
-        '@vela-trading/candlestick-chart',
+        '@wick/core',
+        '@wick/order-book',
+        '@wick/price-ticker',
+        '@wick/trade-feed',
+        '@wick/depth-chart',
+        '@wick/candlestick-chart',
       ],
     },
   },

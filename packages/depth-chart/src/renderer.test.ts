@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { buildDepthLevels, computeBounds, hitTest } from './renderer.js';
-import type { OrderBookData } from '@vela-trading/core';
+import type { OrderBookData } from '@wick/core';
 
 const MOCK_BOOK: OrderBookData = {
   bids: [

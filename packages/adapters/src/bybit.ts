@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@wick/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**
@@ -106,7 +106,7 @@ export function parseTicker(msg: BybitTicker): TickerData {
  *
  * @example
  * ```ts
- * import { bybitAdapter } from '@vela-trading/adapters/bybit';
+ * import { bybitAdapter } from '@wick/adapters/bybit';
  *
  * const ws = new WebSocket('wss://stream.bybit.com/v5/public/spot');
  * ws.onopen = () => {

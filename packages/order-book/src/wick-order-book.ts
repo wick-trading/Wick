@@ -1,16 +1,16 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import type { OrderBookData, OrderBookDelta, PriceFormatOptions } from '@vela-trading/core';
-import { applyOrderBookDelta, cumulativeTotals, formatPrice, formatSize } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, PriceFormatOptions } from '@wick/core';
+import { applyOrderBookDelta, cumulativeTotals, formatPrice, formatSize } from '@wick/core';
 
 /**
- * `<vela-order-book>` — Headless order book component.
+ * `<wick-order-book>` — Headless order book component.
  *
  * Renders bids and asks with depth visualization via CSS custom properties.
  * Fully unstyled — use CSS parts and custom properties to theme.
  *
- * @fires vela-order-book-level-click - When a price level is clicked
+ * @fires wick-order-book-level-click - When a price level is clicked
  *
  * @csspart container - The outer wrapper
  * @csspart header - Column headers row
@@ -22,15 +22,15 @@ import { applyOrderBookDelta, cumulativeTotals, formatPrice, formatSize } from '
  * @csspart total - Total/cumulative cell
  * @csspart depth-bar - Background depth visualization bar
  *
- * @cssprop --vela-ob-ask-color - Ask text color (default: inherit)
- * @cssprop --vela-ob-bid-color - Bid text color (default: inherit)
- * @cssprop --vela-ob-ask-depth-color - Ask depth bar color (default: rgba(255,77,77,0.15))
- * @cssprop --vela-ob-bid-depth-color - Bid depth bar color (default: rgba(77,255,77,0.15))
- * @cssprop --vela-ob-row-height - Row height (default: 24px)
- * @cssprop --vela-ob-font-size - Font size (default: 13px)
+ * @cssprop --wick-ob-ask-color - Ask text color (default: inherit)
+ * @cssprop --wick-ob-bid-color - Bid text color (default: inherit)
+ * @cssprop --wick-ob-ask-depth-color - Ask depth bar color (default: rgba(255,77,77,0.15))
+ * @cssprop --wick-ob-bid-depth-color - Bid depth bar color (default: rgba(77,255,77,0.15))
+ * @cssprop --wick-ob-row-height - Row height (default: 24px)
+ * @cssprop --wick-ob-font-size - Font size (default: 13px)
  */
-@customElement('vela-order-book')
-export class VelaOrderBook extends LitElement {
+@customElement('wick-order-book')
+export class WickOrderBook extends LitElement {
   /** The full order book snapshot */
   @property({ type: Object })
   data: OrderBookData = { bids: [], asks: [] };
@@ -98,7 +98,7 @@ export class VelaOrderBook extends LitElement {
 
   private _handleRowClick(price: number, side: 'bid' | 'ask') {
     this.dispatchEvent(
-      new CustomEvent('vela-order-book-level-click', {
+      new CustomEvent('wick-order-book-level-click', {
         detail: { price, side },
         bubbles: true,
         composed: true,
@@ -114,12 +114,12 @@ export class VelaOrderBook extends LitElement {
     const depthPct = maxTotal > 0 ? (level.total / maxTotal) * 100 : 0;
     const depthColor =
       side === 'bid'
-        ? 'var(--vela-ob-bid-depth-color, rgba(77,255,77,0.15))'
-        : 'var(--vela-ob-ask-depth-color, rgba(255,77,77,0.15))';
+        ? 'var(--wick-ob-bid-depth-color, rgba(77,255,77,0.15))'
+        : 'var(--wick-ob-ask-depth-color, rgba(255,77,77,0.15))';
     const textColor =
       side === 'bid'
-        ? 'var(--vela-ob-bid-color, inherit)'
-        : 'var(--vela-ob-ask-color, inherit)';
+        ? 'var(--wick-ob-bid-color, inherit)'
+        : 'var(--wick-ob-ask-color, inherit)';
 
     const depthStyle = this.showDepth
       ? `background: linear-gradient(to ${side === 'bid' ? 'left' : 'right'}, ${depthColor} ${depthPct}%, transparent ${depthPct}%);`
@@ -131,7 +131,7 @@ export class VelaOrderBook extends LitElement {
         role="row"
         tabindex="0"
         aria-label="${side === 'bid' ? 'Bid' : 'Ask'} ${formatPrice(level.price, this.priceFormat)} size ${formatSize(level.size, this.sizePrecision)}"
-        style="height: var(--vela-ob-row-height, 24px); font-size: var(--vela-ob-font-size, 13px); cursor: pointer; ${depthStyle}"
+        style="height: var(--wick-ob-row-height, 24px); font-size: var(--wick-ob-font-size, 13px); cursor: pointer; ${depthStyle}"
         @click=${() => this._handleRowClick(level.price, side)}
         @keydown=${(e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this._handleRowClick(level.price, side); }}}
       >
@@ -191,6 +191,6 @@ export class VelaOrderBook extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vela-order-book': VelaOrderBook;
+    'wick-order-book': WickOrderBook;
   }
 }

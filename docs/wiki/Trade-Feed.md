@@ -1,17 +1,17 @@
-# Trade Feed — `<vela-trade-feed>`
+# Trade Feed — `<wick-trade-feed>`
 
 Scrolling list of recent trades with buy/sell indicators. Supports streaming via `addTrade()` and configurable time formatting.
 
 ## Usage
 
 ```html
-<vela-trade-feed max-trades="50" time-format="time"></vela-trade-feed>
+<wick-trade-feed max-trades="50" time-format="time"></wick-trade-feed>
 ```
 
 ```javascript
-import '@vela-trading/trade-feed';
+import '@wick/trade-feed';
 
-const feed = document.querySelector('vela-trade-feed');
+const feed = document.querySelector('wick-trade-feed');
 
 // Set initial trades
 feed.trades = [
@@ -53,7 +53,7 @@ feed.addTrades([trade1, trade2, trade3]);
 
 | Event | Detail | Description |
 |-------|--------|-------------|
-| `vela-trade-click` | `Trade` | Fired when a trade row is clicked |
+| `wick-trade-click` | `Trade` | Fired when a trade row is clicked |
 
 ## Time Formats
 
@@ -82,8 +82,8 @@ feed.addTrades([trade1, trade2, trade3]);
 
 | Property | Default | Description |
 |----------|---------|-------------|
-| `--vela-tf-buy-color` | `inherit` | Buy trade text color |
-| `--vela-tf-sell-color` | `inherit` | Sell trade text color |
-| `--vela-tf-row-height` | `24px` | Row height |
-| `--vela-tf-font-size` | `13px` | Font size |
-| `--vela-tf-max-height` | `400px` | Max height of scrollable area |
+| `--wick-tf-buy-color` | `inherit` | Buy trade text color |
+| `--wick-tf-sell-color` | `inherit` | Sell trade text color |
+| `--wick-tf-row-height` | `24px` | Row height |
+| `--wick-tf-font-size` | `13px` | Font size |
+| `--wick-tf-max-height` | `400px` | Max height of scrollable area |

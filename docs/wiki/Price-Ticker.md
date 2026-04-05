@@ -1,17 +1,17 @@
-# Price Ticker — `<vela-price-ticker>`
+# Price Ticker — `<wick-price-ticker>`
 
 Displays a single instrument's price with flash-on-change direction detection and optional 24h stats.
 
 ## Usage
 
 ```html
-<vela-price-ticker show-details></vela-price-ticker>
+<wick-price-ticker show-details></wick-price-ticker>
 ```
 
 ```javascript
-import '@vela-trading/price-ticker';
+import '@wick/price-ticker';
 
-const ticker = document.querySelector('vela-price-ticker');
+const ticker = document.querySelector('wick-price-ticker');
 
 ticker.data = {
   symbol: 'BTC/USD',
@@ -39,27 +39,27 @@ ticker.data = { ...ticker.data, price: 67450.00, timestamp: Date.now() };
 
 | Event | Detail | Description |
 |-------|--------|-------------|
-| `vela-price-change` | `{ price, prevPrice, direction }` | Fired on price change. `direction` is `'up'`, `'down'`, or `'neutral'` |
+| `wick-price-change` | `{ price, prevPrice, direction }` | Fired on price change. `direction` is `'up'`, `'down'`, or `'neutral'` |
 
 ## Flash-on-Change
 
 When the price changes, the component:
 1. Sets `data-direction="up"` or `data-direction="down"` on the container
 2. Sets `data-flashing` attribute for 300ms
-3. Fires `vela-price-change` event
+3. Fires `wick-price-change` event
 
 Style the flash with CSS:
 
 ```css
-vela-price-ticker [data-direction="up"] [part="price"] {
+wick-price-ticker [data-direction="up"] [part="price"] {
   color: #4dff88;
 }
 
-vela-price-ticker [data-direction="down"] [part="price"] {
+wick-price-ticker [data-direction="down"] [part="price"] {
   color: #ff4d4d;
 }
 
-vela-price-ticker [data-flashing] [part="price"] {
+wick-price-ticker [data-flashing] [part="price"] {
   animation: flash 300ms ease-out;
 }
 
@@ -86,6 +86,6 @@ vela-price-ticker [data-flashing] [part="price"] {
 
 | Property | Default | Description |
 |----------|---------|-------------|
-| `--vela-ticker-up-color` | `inherit` | Price increase color |
-| `--vela-ticker-down-color` | `inherit` | Price decrease color |
-| `--vela-ticker-flash-duration` | `300ms` | Flash animation duration |
+| `--wick-ticker-up-color` | `inherit` | Price increase color |
+| `--wick-ticker-down-color` | `inherit` | Price decrease color |
+| `--wick-ticker-flash-duration` | `300ms` | Flash animation duration |

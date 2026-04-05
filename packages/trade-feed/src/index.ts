@@ -1,1 +1,1 @@
-export { VelaTradeFeed } from './vela-trade-feed.js';
+export { WickTradeFeed } from './wick-trade-feed.js';

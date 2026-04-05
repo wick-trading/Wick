@@ -1,5 +1,5 @@
 {
-  "name": "@vela-trading/vue",
+  "name": "@wick/vue",
   "version": "0.0.1",
   "description": "Vue 3 wrappers for Vela trading Web Components",
   "type": "module",
@@ -35,12 +35,12 @@
   ],
   "author": "astralchemist",
   "dependencies": {
-    "@vela-trading/core": "0.0.1",
-    "@vela-trading/order-book": "0.0.1",
-    "@vela-trading/price-ticker": "0.0.1",
-    "@vela-trading/trade-feed": "0.0.1",
-    "@vela-trading/depth-chart": "0.0.1",
-    "@vela-trading/candlestick-chart": "0.0.1"
+    "@wick/core": "0.0.1",
+    "@wick/order-book": "0.0.1",
+    "@wick/price-ticker": "0.0.1",
+    "@wick/trade-feed": "0.0.1",
+    "@wick/depth-chart": "0.0.1",
+    "@wick/candlestick-chart": "0.0.1"
   },
   "peerDependencies": {
     "vue": ">=3.3"

@@ -20,7 +20,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['@vela-trading/core'],
+      external: ['@wick/core'],
     },
   },
 });

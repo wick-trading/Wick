@@ -4,21 +4,21 @@
 
 ```bash
 # Install all components
-npm install @vela-trading/order-book @vela-trading/price-ticker @vela-trading/trade-feed
+npm install @wick/order-book @wick/price-ticker @wick/trade-feed
 
 # Or install individually
-npm install @vela-trading/order-book
+npm install @wick/order-book
 ```
 
 ## Basic Usage
 
-Vela components are standard Web Components. Import them and use in HTML:
+Wick components are standard Web Components. Import them and use in HTML:
 
 ```html
-<vela-order-book id="ob" depth="15" show-total show-depth></vela-order-book>
+<wick-order-book id="ob" depth="15" show-total show-depth></wick-order-book>
 
 <script type="module">
-  import '@vela-trading/order-book';
+  import '@wick/order-book';
 
   const ob = document.querySelector('#ob');
   ob.data = {
@@ -33,7 +33,7 @@ Vela components are standard Web Components. Import them and use in HTML:
 ### React
 
 ```jsx
-import '@vela-trading/order-book';
+import '@wick/order-book';
 
 function OrderBook({ data }) {
   const ref = useRef(null);
@@ -42,7 +42,7 @@ function OrderBook({ data }) {
     if (ref.current) ref.current.data = data;
   }, [data]);
 
-  return <vela-order-book ref={ref} depth={15} show-total show-depth />;
+  return <wick-order-book ref={ref} depth={15} show-total show-depth />;
 }
 ```
 
@@ -50,11 +50,11 @@ function OrderBook({ data }) {
 
 ```vue
 <template>
-  <vela-order-book ref="ob" :depth="15" show-total show-depth />
+  <wick-order-book ref="ob" :depth="15" show-total show-depth />
 </template>
 
 <script setup>
-import '@vela-trading/order-book';
+import '@wick/order-book';
 import { ref, watch } from 'vue';
 
 const ob = ref(null);
@@ -70,24 +70,24 @@ watch(data, (val) => {
 
 ```svelte
 <script>
-  import '@vela-trading/order-book';
+  import '@wick/order-book';
   let ob;
   export let data;
 
   $: if (ob) ob.data = data;
 </script>
 
-<vela-order-book bind:this={ob} depth={15} show-total show-depth />
+<wick-order-book bind:this={ob} depth={15} show-total show-depth />
 ```
 
 ## Connecting to a WebSocket
 
 ```javascript
-import '@vela-trading/order-book';
-import '@vela-trading/trade-feed';
+import '@wick/order-book';
+import '@wick/trade-feed';
 
-const ob = document.querySelector('vela-order-book');
-const feed = document.querySelector('vela-trade-feed');
+const ob = document.querySelector('wick-order-book');
+const feed = document.querySelector('wick-trade-feed');
 
 const ws = new WebSocket('wss://your-exchange.com/ws');
 

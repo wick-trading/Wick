@@ -32,7 +32,7 @@ Opens a browser with mock BTC/USD real-time data exercising all components.
    - `package.json` (use existing packages as template)
    - `tsconfig.json` (reference `../core`)
    - `vite.config.ts`
-   - `src/vela-your-component.ts`
+   - `src/wick-your-component.ts`
    - `src/index.ts`
 2. Add the package to root `tsconfig.json` references
 3. Add the workspace build step to root `package.json` build script

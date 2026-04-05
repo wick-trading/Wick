@@ -10,12 +10,12 @@ This document tracks issues encountered during initial scaffolding and how they 
 
 **Root cause:** We initially tried adding `tsc --emitDeclarationOnly --declaration --outDir dist` to each package's build script. This failed for two reasons:
 1. The `--outDir` flag conflicted with the `outDir` already set in each package's `tsconfig.json`, causing tsc to emit nothing silently.
-2. Running tsc per-package didn't resolve cross-package references (`@vela-trading/core` types weren't available when building `@vela-trading/order-book`).
+2. Running tsc per-package didn't resolve cross-package references (`@wick/core` types weren't available when building `@wick/order-book`).
 
 **Solution:** Use `tsc --build` at the root level, which respects project references and builds packages in dependency order. The root build script runs vite for each package first (for optimized JS bundles), then `tsc --build` last (for declarations). This works because vite doesn't clean the `dist/` directory when files already exist, and tsc adds `.d.ts` + `.d.ts.map` files alongside the vite-generated `.js` files.
 
 **Files changed:**
-- `package.json` — root build script: `"build": "npm run build -w @vela-trading/core && ... && tsc --build"`
+- `package.json` — root build script: `"build": "npm run build -w @wick/core && ... && tsc --build"`
 - `tsconfig.json` — added `"files": []` so root tsconfig only coordinates references, doesn't compile anything itself
 - All package `tsconfig.json` files — added `"declaration": true, "declarationMap": true`
 
@@ -43,7 +43,7 @@ This document tracks issues encountered during initial scaffolding and how they 
 **Solution:** Changed all workspace references from directory paths to package names:
 ```diff
 - npm run build -w packages/core
-+ npm run build -w @vela-trading/core
++ npm run build -w @wick/core
 ```
 
 **Files changed:**
@@ -77,7 +77,7 @@ This document tracks issues encountered during initial scaffolding and how they 
 **Solution:** Removed the unused `_flash` state field and its `@state()` import. Flash-on-change can be re-added when the feature is actually implemented, rather than leaving dead code.
 
 **Files changed:**
-- `packages/order-book/src/vela-order-book.ts` — removed `_flash` state, removed `state` import from decorators
+- `packages/order-book/src/wick-order-book.ts` — removed `_flash` state, removed `state` import from decorators
 
 ---
 

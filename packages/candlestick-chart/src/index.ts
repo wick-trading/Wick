@@ -1,1 +1,1 @@
-export { VelaCandlestickChart } from './vela-candlestick-chart.js';
+export { WickCandlestickChart } from './wick-candlestick-chart.js';

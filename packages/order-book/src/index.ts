@@ -1,1 +1,1 @@
-export { VelaOrderBook } from './vela-order-book.js';
+export { WickOrderBook } from './wick-order-book.js';

@@ -6,26 +6,26 @@ const REPO = "https://github.com/astralchemist/vela";
 const DOCS = `${REPO}/tree/main/docs/wiki/Getting-Started.md`;
 
 const components = [
-  { icon: "\u2630", name: "Order Book", desc: "Bids & asks with depth bars, price grouping, streaming delta updates via applyDelta().", tag: "<vela-order-book>" },
-  { icon: "\u26A1", name: "Price Ticker", desc: "Flash-on-change with direction detection. 24h stats. Emits vela-price-change events.", tag: "<vela-price-ticker>" },
-  { icon: "\u21C5", name: "Trade Feed", desc: "Scrolling trade list with addTrade() streaming. Time formats: absolute, relative, datetime.", tag: "<vela-trade-feed>" },
-  { icon: "\u25E0", name: "Depth Chart", desc: "Canvas 2D cumulative bid/ask depth curves. Crosshair tooltip. 60fps via requestAnimationFrame.", tag: "<vela-depth-chart>" },
-  { icon: "\u2593", name: "Candlestick Chart", desc: "OHLCV via TradingView Lightweight Charts. Real-time updateCandle(). Volume overlay.", tag: "<vela-candlestick-chart>" },
+  { icon: "\u2630", name: "Order Book", desc: "Bids & asks with depth bars, price grouping, streaming delta updates via applyDelta().", tag: "<wick-order-book>" },
+  { icon: "\u26A1", name: "Price Ticker", desc: "Flash-on-change with direction detection. 24h stats. Emits wick-price-change events.", tag: "<wick-price-ticker>" },
+  { icon: "\u21C5", name: "Trade Feed", desc: "Scrolling trade list with addTrade() streaming. Time formats: absolute, relative, datetime.", tag: "<wick-trade-feed>" },
+  { icon: "\u25E0", name: "Depth Chart", desc: "Canvas 2D cumulative bid/ask depth curves. Crosshair tooltip. 60fps via requestAnimationFrame.", tag: "<wick-depth-chart>" },
+  { icon: "\u2593", name: "Candlestick Chart", desc: "OHLCV via TradingView Lightweight Charts. Real-time updateCandle(). Volume overlay.", tag: "<wick-candlestick-chart>" },
   { icon: "\u21C4", name: "10 Exchange Adapters", desc: "Binance, Coinbase, Kraken, Bybit, OKX, dYdX, Bitfinex, Gate.io, MEXC, KuCoin.", tag: "adapter.parse()" },
 ];
 
 const codeExamples: Record<string, string> = {
-  Vanilla: `import '@vela-trading/order-book';
-import { binanceAdapter } from '@vela-trading/adapters/binance';
+  Vanilla: `import '@wick/order-book';
+import { binanceAdapter } from '@wick/adapters/binance';
 
-const ob = document.querySelector('vela-order-book');
+const ob = document.querySelector('wick-order-book');
 const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@depth');
 
 ws.onmessage = (e) => {
   const msg = binanceAdapter.parse(JSON.parse(e.data));
   if (msg?.type === 'orderbook_delta') ob.applyDeltas(msg.data);
 };`,
-  React: `import { OrderBook, PriceTicker } from '@vela-trading/react';
+  React: `import { OrderBook, PriceTicker } from '@wick/react';
 
 function TradingPanel({ bookData, tickerData }) {
   return (
@@ -42,7 +42,7 @@ function TradingPanel({ bookData, tickerData }) {
   );
 }`,
   Vue: `<script setup>
-import { useOrderBook } from '@vela-trading/vue';
+import { useOrderBook } from '@wick/vue';
 import { ref } from 'vue';
 
 const data = ref({ bids: [], asks: [] });
@@ -50,27 +50,27 @@ const { elRef } = useOrderBook(data);
 </script>
 
 <template>
-  <vela-order-book ref="elRef" :depth="15" show-total show-depth />
+  <wick-order-book ref="elRef" :depth="15" show-total show-depth />
 </template>`,
   Svelte: `<script>
-  import { orderBook } from '@vela-trading/svelte';
+  import { orderBook } from '@wick/svelte';
   let data = { bids: [], asks: [] };
 </script>
 
-<vela-order-book use:orderBook={data} depth={15} show-total show-depth />`,
-  Angular: `import { VelaOrderBookDirective } from '@vela-trading/angular';
+<wick-order-book use:orderBook={data} depth={15} show-total show-depth />`,
+  Angular: `import { WickOrderBookDirective } from '@wick/angular';
 
 @Component({
   standalone: true,
-  imports: [VelaOrderBookDirective],
+  imports: [WickOrderBookDirective],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: \`
-    <vela-order-book
-      velaOrderBook
-      [velaData]="bookData"
-      (velaLevelClick)="onClick($event)"
+    <wick-order-book
+      wickOrderBook
+      [wickData]="bookData"
+      (wickLevelClick)="onClick($event)"
       depth="15" show-total show-depth
-    ></vela-order-book>
+    ></wick-order-book>
   \`
 })`,
 };
@@ -107,7 +107,7 @@ export default function Home() {
       <div className="relative z-10 max-w-[1100px] mx-auto px-6">
         {/* Nav */}
         <nav className="flex items-center justify-between py-5">
-          <span className="text-xl font-extrabold tracking-tight">Vela</span>
+          <span className="text-xl font-extrabold tracking-tight">Wick</span>
           <div className="hidden md:flex gap-8">
             {["Components", "Exchanges", "Themes"].map((s) => (
               <a key={s} href={`#${s.toLowerCase()}`} className="text-sm font-medium text-muted hover:text-foreground transition-colors">{s}</a>
@@ -140,7 +140,7 @@ export default function Home() {
           </div>
           <div className="mt-8">
             <code className="font-mono text-sm text-text-2 bg-surface border border-border px-5 py-3 rounded-xl select-all">
-              <span className="text-muted">$</span> npm install @vela-trading/order-book @vela-trading/trade-feed
+              <span className="text-muted">$</span> npm install @wick/order-book @wick/trade-feed
             </code>
           </div>
         </section>
@@ -211,7 +211,7 @@ export default function Home() {
         <section id="exchanges" className="mb-20">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold tracking-tight mb-3">10 exchanges. One parse call.</h2>
-            <p className="text-text-2">Drop-in adapters that map raw WebSocket messages to Vela types.</p>
+            <p className="text-text-2">Drop-in adapters that map raw WebSocket messages to Wick types.</p>
           </div>
           <div className="flex flex-wrap gap-3 justify-center">
             {exchanges.map((ex) => (
@@ -245,7 +245,7 @@ export default function Home() {
                   <h3 className="text-[15px] font-semibold mb-1">{t.name}</h3>
                   <p className="text-sm text-muted mb-2">{t.desc}</p>
                   <code className="font-mono text-xs bg-surface-2 px-2 py-1 rounded text-accent-2">
-                    {`import '@vela-trading/theme/${t.slug}'`}
+                    {`import '@wick/theme/${t.slug}'`}
                   </code>
                 </div>
               </div>

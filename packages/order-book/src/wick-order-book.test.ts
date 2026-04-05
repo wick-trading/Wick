@@ -1,26 +1,26 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import { VelaOrderBook } from './vela-order-book.js';
+import { WickOrderBook } from './wick-order-book.js';
 
 // Ensure custom element is registered
-if (!customElements.get('vela-order-book')) {
-  customElements.define('vela-order-book', VelaOrderBook);
+if (!customElements.get('wick-order-book')) {
+  customElements.define('wick-order-book', WickOrderBook);
 }
 
-function createElement(): VelaOrderBook {
-  const el = document.createElement('vela-order-book') as VelaOrderBook;
+function createElement(): WickOrderBook {
+  const el = document.createElement('wick-order-book') as WickOrderBook;
   document.body.appendChild(el);
   return el;
 }
 
-describe('VelaOrderBook', () => {
-  let el: VelaOrderBook;
+describe('WickOrderBook', () => {
+  let el: WickOrderBook;
 
   afterEach(() => {
     el?.remove();
   });
 
   it('registers as a custom element', () => {
-    expect(customElements.get('vela-order-book')).toBeDefined();
+    expect(customElements.get('wick-order-book')).toBeDefined();
   });
 
   it('renders with empty data', async () => {
@@ -191,7 +191,7 @@ describe('VelaOrderBook', () => {
     expect(askRows.length).toBe(2);
   });
 
-  it('fires vela-order-book-level-click on row click', async () => {
+  it('fires wick-order-book-level-click on row click', async () => {
     el = createElement();
     el.data = {
       bids: [{ price: 100, size: 5 }],
@@ -200,7 +200,7 @@ describe('VelaOrderBook', () => {
     await el.updateComplete;
 
     let detail: any = null;
-    el.addEventListener('vela-order-book-level-click', (e: Event) => {
+    el.addEventListener('wick-order-book-level-click', (e: Event) => {
       detail = (e as CustomEvent).detail;
     });
 

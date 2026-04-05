@@ -1,5 +1,5 @@
 {
-  "name": "@vela-trading/order-book",
+  "name": "@wick/order-book",
   "version": "0.0.1",
   "description": "Headless order book Web Component",
   "type": "module",
@@ -37,7 +37,7 @@
   "author": "astralchemist",
   "dependencies": {
     "lit": "^3.2.0",
-    "@vela-trading/core": "0.0.1"
+    "@wick/core": "0.0.1"
   },
   "license": "MIT"
 }

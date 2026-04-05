@@ -1,8 +1,8 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@wick/core';
 
 /**
  * Standard adapter interface that all exchange adapters implement.
- * Parses raw WebSocket messages into Vela data types.
+ * Parses raw WebSocket messages into Wick data types.
  */
 export interface ExchangeAdapter {
   /** Unique identifier for this exchange */

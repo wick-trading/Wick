@@ -1,19 +1,19 @@
 /**
- * Vela Demo — Mock data generator that simulates real-time market data.
+ * Wick Demo — Mock data generator that simulates real-time market data.
  * Exercises all five components with randomized but realistic data.
  */
-import '@vela-trading/order-book';
-import '@vela-trading/price-ticker';
-import '@vela-trading/trade-feed';
-import '@vela-trading/depth-chart';
-import '@vela-trading/candlestick-chart';
+import '@wick/order-book';
+import '@wick/price-ticker';
+import '@wick/trade-feed';
+import '@wick/depth-chart';
+import '@wick/candlestick-chart';
 
-import type { OrderBookData, Trade, Candle } from '@vela-trading/core';
-import type { VelaOrderBook } from '@vela-trading/order-book';
-import type { VelaPriceTicker } from '@vela-trading/price-ticker';
-import type { VelaTradeFeed } from '@vela-trading/trade-feed';
-import type { VelaDepthChart } from '@vela-trading/depth-chart';
-import type { VelaCandlestickChart } from '@vela-trading/candlestick-chart';
+import type { OrderBookData, Trade, Candle } from '@wick/core';
+import type { WickOrderBook } from '@wick/order-book';
+import type { WickPriceTicker } from '@wick/price-ticker';
+import type { WickTradeFeed } from '@wick/trade-feed';
+import type { WickDepthChart } from '@wick/depth-chart';
+import type { WickCandlestickChart } from '@wick/candlestick-chart';
 
 // --- Mock data generators ---
 
@@ -88,11 +88,11 @@ function generateHistoricalCandles(basePrice: number, count: number): Candle[] {
 
 // --- Wire up components ---
 
-const orderBook = document.getElementById('orderbook') as VelaOrderBook;
-const ticker = document.getElementById('ticker') as VelaPriceTicker;
-const tradeFeed = document.getElementById('tradefeed') as VelaTradeFeed;
-const depthChart = document.getElementById('depthchart') as VelaDepthChart;
-const candleChart = document.getElementById('candlechart') as VelaCandlestickChart;
+const orderBook = document.getElementById('orderbook') as WickOrderBook;
+const ticker = document.getElementById('ticker') as WickPriceTicker;
+const tradeFeed = document.getElementById('tradefeed') as WickTradeFeed;
+const depthChart = document.getElementById('depthchart') as WickDepthChart;
+const candleChart = document.getElementById('candlechart') as WickCandlestickChart;
 
 let currentPrice = BASE_PRICE;
 
@@ -191,22 +191,22 @@ function scheduleNextTrade() {
 scheduleNextTrade();
 
 // Log events for debugging
-orderBook.addEventListener('vela-order-book-level-click', (e) => {
+orderBook.addEventListener('wick-order-book-level-click', (e) => {
   console.log('Order book level clicked:', (e as CustomEvent).detail);
 });
 
-ticker.addEventListener('vela-price-change', (e) => {
+ticker.addEventListener('wick-price-change', (e) => {
   console.log('Price changed:', (e as CustomEvent).detail);
 });
 
-tradeFeed.addEventListener('vela-trade-click', (e) => {
+tradeFeed.addEventListener('wick-trade-click', (e) => {
   console.log('Trade clicked:', (e as CustomEvent).detail);
 });
 
-depthChart.addEventListener('vela-depth-chart-click', (e) => {
+depthChart.addEventListener('wick-depth-chart-click', (e) => {
   console.log('Depth chart clicked:', (e as CustomEvent).detail);
 });
 
-candleChart.addEventListener('vela-candlestick-click', (e) => {
+candleChart.addEventListener('wick-candlestick-click', (e) => {
   console.log('Candlestick clicked:', (e as CustomEvent).detail);
 });
