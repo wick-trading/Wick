@@ -20,6 +20,7 @@
     { "path": "./packages/core" },
     { "path": "./packages/order-book" },
     { "path": "./packages/price-ticker" },
-    { "path": "./packages/trade-feed" }
+    { "path": "./packages/trade-feed" },
+    { "path": "./packages/adapters" }
   ]
 }

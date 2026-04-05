@@ -1,0 +1,35 @@
+{
+  "name": "@vela-trading/adapters",
+  "version": "0.0.1",
+  "description": "Exchange adapters that map WebSocket feeds to Vela data types",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./binance": {
+      "types": "./dist/binance.d.ts",
+      "default": "./dist/binance.js"
+    },
+    "./coinbase": {
+      "types": "./dist/coinbase.d.ts",
+      "default": "./dist/coinbase.js"
+    },
+    "./kraken": {
+      "types": "./dist/kraken.d.ts",
+      "default": "./dist/kraken.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "dependencies": {
+    "@vela-trading/core": "0.0.1"
+  },
+  "license": "MIT"
+}
