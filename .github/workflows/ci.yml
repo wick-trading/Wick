@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build all packages
+        run: npm run build
+
+      - name: Verify .d.ts generation
+        run: |
+          test -f packages/core/dist/index.d.ts || (echo "Missing core .d.ts" && exit 1)
+          test -f packages/order-book/dist/vela-order-book.d.ts || (echo "Missing order-book .d.ts" && exit 1)
+          test -f packages/price-ticker/dist/vela-price-ticker.d.ts || (echo "Missing price-ticker .d.ts" && exit 1)
+          test -f packages/trade-feed/dist/vela-trade-feed.d.ts || (echo "Missing trade-feed .d.ts" && exit 1)
+          echo "All declaration files present"
+
+      - name: Run tests
+        run: npx vitest run
+
+      - name: Check bundle sizes
+        run: |
+          echo "## Bundle Sizes (gzip)"
+          for pkg in core order-book price-ticker trade-feed; do
+            size=$(gzip -c packages/$pkg/dist/index.js | wc -c)
+            echo "  @vela-trading/$pkg: ${size} bytes"
+          done
+
+  typecheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck (tsc --build --noEmit)
+        run: npx tsc --build
