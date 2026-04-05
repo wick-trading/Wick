@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, OrderBookDelta, Trade } from '@vela-trading/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**
@@ -35,19 +35,6 @@ interface DydxTrade {
       side: string; // 'BUY' | 'SELL'
       createdAt: string;
     }[];
-  };
-}
-
-interface DydxTicker {
-  type: 'subscribed' | 'channel_data';
-  channel: 'v4_markets';
-  contents: {
-    trading: Record<string, {
-      oraclePrice: string;
-      priceChange24H: string;
-      volume24H: string;
-      nextFundingRate: string;
-    }>;
   };
 }
 

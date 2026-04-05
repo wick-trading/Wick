@@ -51,11 +51,33 @@
       "default": "./dist/kucoin.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build",
     "dev": "vite build --watch"
   },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/vela",
+    "directory": "packages/adapters"
+  },
+  "homepage": "https://github.com/astralchemist/vela#readme",
+  "keywords": [
+    "trading",
+    "web-components",
+    "headless",
+    "orderbook",
+    "real-time",
+    "adapters",
+    "websocket",
+    "exchange",
+    "binance",
+    "coinbase"
+  ],
+  "author": "astralchemist",
   "dependencies": {
     "@vela-trading/core": "0.0.1"
   },

@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, Trade, TickerData } from '@vela-trading/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**

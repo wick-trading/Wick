@@ -1,4 +1,4 @@
-import type { OrderBookData, OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookDelta, Trade, TickerData } from '@vela-trading/core';
 import type { ExchangeAdapter, AdapterMessage } from './types.js';
 
 /**
@@ -31,21 +31,6 @@ interface KucoinTrade {
     side: string; // 'buy' | 'sell'
     time: string; // nanosecond timestamp
     symbol: string;
-  };
-}
-
-interface KucoinTicker {
-  topic: string; // '/market/ticker:BTC-USDT'
-  type: 'message';
-  subject: 'trade.ticker';
-  data: {
-    price: string;
-    size: string;
-    bestBid: string;
-    bestAsk: string;
-    bestBidSize: string;
-    bestAskSize: string;
-    time: number;
   };
 }
 
