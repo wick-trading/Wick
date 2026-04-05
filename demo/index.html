@@ -3,148 +3,211 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vela Trading Components — Demo</title>
+    <title>Vela — Headless Trading Components</title>
     <style>
-      * { box-sizing: border-box; margin: 0; padding: 0; }
+      /* ── Base reset ── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
       body {
-        font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-        background: #0a0a0f;
-        color: #e0e0e0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--vela-bg, #0b0e11);
+        color: var(--vela-text, #eaecef);
+        min-height: 100vh;
+        transition: background 400ms ease;
+      }
+
+      /* Glass theme needs a gradient bg */
+      body.theme-glass {
+        background: linear-gradient(135deg, #0f0c29 0%, #1a1040 30%, #302b63 60%, #24243e 100%);
+        background-attachment: fixed;
+      }
+
+      /* ── Layout ── */
+      .app {
+        max-width: 1400px;
+        margin: 0 auto;
         padding: 24px;
       }
 
-      h1 {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: #fff;
+      /* ── Header ── */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
       }
 
-      .subtitle {
-        color: #666;
+      .header h1 {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .header .tagline {
         font-size: 13px;
-        margin-bottom: 32px;
+        color: var(--vela-text-muted, #5e6673);
+        margin-top: 2px;
       }
 
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 24px;
-        max-width: 1200px;
+      /* ── Theme Switcher ── */
+      .theme-switcher {
+        display: flex;
+        gap: 4px;
+        background: var(--vela-surface, #12161c);
+        border: 1px solid var(--vela-border, #252932);
+        border-radius: 10px;
+        padding: 4px;
       }
 
-      .panel {
-        background: #111118;
-        border: 1px solid #1e1e2e;
-        border-radius: 8px;
-        padding: 16px;
+      body.theme-glass .theme-switcher {
+        background: rgba(15, 15, 35, 0.5);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.08);
       }
 
-      .panel-title {
+      .theme-switcher button {
+        background: none;
+        border: none;
+        color: var(--vela-text-muted, #5e6673);
         font-size: 12px;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all 150ms ease;
+        font-family: inherit;
+      }
+
+      .theme-switcher button:hover {
+        color: var(--vela-text, #eaecef);
+      }
+
+      .theme-switcher button.active {
+        background: var(--vela-surface-hover, #1e2530);
+        color: var(--vela-text, #eaecef);
+        font-weight: 600;
+      }
+
+      body.theme-glass .theme-switcher button.active {
+        background: rgba(124, 93, 250, 0.2);
+        color: #f0f0f8;
+      }
+
+      /* ── Grid ── */
+      .ticker-row {
+        margin-bottom: 20px;
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .panel-label {
+        font-size: 11px;
+        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: #555;
-        margin-bottom: 12px;
+        color: var(--vela-text-muted, #5e6673);
+        margin-bottom: 10px;
+        padding-left: 4px;
       }
 
-      /* Style the headless components */
-      vela-order-book table,
-      vela-trade-feed table {
+      .chart-panel {
+        height: 320px;
+      }
+
+      .chart-panel vela-depth-chart,
+      .chart-panel vela-candlestick-chart {
         width: 100%;
-        border-collapse: collapse;
-        font-size: 13px;
+        height: 280px;
+        display: block;
       }
 
-      vela-order-book th,
-      vela-trade-feed th {
-        text-align: left;
-        font-size: 11px;
-        text-transform: uppercase;
-        color: #555;
-        padding: 4px 8px;
-        border-bottom: 1px solid #1e1e2e;
-      }
-
-      vela-order-book td,
-      vela-trade-feed td {
-        padding: 3px 8px;
-        font-variant-numeric: tabular-nums;
-      }
-
-      --vela-ob-ask-color: #ff4d4d;
-      --vela-ob-bid-color: #4dff88;
-
-      vela-order-book [part~="ask-row"] [part="price"] { color: #ff4d4d; }
-      vela-order-book [part~="bid-row"] [part="price"] { color: #4dff88; }
-
-      vela-trade-feed [part~="buy-row"] [part="price"] { color: #4dff88; }
-      vela-trade-feed [part~="sell-row"] [part="price"] { color: #ff4d4d; }
-
-      vela-price-ticker [part="container"] {
-        display: flex;
-        align-items: baseline;
-        gap: 16px;
-        font-size: 14px;
-      }
-
-      vela-price-ticker [part="symbol"] {
-        font-weight: 700;
-        font-size: 18px;
-        color: #fff;
-      }
-
-      vela-price-ticker [part="price"] {
-        font-size: 24px;
-        font-weight: 600;
-        font-variant-numeric: tabular-nums;
-      }
-
-      vela-price-ticker [part="change"] {
-        font-size: 14px;
-      }
-
-      @media (max-width: 900px) {
-        .grid { grid-template-columns: 1fr; }
+      /* ── Responsive ── */
+      @media (max-width: 1000px) {
+        .main-grid { grid-template-columns: 1fr; }
+        .charts-grid { grid-template-columns: 1fr; }
       }
     </style>
+    <!-- Theme CSS loaded dynamically -->
+    <link id="theme-css" rel="stylesheet" href="">
   </head>
-  <body>
-    <h1>Vela</h1>
-    <p class="subtitle">Headless trading components for the web</p>
+  <body class="theme-dark">
+    <div class="app">
+      <div class="header">
+        <div>
+          <h1>Vela</h1>
+          <div class="tagline">Headless trading components for the web</div>
+        </div>
+        <div class="theme-switcher">
+          <button class="active" data-theme="dark">Exchange</button>
+          <button data-theme="minimal">Minimal</button>
+          <button data-theme="glass">Glass</button>
+        </div>
+      </div>
 
-    <div style="margin-bottom: 24px;">
-      <div class="panel">
-        <div class="panel-title">Price Ticker</div>
+      <div class="ticker-row">
         <vela-price-ticker id="ticker" show-details></vela-price-ticker>
       </div>
-    </div>
 
-    <div class="grid">
-      <div class="panel">
-        <div class="panel-title">Order Book</div>
-        <vela-order-book id="orderbook" depth="12" show-total show-depth></vela-order-book>
+      <div class="main-grid">
+        <div>
+          <div class="panel-label">Order Book</div>
+          <vela-order-book id="orderbook" depth="14" show-total show-depth></vela-order-book>
+        </div>
+
+        <div>
+          <div class="panel-label">Recent Trades</div>
+          <vela-trade-feed id="tradefeed" max-trades="14"></vela-trade-feed>
+        </div>
       </div>
 
-      <div class="panel" style="grid-column: span 2;">
-        <div class="panel-title">Trade Feed</div>
-        <vela-trade-feed id="tradefeed" max-trades="30"></vela-trade-feed>
-      </div>
-    </div>
+      <div class="charts-grid">
+        <div class="chart-panel">
+          <div class="panel-label">Market Depth</div>
+          <vela-depth-chart id="depthchart" enable-crosshair></vela-depth-chart>
+        </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1200px; margin-top: 24px;">
-      <div class="panel" style="height: 350px;">
-        <div class="panel-title">Depth Chart</div>
-        <vela-depth-chart id="depthchart" enable-crosshair style="width: 100%; height: 300px;"></vela-depth-chart>
-      </div>
-
-      <div class="panel" style="height: 350px;">
-        <div class="panel-title">Candlestick Chart</div>
-        <vela-candlestick-chart id="candlechart" show-volume auto-scroll style="width: 100%; height: 300px;"></vela-candlestick-chart>
+        <div class="chart-panel">
+          <div class="panel-label">BTC/USD · 1m</div>
+          <vela-candlestick-chart id="candlechart" show-volume auto-scroll></vela-candlestick-chart>
+        </div>
       </div>
     </div>
 
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      // Theme switcher
+      const buttons = document.querySelectorAll('.theme-switcher button');
+      const themeLink = document.getElementById('theme-css');
+      const themeMap = {
+        dark: '/node_modules/@vela-trading/theme/src/dark.css',
+        minimal: '/node_modules/@vela-trading/theme/src/minimal.css',
+        glass: '/node_modules/@vela-trading/theme/src/glass.css',
+      };
+
+      // Load default theme
+      themeLink.href = themeMap.dark;
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const theme = btn.dataset.theme;
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          document.body.className = 'theme-' + theme;
+          themeLink.href = themeMap[theme];
+        });
+      });
+    </script>
   </body>
 </html>

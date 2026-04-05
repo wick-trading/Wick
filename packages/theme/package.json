@@ -1,0 +1,26 @@
+{
+  "name": "@vela-trading/theme",
+  "version": "0.0.1",
+  "description": "Professional themes for Vela trading components — Binance/Bybit Modern, Minimal Monochrome, Glassmorphism",
+  "type": "module",
+  "exports": {
+    ".": "./dist/dark.css",
+    "./dark": "./dist/dark.css",
+    "./minimal": "./dist/minimal.css",
+    "./glass": "./dist/glass.css"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "mkdir -p dist && cp src/*.css dist/"
+  },
+  "sideEffects": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/vela",
+    "directory": "packages/theme"
+  },
+  "homepage": "https://github.com/astralchemist/vela#readme",
+  "keywords": ["trading", "web-components", "theme", "css", "dark-mode", "glassmorphism", "minimal"],
+  "author": "astralchemist",
+  "license": "MIT"
+}
