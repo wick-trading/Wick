@@ -128,15 +128,19 @@ export class VelaOrderBook extends LitElement {
     return html`
       <tr
         part="row ${side}-row"
+        role="row"
+        tabindex="0"
+        aria-label="${side === 'bid' ? 'Bid' : 'Ask'} ${formatPrice(level.price, this.priceFormat)} size ${formatSize(level.size, this.sizePrecision)}"
         style="height: var(--vela-ob-row-height, 24px); font-size: var(--vela-ob-font-size, 13px); cursor: pointer; ${depthStyle}"
         @click=${() => this._handleRowClick(level.price, side)}
+        @keydown=${(e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this._handleRowClick(level.price, side); }}}
       >
-        <td part="price" style="color: ${textColor}">
+        <td part="price" role="gridcell" style="color: ${textColor}">
           ${formatPrice(level.price, this.priceFormat)}
         </td>
-        <td part="size">${formatSize(level.size, this.sizePrecision)}</td>
+        <td part="size" role="gridcell">${formatSize(level.size, this.sizePrecision)}</td>
         ${this.showTotal
-          ? html`<td part="total">${formatSize(level.total, this.sizePrecision)}</td>`
+          ? html`<td part="total" role="gridcell">${formatSize(level.total, this.sizePrecision)}</td>`
           : ''}
       </tr>
     `;
@@ -164,13 +168,13 @@ export class VelaOrderBook extends LitElement {
     const maxTotal = Math.max(askMaxTotal, bidMaxTotal);
 
     return html`
-      <div part="container">
-        <table part="table" style="width: 100%; border-collapse: collapse;">
+      <div part="container" role="region" aria-label="Order Book">
+        <table part="table" style="width: 100%; border-collapse: collapse;" role="grid" aria-label="Order book price levels">
           <thead>
-            <tr part="header">
-              <th part="header-price">Price</th>
-              <th part="header-size">Size</th>
-              ${this.showTotal ? html`<th part="header-total">Total</th>` : ''}
+            <tr part="header" role="row">
+              <th part="header-price" scope="col">Price</th>
+              <th part="header-size" scope="col">Size</th>
+              ${this.showTotal ? html`<th part="header-total" scope="col">Total</th>` : ''}
             </tr>
           </thead>
           <tbody part="asks">

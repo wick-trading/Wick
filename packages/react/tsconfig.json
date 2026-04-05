@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "jsx": "react-jsx"
+  },
+  "include": ["src"],
+  "exclude": ["vite.config.ts", "src/**/*.test.ts"],
+  "references": [
+    { "path": "../core" },
+    { "path": "../order-book" },
+    { "path": "../price-ticker" },
+    { "path": "../trade-feed" },
+    { "path": "../depth-chart" },
+    { "path": "../candlestick-chart" }
+  ]
+}

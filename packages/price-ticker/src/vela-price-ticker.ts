@@ -107,9 +107,9 @@ export class VelaPriceTicker extends LitElement {
     const { symbol, price, change24h, high24h, low24h, volume24h } = this.data;
 
     return html`
-      <div part="container" data-direction=${this._direction} ?data-flashing=${this._flashing}>
-        <span part="symbol">${symbol}</span>
-        <span part="price" style="color: ${this._priceColor()}">
+      <div part="container" role="status" aria-live="polite" aria-label="${symbol} price ticker" data-direction=${this._direction} ?data-flashing=${this._flashing}>
+        <span part="symbol" aria-hidden="true">${symbol}</span>
+        <span part="price" style="color: ${this._priceColor()}" aria-label="Price ${formatPrice(price, this.priceFormat)}">
           ${formatPrice(price, this.priceFormat)}
         </span>
         ${change24h !== undefined

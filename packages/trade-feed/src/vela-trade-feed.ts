@@ -101,13 +101,13 @@ export class VelaTradeFeed extends LitElement {
         : 'var(--vela-tf-sell-color, inherit)';
 
     return html`
-      <div part="container">
-        <table part="table" style="width: 100%; border-collapse: collapse;">
+      <div part="container" role="region" aria-label="Trade Feed" aria-live="polite">
+        <table part="table" style="width: 100%; border-collapse: collapse;" role="grid" aria-label="Recent trades">
           <thead>
-            <tr part="header">
-              <th part="header-price">Price</th>
-              <th part="header-size">Size</th>
-              <th part="header-time">Time</th>
+            <tr part="header" role="row">
+              <th part="header-price" scope="col">Price</th>
+              <th part="header-size" scope="col">Size</th>
+              <th part="header-time" scope="col">Time</th>
             </tr>
           </thead>
           <tbody
@@ -117,14 +117,18 @@ export class VelaTradeFeed extends LitElement {
             ${repeat(visibleTrades, (t) => t.id, (trade) => html`
                 <tr
                   part="row ${trade.side}-row"
+                  role="row"
+                  tabindex="0"
+                  aria-label="${trade.side === 'buy' ? 'Buy' : 'Sell'} ${formatPrice(trade.price, this.priceFormat)} size ${formatSize(trade.size, this.sizePrecision)}"
                   style="height: var(--vela-tf-row-height, 24px); font-size: var(--vela-tf-font-size, 13px); cursor: pointer; display: table; width: 100%; table-layout: fixed;"
                   @click=${() => this._handleRowClick(trade)}
+                  @keydown=${(e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this._handleRowClick(trade); }}}
                 >
-                  <td part="price" style="color: ${sideColor(trade.side)}">
+                  <td part="price" role="gridcell" style="color: ${sideColor(trade.side)}">
                     ${formatPrice(trade.price, this.priceFormat)}
                   </td>
-                  <td part="size">${formatSize(trade.size, this.sizePrecision)}</td>
-                  <td part="time">${this._formatTime(trade.timestamp)}</td>
+                  <td part="size" role="gridcell">${formatSize(trade.size, this.sizePrecision)}</td>
+                  <td part="time" role="gridcell">${this._formatTime(trade.timestamp)}</td>
                 </tr>
               `,
             )}

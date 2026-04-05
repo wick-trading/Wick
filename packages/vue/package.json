@@ -1,0 +1,31 @@
+{
+  "name": "@vela-trading/vue",
+  "version": "0.0.1",
+  "description": "Vue 3 wrappers for Vela trading Web Components",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "dependencies": {
+    "@vela-trading/core": "0.0.1",
+    "@vela-trading/order-book": "0.0.1",
+    "@vela-trading/price-ticker": "0.0.1",
+    "@vela-trading/trade-feed": "0.0.1",
+    "@vela-trading/depth-chart": "0.0.1",
+    "@vela-trading/candlestick-chart": "0.0.1"
+  },
+  "peerDependencies": {
+    "vue": ">=3.3"
+  },
+  "license": "MIT"
+}
