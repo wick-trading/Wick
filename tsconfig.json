@@ -21,6 +21,8 @@
     { "path": "./packages/order-book" },
     { "path": "./packages/price-ticker" },
     { "path": "./packages/trade-feed" },
-    { "path": "./packages/adapters" }
+    { "path": "./packages/adapters" },
+    { "path": "./packages/depth-chart" },
+    { "path": "./packages/candlestick-chart" }
   ]
 }

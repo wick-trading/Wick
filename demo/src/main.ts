@@ -1,15 +1,19 @@
 /**
  * Vela Demo — Mock data generator that simulates real-time market data.
- * This exercises all three components with randomized but realistic data.
+ * Exercises all five components with randomized but realistic data.
  */
 import '@vela-trading/order-book';
 import '@vela-trading/price-ticker';
 import '@vela-trading/trade-feed';
+import '@vela-trading/depth-chart';
+import '@vela-trading/candlestick-chart';
 
-import type { OrderBookData, Trade, TickerData } from '@vela-trading/core';
+import type { OrderBookData, Trade, Candle } from '@vela-trading/core';
 import type { VelaOrderBook } from '@vela-trading/order-book';
 import type { VelaPriceTicker } from '@vela-trading/price-ticker';
 import type { VelaTradeFeed } from '@vela-trading/trade-feed';
+import type { VelaDepthChart } from '@vela-trading/depth-chart';
+import type { VelaCandlestickChart } from '@vela-trading/candlestick-chart';
 
 // --- Mock data generators ---
 
@@ -20,11 +24,11 @@ function randomAround(base: number, variance: number): number {
   return base + (Math.random() - 0.5) * 2 * variance;
 }
 
-function generateOrderBook(midPrice: number): OrderBookData {
+function generateOrderBook(midPrice: number, levels = 40): OrderBookData {
   const bids = [];
   const asks = [];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < levels; i++) {
     bids.push({
       price: midPrice - SPREAD / 2 - i * randomAround(1, 0.5),
       size: randomAround(2, 1.8),
@@ -53,16 +57,50 @@ function generateTrade(midPrice: number): Trade {
   };
 }
 
+function generateHistoricalCandles(basePrice: number, count: number): Candle[] {
+  const candles: Candle[] = [];
+  const now = Date.now();
+  const interval = 60_000; // 1 minute candles
+  let price = basePrice - count * 5; // Start lower to show trend
+
+  for (let i = count; i > 0; i--) {
+    const open = price;
+    const change = randomAround(0, 15);
+    const close = open + change;
+    const high = Math.max(open, close) + Math.abs(randomAround(0, 8));
+    const low = Math.min(open, close) - Math.abs(randomAround(0, 8));
+    const volume = randomAround(50, 45);
+
+    candles.push({
+      time: now - i * interval,
+      open,
+      high,
+      low,
+      close,
+      volume: Math.abs(volume),
+    });
+
+    price = close;
+  }
+
+  return candles;
+}
+
 // --- Wire up components ---
 
 const orderBook = document.getElementById('orderbook') as VelaOrderBook;
 const ticker = document.getElementById('ticker') as VelaPriceTicker;
 const tradeFeed = document.getElementById('tradefeed') as VelaTradeFeed;
+const depthChart = document.getElementById('depthchart') as VelaDepthChart;
+const candleChart = document.getElementById('candlechart') as VelaCandlestickChart;
 
 let currentPrice = BASE_PRICE;
 
 // Initial state
-orderBook.data = generateOrderBook(currentPrice);
+const initialBook = generateOrderBook(currentPrice);
+orderBook.data = initialBook;
+depthChart.data = initialBook;
+
 ticker.data = {
   symbol: 'BTC/USD',
   price: currentPrice,
@@ -80,12 +118,28 @@ for (let i = 0; i < 15; i++) {
 }
 tradeFeed.trades = initialTrades;
 
+// Generate historical candles
+const candles = generateHistoricalCandles(currentPrice, 200);
+candleChart.candles = candles;
+
+// Track current candle for real-time updates
+let currentCandle: Candle = {
+  time: Math.floor(Date.now() / 60_000) * 60_000, // Round to current minute
+  open: currentPrice,
+  high: currentPrice,
+  low: currentPrice,
+  close: currentPrice,
+  volume: 0,
+};
+
 // --- Simulate real-time updates ---
 
-// Order book: refresh every 200ms
+// Order book + depth chart: refresh every 200ms
 setInterval(() => {
   currentPrice = randomAround(currentPrice, 2);
-  orderBook.data = generateOrderBook(currentPrice);
+  const book = generateOrderBook(currentPrice);
+  orderBook.data = book;
+  depthChart.data = book;
 }, 200);
 
 // Ticker: update every 500ms
@@ -103,6 +157,27 @@ setInterval(() => {
     volume24h: (ticker.data.volume24h ?? 0) + randomAround(5, 4),
     timestamp: Date.now(),
   };
+
+  // Update current candle
+  const now = Math.floor(Date.now() / 60_000) * 60_000;
+  if (now > currentCandle.time) {
+    // New candle
+    currentCandle = {
+      time: now,
+      open: currentPrice,
+      high: currentPrice,
+      low: currentPrice,
+      close: currentPrice,
+      volume: 0,
+    };
+  } else {
+    currentCandle.close = currentPrice;
+    currentCandle.high = Math.max(currentCandle.high, currentPrice);
+    currentCandle.low = Math.min(currentCandle.low, currentPrice);
+    currentCandle.volume += Math.abs(randomAround(1, 0.8));
+  }
+
+  candleChart.updateCandle(currentCandle);
 }, 500);
 
 // Trade feed: new trade every 300-800ms
@@ -126,4 +201,12 @@ ticker.addEventListener('vela-price-change', (e) => {
 
 tradeFeed.addEventListener('vela-trade-click', (e) => {
   console.log('Trade clicked:', (e as CustomEvent).detail);
+});
+
+depthChart.addEventListener('vela-depth-chart-click', (e) => {
+  console.log('Depth chart clicked:', (e as CustomEvent).detail);
+});
+
+candleChart.addEventListener('vela-candlestick-click', (e) => {
+  console.log('Candlestick clicked:', (e as CustomEvent).detail);
 });

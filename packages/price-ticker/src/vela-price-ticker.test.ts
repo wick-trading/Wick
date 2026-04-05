@@ -125,8 +125,6 @@ describe('VelaPriceTicker', () => {
       timestamp: Date.now(),
     };
     await el.updateComplete;
-    // Cascading update from @state changes inside update()
-    await el.updateComplete;
 
     const container = el.querySelector('[part="container"]');
     expect(container?.getAttribute('data-direction')).toBe('up');
@@ -137,7 +135,6 @@ describe('VelaPriceTicker', () => {
       price: 66900,
       timestamp: Date.now(),
     };
-    await el.updateComplete;
     await el.updateComplete;
 
     expect(container?.getAttribute('data-direction')).toBe('down');

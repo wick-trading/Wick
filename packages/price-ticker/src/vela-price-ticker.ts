@@ -47,12 +47,7 @@ export class VelaPriceTicker extends LitElement {
   private _flashTimeout: ReturnType<typeof setTimeout> | null = null;
   private _prevPrice = 0;
 
-  /**
-   * Update ticker with new data. Triggers flash animation.
-   */
-  update(changedProps: Map<string, unknown>): void {
-    super.update(changedProps);
-
+  protected override willUpdate(changedProps: Map<string, unknown>): void {
     if (changedProps.has('data') && this._prevPrice !== 0) {
       if (this.data.price > this._prevPrice) {
         this._direction = 'up';
@@ -65,12 +60,18 @@ export class VelaPriceTicker extends LitElement {
       this._flashTimeout = setTimeout(() => {
         this._flashing = false;
       }, 300);
+    }
 
+    this._prevPrice = this.data.price;
+  }
+
+  protected override updated(changedProps: Map<string, unknown>): void {
+    if (changedProps.has('data') && this._prevPrice !== 0) {
       this.dispatchEvent(
         new CustomEvent('vela-price-change', {
           detail: {
             price: this.data.price,
-            prevPrice: this._prevPrice,
+            prevPrice: (changedProps.get('data') as typeof this.data)?.price ?? 0,
             direction: this._direction,
           },
           bubbles: true,
@@ -78,8 +79,6 @@ export class VelaPriceTicker extends LitElement {
         }),
       );
     }
-
-    this._prevPrice = this.data.price;
   }
 
   override disconnectedCallback(): void {

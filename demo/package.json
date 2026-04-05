@@ -12,6 +12,8 @@
     "@vela-trading/core": "0.0.1",
     "@vela-trading/order-book": "0.0.1",
     "@vela-trading/price-ticker": "0.0.1",
-    "@vela-trading/trade-feed": "0.0.1"
+    "@vela-trading/trade-feed": "0.0.1",
+    "@vela-trading/depth-chart": "0.0.1",
+    "@vela-trading/candlestick-chart": "0.0.1"
   }
 }

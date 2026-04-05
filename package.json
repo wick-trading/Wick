@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "npm run dev -w demo",
-    "build": "npm run build -w @vela-trading/core && npm run build -w @vela-trading/order-book && npm run build -w @vela-trading/price-ticker && npm run build -w @vela-trading/trade-feed && npm run build -w @vela-trading/adapters && tsc --build",
+    "build": "npm run build -w @vela-trading/core && npm run build -w @vela-trading/order-book && npm run build -w @vela-trading/price-ticker && npm run build -w @vela-trading/trade-feed && npm run build -w @vela-trading/adapters && npm run build -w @vela-trading/depth-chart && npm run build -w @vela-trading/candlestick-chart && tsc --build",
     "test": "vitest",
     "lint": "eslint packages/*/src/**/*.ts"
   },

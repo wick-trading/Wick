@@ -133,6 +133,18 @@
       </div>
     </div>
 
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1200px; margin-top: 24px;">
+      <div class="panel" style="height: 350px;">
+        <div class="panel-title">Depth Chart</div>
+        <vela-depth-chart id="depthchart" enable-crosshair style="width: 100%; height: 300px;"></vela-depth-chart>
+      </div>
+
+      <div class="panel" style="height: 350px;">
+        <div class="panel-title">Candlestick Chart</div>
+        <vela-candlestick-chart id="candlechart" show-volume auto-scroll style="width: 100%; height: 300px;"></vela-candlestick-chart>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
