@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vela Trading Components — Demo</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+        background: #0a0a0f;
+        color: #e0e0e0;
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #fff;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 32px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 24px;
+        max-width: 1200px;
+      }
+
+      .panel {
+        background: #111118;
+        border: 1px solid #1e1e2e;
+        border-radius: 8px;
+        padding: 16px;
+      }
+
+      .panel-title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #555;
+        margin-bottom: 12px;
+      }
+
+      /* Style the headless components */
+      vela-order-book table,
+      vela-trade-feed table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      vela-order-book th,
+      vela-trade-feed th {
+        text-align: left;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #555;
+        padding: 4px 8px;
+        border-bottom: 1px solid #1e1e2e;
+      }
+
+      vela-order-book td,
+      vela-trade-feed td {
+        padding: 3px 8px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      --vela-ob-ask-color: #ff4d4d;
+      --vela-ob-bid-color: #4dff88;
+
+      vela-order-book [part~="ask-row"] [part="price"] { color: #ff4d4d; }
+      vela-order-book [part~="bid-row"] [part="price"] { color: #4dff88; }
+
+      vela-trade-feed [part~="buy-row"] [part="price"] { color: #4dff88; }
+      vela-trade-feed [part~="sell-row"] [part="price"] { color: #ff4d4d; }
+
+      vela-price-ticker [part="container"] {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        font-size: 14px;
+      }
+
+      vela-price-ticker [part="symbol"] {
+        font-weight: 700;
+        font-size: 18px;
+        color: #fff;
+      }
+
+      vela-price-ticker [part="price"] {
+        font-size: 24px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+
+      vela-price-ticker [part="change"] {
+        font-size: 14px;
+      }
+
+      @media (max-width: 900px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Vela</h1>
+    <p class="subtitle">Headless trading components for the web</p>
+
+    <div style="margin-bottom: 24px;">
+      <div class="panel">
+        <div class="panel-title">Price Ticker</div>
+        <vela-price-ticker id="ticker" show-details></vela-price-ticker>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <div class="panel-title">Order Book</div>
+        <vela-order-book id="orderbook" depth="12" show-total show-depth></vela-order-book>
+      </div>
+
+      <div class="panel" style="grid-column: span 2;">
+        <div class="panel-title">Trade Feed</div>
+        <vela-trade-feed id="tradefeed" max-trades="30"></vela-trade-feed>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

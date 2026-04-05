@@ -1,0 +1,27 @@
+{
+  "name": "vela",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Headless Web Components for trading interfaces",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "demo"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w demo",
+    "build": "npm run build -w packages/core && npm run build -w packages/order-book && npm run build -w packages/price-ticker && npm run build -w packages/trade-feed",
+    "test": "vitest",
+    "lint": "eslint packages/*/src/**/*.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vite": "^5.4.0",
+    "vitest": "^2.0.0",
+    "eslint": "^9.0.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
