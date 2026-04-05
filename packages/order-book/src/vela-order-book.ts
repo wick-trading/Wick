@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import type { OrderBookData, OrderBookDelta, PriceFormatOptions } from '@vela-trading/core';
 import { applyOrderBookDelta, cumulativeTotals, formatPrice, formatSize } from '@vela-trading/core';
 
@@ -57,9 +58,6 @@ export class VelaOrderBook extends LitElement {
   /** Grouping/tick size (e.g. 0.01, 0.1, 1, 10) */
   @property({ type: Number })
   grouping = 0;
-
-  @state()
-  private _flash: Map<number, 'up' | 'down'> = new Map();
 
   /**
    * Apply a delta update to the current order book state.
@@ -176,10 +174,10 @@ export class VelaOrderBook extends LitElement {
             </tr>
           </thead>
           <tbody part="asks">
-            ${asksWithTotals.map((level) => this._renderRow(level, maxTotal, 'ask'))}
+            ${repeat(asksWithTotals, (l) => l.price, (level) => this._renderRow(level, maxTotal, 'ask'))}
           </tbody>
           <tbody part="bids">
-            ${bidsWithTotals.map((level) => this._renderRow(level, maxTotal, 'bid'))}
+            ${repeat(bidsWithTotals, (l) => l.price, (level) => this._renderRow(level, maxTotal, 'bid'))}
           </tbody>
         </table>
       </div>

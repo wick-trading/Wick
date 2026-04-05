@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import type { Trade, PriceFormatOptions } from '@vela-trading/core';
 import { formatPrice, formatSize } from '@vela-trading/core';
 
@@ -113,8 +114,7 @@ export class VelaTradeFeed extends LitElement {
             part="list"
             style="display: block; max-height: var(--vela-tf-max-height, 400px); overflow-y: auto;"
           >
-            ${visibleTrades.map(
-              (trade) => html`
+            ${repeat(visibleTrades, (t) => t.id, (trade) => html`
                 <tr
                   part="row ${trade.side}-row"
                   style="height: var(--vela-tf-row-height, 24px); font-size: var(--vela-tf-font-size, 13px); cursor: pointer; display: table; width: 100%; table-layout: fixed;"

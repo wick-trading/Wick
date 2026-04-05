@@ -3,3 +3,15 @@ dist/
 *.tsbuildinfo
 .vite/
 .DS_Store
+
+# tsc build artifacts outside dist/
+*.js.map
+!packages/*/src/**
+vite.config.js
+vite.config.d.ts
+vite.config.d.ts.map
+vite.config.js.map
+demo/src/main.js
+demo/src/main.js.map
+demo/src/main.d.ts
+demo/src/main.d.ts.map

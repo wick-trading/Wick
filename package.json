@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "npm run dev -w demo",
-    "build": "npm run build -w packages/core && npm run build -w packages/order-book && npm run build -w packages/price-ticker && npm run build -w packages/trade-feed",
+    "build": "npm run build -w @vela-trading/core && npm run build -w @vela-trading/order-book && npm run build -w @vela-trading/price-ticker && npm run build -w @vela-trading/trade-feed && tsc --build",
     "test": "vitest",
     "lint": "eslint packages/*/src/**/*.ts"
   },
