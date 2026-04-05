@@ -2,6 +2,21 @@
 
 Headless Web Components for trading interfaces. Framework-agnostic, unstyled, real-time ready.
 
+## Documentation
+
+| | |
+|---|---|
+| [Getting Started](docs/wiki/Getting-Started.md) | Installation, basic usage, framework integration |
+| [Components](docs/wiki/Components.md) | Overview of all components and design principles |
+| [Order Book](docs/wiki/Order-Book.md) | `<vela-order-book>` — full API reference |
+| [Price Ticker](docs/wiki/Price-Ticker.md) | `<vela-price-ticker>` — full API reference |
+| [Trade Feed](docs/wiki/Trade-Feed.md) | `<vela-trade-feed>` — full API reference |
+| [Styling Guide](docs/wiki/Styling-Guide.md) | Dark/light themes, Tailwind, CSS parts |
+| [Data Contracts](docs/wiki/Data-Contracts.md) | TypeScript types, exchange mapping examples |
+| [Architecture](docs/wiki/Architecture.md) | Project structure, build pipeline, design decisions |
+| [Contributing](docs/wiki/Contributing.md) | Development setup, component guidelines |
+| [Development Log](docs/DEVELOPMENT.md) | Issues encountered & solutions |
+
 ## Packages
 
 | Package | Description | Size (gzip) |
@@ -10,6 +25,7 @@ Headless Web Components for trading interfaces. Framework-agnostic, unstyled, re
 | `@vela-trading/order-book` | `<vela-order-book>` | ~1.8 KB |
 | `@vela-trading/price-ticker` | `<vela-price-ticker>` | ~1.2 KB |
 | `@vela-trading/trade-feed` | `<vela-trade-feed>` | ~1.4 KB |
+| `@vela-trading/adapters` | Binance, Coinbase, Kraken adapters | ~0.6 KB each |
 
 ## Quick Start
 

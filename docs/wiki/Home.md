@@ -22,12 +22,12 @@ Vela is different:
 
 ## Pages
 
-- [[Getting Started]]
-- [[Components]]
-  - [[Order Book]]
-  - [[Price Ticker]]
-  - [[Trade Feed]]
-- [[Styling Guide]]
-- [[Data Contracts]]
-- [[Architecture]]
-- [[Contributing]]
+- [Getting Started](Getting-Started.md)
+- [Components](Components.md)
+  - [Order Book](Order-Book.md)
+  - [Price Ticker](Price-Ticker.md)
+  - [Trade Feed](Trade-Feed.md)
+- [Styling Guide](Styling-Guide.md)
+- [Data Contracts](Data-Contracts.md)
+- [Architecture](Architecture.md)
+- [Contributing](Contributing.md)
