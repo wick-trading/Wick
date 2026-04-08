@@ -12,28 +12,44 @@ each category is a self-contained surface a small team can own end-to-end
 
 ## Status Legend
 
+A package is only `✅ Shipped` when it meets **all four** criteria:
+
+1. **Published** to npm under `@wick/*` at a real semver (≥ `0.1.0`)
+2. **Documented** with a dedicated page on the site (not a one-line table entry)
+3. **Demoed** live at `/live` driven by the market engine
+4. **Tested** with meaningful unit tests (not just smoke tests)
+
 | Symbol | Meaning |
 |--------|---------|
-| ✅ | Shipped — published, tested, documented |
+| ✅ | Shipped — meets all four criteria above |
+| 🚧 | Built — exists in the monorepo with tests, but not yet published/documented/demoed |
 | 🔄 | Transmigrating — porting from an abandoned OSS library |
 | 📋 | Planned — greenfield, design phase |
 | 🧩 | Framework wrapper — thin wrapper, not a component |
 
+> **Current reality (2026-04-08):** zero packages are `✅ Shipped` by this
+> definition. Everything previously marked `✅` should be read as `🚧 Built`.
+> The bar is deliberate — `✅` should mean a stranger can `npm install` it and
+> find a real docs page. See the Phase 2 plan in the recovery roadmap.
+
 ## Team Ownership
 
-Categories are designed to be owned by squads. Owners are placeholders
-until contributors claim them in `.github/CODEOWNERS`.
+> **Note:** Wick is currently maintained by a single person (@astralchemist).
+> The squads below are **aspirational** — they describe how ownership would
+> split if/when the project grows. They are not real teams. `.github/CODEOWNERS`
+> routes everything to the solo maintainer. Do not treat this section as
+> organisational fact.
 
-| Category | Suggested squad | GitHub team |
-|----------|------------------|-------------|
-| Market Data | Streaming UI | `@wick/streaming` |
-| Charts | Visualisation | `@wick/charts` |
-| Heatmaps | Visualisation | `@wick/charts` |
-| Execution | Trading | `@wick/trading` |
-| Portfolio | Trading | `@wick/trading` |
-| Market Overview | Discovery | `@wick/discovery` |
-| Alerts & Intel | Discovery | `@wick/discovery` |
-| Infrastructure | Platform | `@wick/platform` |
+| Category | Future squad |
+|----------|--------------|
+| Market Data | Streaming UI |
+| Charts | Visualisation |
+| Heatmaps | Visualisation |
+| Execution | Trading |
+| Portfolio | Trading |
+| Market Overview | Discovery |
+| Alerts & Intel | Discovery |
+| Infrastructure | Platform |
 
 ---
 
