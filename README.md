@@ -2,6 +2,12 @@
 
 Headless Web Components for trading interfaces. Framework-agnostic, unstyled, real-time ready.
 
+> **Status:** early. Wick is currently maintained by a single person. 30+
+> components exist in the monorepo (`🚧 Built`), but **none are yet published
+> to npm**. The immediate roadmap is to harden `@wick/order-book` end-to-end
+> as the first genuine `✅ Shipped` component. See
+> [`packages/CATEGORIES.md`](packages/CATEGORIES.md) for the honest status map.
+
 ## Documentation
 
 | | |
@@ -21,7 +27,11 @@ Headless Web Components for trading interfaces. Framework-agnostic, unstyled, re
 
 See [`packages/CATEGORIES.md`](packages/CATEGORIES.md) for the full operational roadmap.
 
-### ✅ Shipped
+### 🚧 Built (in monorepo, not yet on npm)
+
+The following packages exist in `packages/*` with tests, but do not yet meet
+the `✅ Shipped` bar (published + documented + live demo). The order-book
+trio below is the current focus for the first real release.
 
 | Package | Component | Category | Size (gzip) |
 |---------|-----------|----------|-------------|
@@ -33,6 +43,9 @@ See [`packages/CATEGORIES.md`](packages/CATEGORIES.md) for the full operational 
 | `@wick/trade-feed` | `<wick-trade-feed>` | Market Data | ~1.4 KB |
 | `@wick/depth-chart` | `<wick-depth-chart>` | Market Data | ~2.1 KB |
 | `@wick/candlestick-chart` | `<wick-candlestick-chart>` | Charts | ~1.6 KB + Lightweight Charts |
+
+…plus 20+ additional greenfield components. See
+[`packages/CATEGORIES.md`](packages/CATEGORIES.md) for the full list.
 
 ### 🔄 Transmigrating (in progress)
 
