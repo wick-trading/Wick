@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="128" fill="#06060a"/>
+  <!-- Subtle green ring -->
+  <circle cx="128" cy="128" r="122" stroke="#00ffa3" stroke-opacity="0.24" stroke-width="5" fill="none"/>
+  <!-- Candlestick wick stem -->
+  <rect x="123" y="51" width="10" height="57" rx="3" fill="#00ffa3"/>
+  <!-- Triangle body -->
+  <polygon points="128,108 61,195 195,195" fill="#00ffa3"/>
+</svg>
