@@ -1,0 +1,41 @@
+{
+  "name": "@wick/positions",
+  "version": "0.0.2",
+  "description": "Headless position tracker — open trades, entry/current price, live unrealized P&L, liquidation",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/positions"
+  },
+  "homepage": "https://github.com/astralchemist/wick#readme",
+  "keywords": [
+    "trading",
+    "web-components",
+    "headless",
+    "positions",
+    "portfolio",
+    "real-time"
+  ],
+  "author": "astralchemist",
+  "dependencies": {
+    "lit": "^3.2.0"
+  },
+  "license": "MIT"
+}
