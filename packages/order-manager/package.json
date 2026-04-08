@@ -1,0 +1,30 @@
+{
+  "name": "@wick/order-manager",
+  "version": "0.0.2",
+  "description": "Headless open orders table with cancel/modify hooks — manages active orders, not order entry",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/order-manager"
+  },
+  "homepage": "https://github.com/astralchemist/wick#readme",
+  "keywords": ["trading", "web-components", "headless", "order-management", "execution"],
+  "author": "astralchemist",
+  "dependencies": { "lit": "^3.2.0" },
+  "license": "MIT"
+}
