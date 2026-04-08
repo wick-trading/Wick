@@ -1,0 +1,39 @@
+{
+  "name": "@wick/connection-status",
+  "version": "0.0.2",
+  "description": "Headless WebSocket health indicator — latency, reconnect state, last-tick age",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/connection-status"
+  },
+  "homepage": "https://github.com/astralchemist/wick#readme",
+  "keywords": [
+    "trading",
+    "web-components",
+    "headless",
+    "connection-status",
+    "latency",
+    "websocket"
+  ],
+  "author": "astralchemist",
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.2.0"
+  }
+}
