@@ -22,6 +22,10 @@ import { formatPrice } from '@wick/core';
  * @cssprop --wick-ticker-up-color - Color for price increase (default: inherit)
  * @cssprop --wick-ticker-down-color - Color for price decrease (default: inherit)
  * @cssprop --wick-ticker-flash-duration - Flash animation duration (default: 300ms)
+ * @cssprop --wick-ticker-price-size - Font size for the price (default: 1.5rem)
+ * @cssprop --wick-ticker-symbol-size - Font size for the symbol label (default: 0.75rem)
+ *
+ * @attr {sm|md|lg} size - Preset size: sm (compact), md (default), lg (prominent)
  */
 @customElement('wick-price-ticker')
 export class WickPriceTicker extends LitElement {
@@ -36,6 +40,21 @@ export class WickPriceTicker extends LitElement {
   /** Whether to show extended info (high, low, volume) */
   @property({ type: Boolean, attribute: 'show-details' })
   showDetails = false;
+
+  /**
+   * Preset size variant.
+   * - sm: symbol 0.65rem, price 1.1rem
+   * - md: symbol 0.75rem, price 1.5rem (default)
+   * - lg: symbol 0.85rem, price 2rem
+   */
+  @property({ type: String })
+  size: 'sm' | 'md' | 'lg' = 'md';
+
+  private _sizeVars(): string {
+    if (this.size === 'sm') return '--wick-ticker-price-size: 1.1rem; --wick-ticker-symbol-size: 0.65rem;';
+    if (this.size === 'lg') return '--wick-ticker-price-size: 2rem; --wick-ticker-symbol-size: 0.85rem;';
+    return '';
+  }
 
   /** Flash direction state */
   @state()
@@ -107,9 +126,9 @@ export class WickPriceTicker extends LitElement {
     const { symbol, price, change24h, high24h, low24h, volume24h } = this.data;
 
     return html`
-      <div part="container" role="status" aria-live="polite" aria-label="${symbol} price ticker" data-direction=${this._direction} ?data-flashing=${this._flashing}>
-        <span part="symbol" aria-hidden="true">${symbol}</span>
-        <span part="price" style="color: ${this._priceColor()}" aria-label="Price ${formatPrice(price, this.priceFormat)}">
+      <div part="container" role="status" aria-live="polite" aria-label="${symbol} price ticker" data-direction=${this._direction} ?data-flashing=${this._flashing} style=${this._sizeVars()}>
+        <span part="symbol" aria-hidden="true" style="font-size: var(--wick-ticker-symbol-size, 0.75rem)">${symbol}</span>
+        <span part="price" style="color: ${this._priceColor()}; font-size: var(--wick-ticker-price-size, 1.5rem)" aria-label="Price ${formatPrice(price, this.priceFormat)}">
           ${formatPrice(price, this.priceFormat)}
         </span>
         ${change24h !== undefined

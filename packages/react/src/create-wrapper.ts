@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, type RefObject } from 'react';
+import { useRef, useEffect, type RefObject } from 'react';
 
 /**
  * Hook that syncs object/array properties to a Web Component ref.

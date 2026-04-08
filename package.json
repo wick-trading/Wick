@@ -6,11 +6,12 @@
   "type": "module",
   "workspaces": [
     "packages/*",
-    "demo"
+    "demo",
+    "site"
   ],
   "scripts": {
     "dev": "npm run dev -w demo",
-    "build": "npm run build -w @wick/core && npm run build -w @wick/order-book && npm run build -w @wick/price-ticker && npm run build -w @wick/trade-feed && npm run build -w @wick/adapters && npm run build -w @wick/depth-chart && npm run build -w @wick/candlestick-chart && tsc --build",
+    "build": "npm run build -w @wick/core && npm run build -w @wick/order-book && npm run build -w @wick/price-ticker && npm run build -w @wick/trade-feed && npm run build -w @wick/adapters && npm run build -w @wick/depth-chart && npm run build -w @wick/candlestick-chart && npm run build -w @wick/mini-chart && npm run build -w @wick/funding-rate && npm run build -w @wick/connection-status && npm run build -w @wick/position-sizer && npm run build -w @wick/risk-panel && npm run build -w @wick/market-clock && npm run build -w @wick/economic-calendar && npm run build -w @wick/liquidation-feed && npm run build -w @wick/news-feed && npm run build -w @wick/alerts && npm run build -w @wick/trade-history && npm run build -w @wick/open-interest && npm run build -w @wick/pnl && npm run build -w @wick/positions && npm run build -w @wick/correlation-matrix && npm run build -w @wick/watchlist && npm run build -w @wick/symbol-search && npm run build -w @wick/order-ticket && npm run build -w @wick/order-manager && npm run build -w @wick/screener && npm run build -w @wick/volume-profile && npm run build -w @wick/dom-ladder && npm run build -w @wick/drawing-tools && npm run build -w @wick/indicators && npm run build -w @wick/order-book-heatmap && npm run build -w @wick/market-heatmap && tsc --build",
     "test": "vitest",
     "lint": "eslint packages/*/src/**/*.ts",
     "changeset": "changeset",

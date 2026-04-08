@@ -295,3 +295,309 @@ wick-candlestick-chart {
 wick-candlestick-chart [part="container"] {
   overflow: hidden;
 }
+
+/* ── Funding Rate ───────────────────────────────────────── */
+
+wick-funding-rate {
+  --wick-fr-positive-color: var(--wick-green);
+  --wick-fr-negative-color: var(--wick-red);
+  --wick-fr-zero-color: var(--wick-text-muted);
+  font-family: var(--wick-font-sans);
+  color: var(--wick-text);
+}
+
+wick-funding-rate [part="container"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 20px;
+  background: var(--wick-surface);
+  backdrop-filter: blur(var(--wick-glass-blur));
+  -webkit-backdrop-filter: blur(var(--wick-glass-blur));
+  border: var(--wick-glass-border);
+  border-radius: var(--wick-radius);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+wick-funding-rate [part="symbol"] {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--wick-text-muted);
+}
+
+wick-funding-rate [part~="rate"] {
+  font-family: var(--wick-font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+wick-funding-rate [part~="rate--positive"] {
+  color: var(--wick-fr-positive-color);
+  text-shadow: 0 0 14px var(--wick-green-glow);
+}
+
+wick-funding-rate [part~="rate--negative"] {
+  color: var(--wick-fr-negative-color);
+  text-shadow: 0 0 14px var(--wick-red-glow);
+}
+
+wick-funding-rate [part~="rate--zero"] { color: var(--wick-fr-zero-color); }
+
+wick-funding-rate [part="countdown"] {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 18px;
+  border-left: 1px solid var(--wick-border);
+}
+
+wick-funding-rate [part="countdown-label"] {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--wick-text-muted);
+}
+
+wick-funding-rate [part="countdown-value"] {
+  font-family: var(--wick-font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--wick-text);
+}
+
+wick-funding-rate [part="sparkline"] {
+  width: 110px;
+  height: 32px;
+}
+
+/* ── Mini Chart ─────────────────────────────────────────── */
+
+wick-mini-chart {
+  --wick-mc-up-color: var(--wick-green);
+  --wick-mc-down-color: var(--wick-red);
+  --wick-mc-flat-color: var(--wick-text-muted);
+  --wick-mc-up-fill: var(--wick-green-glow);
+  --wick-mc-down-fill: var(--wick-red-glow);
+  --wick-mc-flat-fill: rgba(255, 255, 255, 0.04);
+  --wick-mc-line-width: 1.75;
+  --wick-mc-dot-size: 2.25;
+  --wick-mc-baseline-color: rgba(255, 255, 255, 0.14);
+  --wick-mc-baseline-width: 1;
+  --wick-mc-baseline-dash: 2 3;
+  display: inline-block;
+  width: 128px;
+  height: 36px;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 6px rgba(0, 255, 163, 0.12));
+}
+
+wick-mini-chart [part="svg"] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+wick-mini-chart [part~="line--down"] {
+  filter: drop-shadow(0 0 4px rgba(255, 56, 96, 0.3));
+}
+
+wick-mini-chart [part~="line--up"] {
+  filter: drop-shadow(0 0 4px rgba(0, 255, 163, 0.3));
+}
+
+/* ══════════════════════════════════════════════════════════
+   New Packages — Batch A–E (glass theme)
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Connection Status ───────────────────────────────────── */
+wick-connection-status {
+  --wick-cs-connected-color: var(--wick-green);
+  --wick-cs-connecting-color: #fbbf24;
+  --wick-cs-degraded-color: #fbbf24;
+  --wick-cs-disconnected-color: var(--wick-red);
+  --wick-cs-stale-color: rgba(232,240,254,0.35);
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-family: var(--wick-font-mono);
+}
+wick-connection-status [part="dot"] { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+wick-connection-status [part~="state--connected"]    { color: var(--wick-cs-connected-color); }
+wick-connection-status [part~="state--connecting"]   { color: var(--wick-cs-connecting-color); }
+wick-connection-status [part~="state--degraded"]     { color: var(--wick-cs-degraded-color); }
+wick-connection-status [part~="state--disconnected"] { color: var(--wick-cs-disconnected-color); }
+wick-connection-status [part~="state--stale"]        { color: var(--wick-cs-stale-color); }
+wick-connection-status [part="latency"] { color: rgba(232,240,254,0.4); margin-left: 4px; }
+
+/* ── Position Sizer ──────────────────────────────────────── */
+wick-position-sizer {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  padding: 12px; background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); font-size: 13px;
+}
+wick-position-sizer [part="result-label"] { color: var(--wick-text-muted); }
+wick-position-sizer [part="result-value"] { font-family: var(--wick-font-mono); font-variant-numeric: tabular-nums; color: var(--wick-text); }
+
+/* ── Risk Panel ──────────────────────────────────────────── */
+wick-risk-panel {
+  --wick-rp-safe-color: var(--wick-green);
+  --wick-rp-warn-color: #fbbf24;
+  --wick-rp-danger-color: var(--wick-red);
+  display: block; padding: 12px; background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); font-size: 13px;
+}
+wick-risk-panel [part~="level--safe"]   { color: var(--wick-rp-safe-color); }
+wick-risk-panel [part~="level--warn"]   { color: var(--wick-rp-warn-color); }
+wick-risk-panel [part~="level--danger"] { color: var(--wick-rp-danger-color); }
+wick-risk-panel [part="health-bar"] { height: 4px; background: var(--wick-border); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+wick-risk-panel [part="health-fill"] { height: 100%; width: var(--wick-rp-utilization, 0%); background: currentColor; border-radius: 2px; transition: width 0.3s; }
+
+/* ── Market Clock ────────────────────────────────────────── */
+wick-market-clock {
+  --wick-mkc-open-color: var(--wick-green);
+  --wick-mkc-closed-color: var(--wick-red);
+  display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; font-family: var(--wick-font-mono);
+}
+wick-market-clock [part~="market-status--open"]   { color: var(--wick-mkc-open-color); }
+wick-market-clock [part~="market-status--closed"] { color: var(--wick-mkc-closed-color); }
+wick-market-clock [part="countdown-value"]        { font-variant-numeric: tabular-nums; color: rgba(232,240,254,0.5); }
+
+/* ── Economic Calendar ───────────────────────────────────── */
+wick-economic-calendar {
+  --wick-ec-high-color: var(--wick-red);
+  --wick-ec-medium-color: #fbbf24;
+  --wick-ec-low-color: rgba(232,240,254,0.35);
+  display: block; font-size: 13px;
+}
+wick-economic-calendar [part~="event-row--high"]   { border-left: 2px solid var(--wick-ec-high-color); }
+wick-economic-calendar [part~="event-row--medium"] { border-left: 2px solid var(--wick-ec-medium-color); }
+wick-economic-calendar [part~="event-row--low"]    { border-left: 2px solid var(--wick-ec-low-color); }
+wick-economic-calendar [part="event-time"]  { font-family: var(--wick-font-mono); color: rgba(232,240,254,0.5); }
+wick-economic-calendar [part="day-header"]  { color: rgba(232,240,254,0.4); font-size: 11px; text-transform: uppercase; padding: 8px 0 4px; }
+
+/* ── Liquidation Feed ────────────────────────────────────── */
+wick-liquidation-feed {
+  display: block; font-size: 12px; font-family: var(--wick-font-mono);
+}
+wick-liquidation-feed [part~="event--long"]  { color: var(--wick-red); }
+wick-liquidation-feed [part~="event--short"] { color: var(--wick-green); }
+wick-liquidation-feed [part~="event--whale"] { border: 1px solid rgba(251,191,36,0.3); background: rgba(251,191,36,0.06); }
+wick-liquidation-feed [part="size"]   { font-variant-numeric: tabular-nums; font-weight: 600; }
+wick-liquidation-feed [part="symbol"] { color: rgba(232,240,254,0.5); margin-right: 4px; }
+
+/* ── News Feed ───────────────────────────────────────────── */
+wick-news-feed { display: block; font-size: 13px; }
+wick-news-feed [part="item-title"]  { color: var(--wick-text); font-weight: 500; }
+wick-news-feed [part="item-source"] { color: var(--wick-text-muted); font-size: 11px; }
+wick-news-feed [part~="sentiment--bullish"] { border-left: 2px solid var(--wick-green); }
+wick-news-feed [part~="sentiment--bearish"] { border-left: 2px solid var(--wick-red); }
+
+/* ── Alerts ──────────────────────────────────────────────── */
+wick-alerts { display: block; font-size: 13px; }
+wick-alerts [part="rule-row"] { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--wick-border); }
+wick-alerts [part~="rule--triggered"] { background: rgba(0,255,163,0.05); }
+
+/* ── Trade History ───────────────────────────────────────── */
+wick-trade-history { display: block; font-size: 12px; font-family: var(--wick-font-mono); }
+wick-trade-history [part~="row--win"]  { color: var(--wick-green); }
+wick-trade-history [part~="row--loss"] { color: var(--wick-red); }
+wick-trade-history [part="summary-grid"] { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--wick-border); margin-bottom: 8px; }
+
+/* ── Open Interest ───────────────────────────────────────── */
+wick-open-interest { display: block; padding: 8px; background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); }
+wick-open-interest [part="current-value"] { font-family: var(--wick-font-mono); font-size: 20px; font-variant-numeric: tabular-nums; color: var(--wick-text); }
+wick-open-interest [part="current-label"] { font-size: 11px; color: var(--wick-text-muted); text-transform: uppercase; }
+
+/* ── PnL Summary ─────────────────────────────────────────── */
+wick-pnl-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px;
+}
+wick-pnl-summary [part="stat-tile"] { background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); padding: 10px 12px; backdrop-filter: blur(4px); }
+wick-pnl-summary [part="stat-label"] { font-size: 11px; color: var(--wick-text-muted); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+wick-pnl-summary [part="stat-value"] { font-family: var(--wick-font-mono); font-variant-numeric: tabular-nums; font-size: 16px; color: var(--wick-text); }
+wick-pnl-summary [part~="stat-value--positive"] { color: var(--wick-green); }
+wick-pnl-summary [part~="stat-value--negative"] { color: var(--wick-red); }
+
+/* ── Equity Curve ────────────────────────────────────────── */
+wick-equity-curve { display: block; padding: 8px; background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); backdrop-filter: blur(8px); }
+wick-equity-curve [part="timeframe-btn"] { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: transparent; border: 1px solid var(--wick-border); color: var(--wick-text-muted); cursor: pointer; }
+wick-equity-curve [part~="timeframe-btn--active"] { background: var(--wick-green); color: #000; border-color: transparent; }
+
+/* ── Positions ───────────────────────────────────────────── */
+wick-positions { display: block; font-size: 12px; font-family: var(--wick-font-mono); }
+wick-positions [part~="position-row--long"]  { border-left: 2px solid var(--wick-green); }
+wick-positions [part~="position-row--short"] { border-left: 2px solid var(--wick-red); }
+wick-positions [part~="cell-pnl--positive"]  { color: var(--wick-green); }
+wick-positions [part~="cell-pnl--negative"]  { color: var(--wick-red); }
+wick-positions [part="cell-close-btn"]       { font-size: 10px; padding: 2px 6px; background: rgba(255,56,96,0.12); color: var(--wick-red); border: 1px solid rgba(255,56,96,0.25); border-radius: 3px; cursor: pointer; }
+
+/* ── Correlation Matrix ──────────────────────────────────── */
+wick-correlation-matrix {
+  --wick-cm-cell-size: 56px;
+  display: inline-grid;
+}
+wick-correlation-matrix [part~="cell"] { width: var(--wick-cm-cell-size); height: var(--wick-cm-cell-size); display: flex; align-items: center; justify-content: center; font-family: var(--wick-font-mono); font-size: 11px; border: 1px solid var(--wick-border); cursor: pointer; backdrop-filter: blur(4px); }
+wick-correlation-matrix [part~="cell--positive"] { background: rgba(0,255,163,calc(var(--wick-cm-cell-strength,0)*0.4)); }
+wick-correlation-matrix [part~="cell--negative"] { background: rgba(255,56,96,calc(var(--wick-cm-cell-strength,0)*0.4)); }
+wick-correlation-matrix [part~="cell--diagonal"] { background: rgba(255,255,255,0.04); }
+
+/* ── Watchlist ───────────────────────────────────────────── */
+wick-watchlist { display: block; font-size: 12px; font-family: var(--wick-font-mono); }
+wick-watchlist [part~="cell--change--positive"] { color: var(--wick-green); }
+wick-watchlist [part~="cell--change--negative"] { color: var(--wick-red); }
+wick-watchlist [part~="row"]:hover { background: rgba(255,255,255,0.04); }
+
+/* ── Symbol Search ───────────────────────────────────────── */
+wick-symbol-search { display: block; position: relative; font-size: 13px; }
+wick-symbol-search [part="input"] { width: 100%; padding: 8px 12px; background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); color: var(--wick-text); backdrop-filter: blur(8px); outline: none; }
+wick-symbol-search [part="input"]:focus { border-color: var(--wick-green); box-shadow: 0 0 0 2px rgba(0,255,163,0.15); }
+wick-symbol-search [part="results"] { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 100; background: rgba(10,12,20,0.92); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); backdrop-filter: blur(12px); overflow: hidden; max-height: 300px; overflow-y: auto; }
+wick-symbol-search [part~="result"] { padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+wick-symbol-search [part~="result--active"] { background: rgba(0,255,163,0.08); }
+wick-symbol-search [part="result-symbol"]   { font-weight: 600; color: var(--wick-text); }
+wick-symbol-search [part="result-name"]     { color: var(--wick-text-muted); font-size: 11px; }
+
+/* ── Order Ticket ────────────────────────────────────────── */
+wick-order-ticket { display: block; padding: 12px; background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); backdrop-filter: blur(8px); font-size: 13px; }
+wick-order-ticket [part~="side-buy"]  { background: rgba(0,255,163,0.12); color: var(--wick-green); border: 1px solid rgba(0,255,163,0.25); }
+wick-order-ticket [part~="side-sell"] { background: rgba(255,56,96,0.12); color: var(--wick-red); border: 1px solid rgba(255,56,96,0.25); }
+wick-order-ticket [part="submit-btn"] { width: 100%; padding: 10px; border: none; border-radius: var(--wick-radius); font-size: 14px; font-weight: 600; cursor: pointer; background: var(--wick-green); color: #000; }
+wick-order-ticket [part="submit-btn"]:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Order Manager ───────────────────────────────────────── */
+wick-order-manager { display: block; font-size: 12px; font-family: var(--wick-font-mono); }
+wick-order-manager [part~="cell--side--buy"]  { color: var(--wick-green); }
+wick-order-manager [part~="cell--side--sell"] { color: var(--wick-red); }
+wick-order-manager [part="fill-progress"] { height: 3px; background: var(--wick-green); width: var(--wick-om-fill, 0%); border-radius: 2px; }
+wick-order-manager [part="cancel-btn"] { font-size: 10px; padding: 2px 6px; background: rgba(255,56,96,0.12); color: var(--wick-red); border: 1px solid rgba(255,56,96,0.25); border-radius: 3px; cursor: pointer; }
+
+/* ── Screener ────────────────────────────────────────────── */
+wick-screener { display: block; padding: 12px; background: var(--wick-surface); border: 1px solid var(--wick-border); border-radius: var(--wick-radius); backdrop-filter: blur(8px); font-size: 13px; }
+wick-screener [part="filter-bar"] { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+wick-screener [part="filter-label"] { font-size: 11px; color: var(--wick-text-muted); display: block; margin-bottom: 4px; }
+wick-screener [part="results-count"] { margin-left: auto; color: var(--wick-text-muted); font-size: 12px; }
+
+/* ── Volume Profile ──────────────────────────────────────── */
+wick-volume-profile { --wick-vp-bar-color: rgba(0,255,163,0.3); --wick-vp-poc-color: var(--wick-green); display: block; }
+wick-volume-profile [part~="bar"] { height: 6px; margin: 1px 0; background: var(--wick-vp-bar-color); width: var(--wick-vp-bar-pct, 0%); border-radius: 0 3px 3px 0; }
+wick-volume-profile [part~="bar--poc"] { background: var(--wick-vp-poc-color); }
+wick-volume-profile [part="poc-line"] { border-top: 1px solid var(--wick-vp-poc-color); box-shadow: 0 0 6px rgba(0,255,163,0.4); }
+
+/* ── DOM Ladder ──────────────────────────────────────────── */
+wick-dom-ladder { display: block; font-size: 12px; font-family: var(--wick-font-mono); }
+wick-dom-ladder [part~="row"] { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 1px 4px; cursor: pointer; }
+wick-dom-ladder [part~="row--best-bid"] { background: rgba(0,255,163,0.12); }
+wick-dom-ladder [part~="row--best-ask"] { background: rgba(255,56,96,0.12); }
+wick-dom-ladder [part="bid-cell"]   { color: var(--wick-green); text-align: right; font-variant-numeric: tabular-nums; }
+wick-dom-ladder [part="ask-cell"]   { color: var(--wick-red); text-align: left; font-variant-numeric: tabular-nums; }
+wick-dom-ladder [part="price-cell"] { text-align: center; color: var(--wick-text); padding: 0 8px; }
+
+/* ── Drawing Overlay ─────────────────────────────────────── */
+wick-drawing-overlay { display: block; position: absolute; inset: 0; pointer-events: none; }
+wick-drawing-overlay [part="overlay"] { pointer-events: auto; width: 100%; height: 100%; position: relative; }
+wick-drawing-overlay [part~="tool-handle"] { position: absolute; width: 8px; height: 8px; background: rgba(232,240,254,0.5); border-radius: 50%; cursor: move; transform: translate(-50%,-50%); }
+wick-drawing-overlay [part~="tool-handle--selected"] { background: var(--wick-green); box-shadow: 0 0 0 2px rgba(0,255,163,0.3), 0 0 8px rgba(0,255,163,0.4); }

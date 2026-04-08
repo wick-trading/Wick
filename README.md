@@ -19,13 +19,56 @@ Headless Web Components for trading interfaces. Framework-agnostic, unstyled, re
 
 ## Packages
 
-| Package | Description | Size (gzip) |
-|---------|-------------|-------------|
-| `@wick/core` | Shared types & utilities | ~0.5 KB |
-| `@wick/order-book` | `<wick-order-book>` | ~1.8 KB |
-| `@wick/price-ticker` | `<wick-price-ticker>` | ~1.2 KB |
-| `@wick/trade-feed` | `<wick-trade-feed>` | ~1.4 KB |
-| `@wick/adapters` | Binance, Coinbase, Kraken adapters | ~0.6 KB each |
+See [`packages/CATEGORIES.md`](packages/CATEGORIES.md) for the full operational roadmap.
+
+### ✅ Shipped
+
+| Package | Component | Category | Size (gzip) |
+|---------|-----------|----------|-------------|
+| `@wick/core` | — | Infrastructure | ~0.5 KB |
+| `@wick/adapters` | — | Infrastructure | ~0.6 KB each |
+| `@wick/theme` | — | Infrastructure | — |
+| `@wick/order-book` | `<wick-order-book>` | Market Data | ~1.8 KB |
+| `@wick/price-ticker` | `<wick-price-ticker>` | Market Data | ~1.2 KB |
+| `@wick/trade-feed` | `<wick-trade-feed>` | Market Data | ~1.4 KB |
+| `@wick/depth-chart` | `<wick-depth-chart>` | Market Data | ~2.1 KB |
+| `@wick/candlestick-chart` | `<wick-candlestick-chart>` | Charts | ~1.6 KB + Lightweight Charts |
+
+### 🔄 Transmigrating (in progress)
+
+| Package | Component | Source |
+|---------|-----------|--------|
+| `@wick/indicators` | `<wick-indicator-ema>` etc. | [`react-financial-charts`](https://github.com/react-financial/react-financial-charts) + [`react-stockcharts`](https://github.com/rrag/react-stockcharts) (both MIT) |
+| `@wick/order-book-heatmap` | `<wick-order-book-heatmap>` | [`Elenchev/order-book-heatmap`](https://github.com/Elenchev/order-book-heatmap) (BSD-2) |
+| `@wick/market-heatmap` | `<wick-market-heatmap>` | [`react-stock-heatmap`](https://github.com/rongmz/react-stock-heatmap) (MIT) |
+
+### 📋 Planned (greenfield — no OSS equivalent exists)
+
+| Package | Component | Category |
+|---------|-----------|----------|
+| `@wick/funding-rate` | `<wick-funding-rate>` | Market Data |
+| `@wick/open-interest` | `<wick-open-interest>` | Market Data |
+| `@wick/liquidation-feed` | `<wick-liquidation-feed>` | Market Data |
+| `@wick/dom-ladder` | `<wick-dom-ladder>` | Market Data |
+| `@wick/volume-profile` | `<wick-volume-profile>` | Charts |
+| `@wick/drawing-tools` | `<wick-drawing-overlay>` | Charts |
+| `@wick/mini-chart` | `<wick-mini-chart>` | Charts |
+| `@wick/correlation-matrix` | `<wick-correlation-matrix>` | Charts |
+| `@wick/order-ticket` | `<wick-order-ticket>` | Execution |
+| `@wick/order-manager` | `<wick-order-manager>` | Execution |
+| `@wick/position-sizer` | `<wick-position-sizer>` | Execution |
+| `@wick/positions` | `<wick-positions>` | Portfolio |
+| `@wick/pnl` | `<wick-pnl-summary>` + `<wick-equity-curve>` | Portfolio |
+| `@wick/trade-history` | `<wick-trade-history>` | Portfolio |
+| `@wick/risk-panel` | `<wick-risk-panel>` | Portfolio |
+| `@wick/watchlist` | `<wick-watchlist>` | Market Overview |
+| `@wick/screener` | `<wick-screener>` | Market Overview |
+| `@wick/symbol-search` | `<wick-symbol-search>` | Market Overview |
+| `@wick/market-clock` | `<wick-market-clock>` | Market Overview |
+| `@wick/alerts` | `<wick-alerts>` | Alerts & Intel |
+| `@wick/news-feed` | `<wick-news-feed>` | Alerts & Intel |
+| `@wick/economic-calendar` | `<wick-economic-calendar>` | Alerts & Intel |
+| `@wick/connection-status` | `<wick-connection-status>` | Alerts & Intel |
 
 ## Quick Start
 

@@ -1,0 +1,182 @@
+/**
+ * wick-components.css — bridges site CSS tokens to @wick/* component variables.
+ *
+ * The headless components expose per-prefix CSS custom properties and parts.
+ * We map site tokens (--green, --red, --surface, --border, --text-muted)
+ * onto them so components inherit the site's visual language automatically.
+ */
+
+/* ── Global bridge for all wick components ──────────────────────────────── */
+:where(wick-order-book, wick-price-ticker, wick-trade-feed) {
+  display: block;
+  color: var(--foreground);
+  font-family: var(--font-mono, 'SF Mono', 'Fira Code', monospace);
+  font-size: 13px;
+  line-height: 1.5;
+
+  /* Shared palette tokens (most wick components read these) */
+  --wick-green: var(--green);
+  --wick-red: var(--red);
+  --wick-bg: var(--surface);
+  --wick-text: var(--foreground);
+  --wick-text-muted: var(--text-muted);
+  --wick-border: var(--border);
+}
+
+/* ── Order book ─────────────────────────────────────────────────────────── */
+wick-order-book {
+  --wick-ob-ask-color: var(--red);
+  --wick-ob-bid-color: var(--green);
+  --wick-ob-ask-depth-color: color-mix(in oklab, var(--red) 14%, transparent);
+  --wick-ob-bid-depth-color: color-mix(in oklab, var(--green) 14%, transparent);
+  --wick-ob-row-hover: color-mix(in oklab, var(--foreground) 4%, transparent);
+  --wick-ob-spread-color: var(--text-muted);
+  --wick-ob-font-size: 12px;
+  --wick-ob-row-height: 22px;
+  padding: 12px 14px;
+}
+
+wick-order-book [part~="header"] {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0 4px 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+
+wick-order-book [part~="row"] {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0 4px;
+  align-items: center;
+  cursor: default;
+  transition: background 120ms ease;
+}
+
+wick-order-book [part~="spread"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px dashed var(--border);
+  margin: 6px 0;
+}
+
+/* ── Price ticker ───────────────────────────────────────────────────────── */
+wick-price-ticker {
+  --wick-ticker-up-color: var(--green);
+  --wick-ticker-down-color: var(--red);
+  --wick-ticker-flash-duration: 280ms;
+}
+
+wick-price-ticker [part~="container"] {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+wick-price-ticker [part~="symbol"] {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+wick-price-ticker [part~="price"] {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition: color 180ms ease;
+}
+
+wick-price-ticker [part~="change"] {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+wick-price-ticker [part~="high"],
+wick-price-ticker [part~="low"],
+wick-price-ticker [part~="volume"] {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Flash background on last-tick change */
+wick-price-ticker [part~="container"][data-flashing][data-direction="up"] {
+  background: color-mix(in oklab, var(--green) 8%, transparent);
+  border-radius: 6px;
+}
+wick-price-ticker [part~="container"][data-flashing][data-direction="down"] {
+  background: color-mix(in oklab, var(--red) 8%, transparent);
+  border-radius: 6px;
+}
+
+/* ── Trade feed ─────────────────────────────────────────────────────────── */
+wick-trade-feed {
+  --wick-tf-buy-color: var(--green);
+  --wick-tf-sell-color: var(--red);
+  --wick-tf-row-height: 22px;
+  --wick-tf-font-size: 12px;
+  --wick-tf-max-height: 380px;
+  padding: 0;
+}
+
+wick-trade-feed [part~="table"] {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+wick-trade-feed thead th {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-align: right;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+wick-trade-feed thead th:first-child {
+  text-align: left;
+}
+
+wick-trade-feed [part~="list"] {
+  max-height: var(--wick-tf-max-height, 380px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+wick-trade-feed [part~="row"] {
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 50%, transparent);
+  transition: background 120ms ease;
+}
+wick-trade-feed [part~="row"]:hover {
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+}
+
+wick-trade-feed [part~="price"],
+wick-trade-feed [part~="size"],
+wick-trade-feed [part~="time"] {
+  padding: 0 14px;
+  text-align: right;
+  font-size: 12px;
+}
+wick-trade-feed [part~="price"] {
+  text-align: left;
+  font-weight: 600;
+}
+wick-trade-feed [part~="time"] {
+  color: var(--text-muted);
+  font-size: 11px;
+}
