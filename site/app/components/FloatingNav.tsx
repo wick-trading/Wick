@@ -80,7 +80,7 @@ const catSlug = (label: string) =>
   label.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
 
 // Target href: takes users to the landing #components section with category preselected
-const catHref = (label: string) => `/#components?cat=${catSlug(label)}`;
+const catHref = (label: string) => `/Wick/#components?cat=${catSlug(label)}`;
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 
