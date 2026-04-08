@@ -1,0 +1,31 @@
+{
+  "name": "@wick/market-heatmap",
+  "version": "0.0.2",
+  "description": "Headless canvas treemap-style market heatmap — any market universe by size and change %",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/market-heatmap"
+  },
+  "keywords": ["trading", "web-components", "headless", "heatmap", "treemap", "market", "canvas"],
+  "author": "astralchemist",
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.2.0"
+  }
+}
