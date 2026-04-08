@@ -11,7 +11,7 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "SOURCES.md", "README.md"],
   "scripts": {
     "build": "vite build",
     "dev": "vite build --watch"
@@ -19,7 +19,7 @@
   "sideEffects": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/astralchemist/wick",
+    "url": "https://github.com/wick-trading/Wick",
     "directory": "packages/indicators"
   },
   "keywords": [
