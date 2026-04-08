@@ -1,279 +1,277 @@
-"use client";
+import { FloatingNav } from "./components/FloatingNav";
+import { AnimatedTradingCard } from "./components/AnimatedTradingCard";
+import { BentoGrid } from "./components/BentoGrid";
+import { ComponentCards } from "./components/ComponentCards";
+import { CodeTabs } from "./components/CodeTabs";
+import { ThemesShowcase } from "./components/ThemesShowcase";
+import { SkipNav } from "./components/ui/SkipNav";
+import { GITHUB, DOCS_BASE, VERSION } from "./lib/constants";
 
-import { useState } from "react";
-
-const REPO = "https://github.com/astralchemist/vela";
-const DOCS = `${REPO}/tree/main/docs/wiki/Getting-Started.md`;
-
-const components = [
-  { icon: "\u2630", name: "Order Book", desc: "Bids & asks with depth bars, price grouping, streaming delta updates via applyDelta().", tag: "<wick-order-book>" },
-  { icon: "\u26A1", name: "Price Ticker", desc: "Flash-on-change with direction detection. 24h stats. Emits wick-price-change events.", tag: "<wick-price-ticker>" },
-  { icon: "\u21C5", name: "Trade Feed", desc: "Scrolling trade list with addTrade() streaming. Time formats: absolute, relative, datetime.", tag: "<wick-trade-feed>" },
-  { icon: "\u25E0", name: "Depth Chart", desc: "Canvas 2D cumulative bid/ask depth curves. Crosshair tooltip. 60fps via requestAnimationFrame.", tag: "<wick-depth-chart>" },
-  { icon: "\u2593", name: "Candlestick Chart", desc: "OHLCV via TradingView Lightweight Charts. Real-time updateCandle(). Volume overlay.", tag: "<wick-candlestick-chart>" },
-  { icon: "\u21C4", name: "10 Exchange Adapters", desc: "Binance, Coinbase, Kraken, Bybit, OKX, dYdX, Bitfinex, Gate.io, MEXC, KuCoin.", tag: "adapter.parse()" },
-];
-
-const codeExamples: Record<string, string> = {
-  Vanilla: `import '@wick/order-book';
-import { binanceAdapter } from '@wick/adapters/binance';
-
-const ob = document.querySelector('wick-order-book');
-const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@depth');
-
-ws.onmessage = (e) => {
-  const msg = binanceAdapter.parse(JSON.parse(e.data));
-  if (msg?.type === 'orderbook_delta') ob.applyDeltas(msg.data);
-};`,
-  React: `import { OrderBook, PriceTicker } from '@wick/react';
-
-function TradingPanel({ bookData, tickerData }) {
+export default function HomePage() {
   return (
     <>
-      <PriceTicker data={tickerData} showDetails />
-      <OrderBook
-        data={bookData}
-        depth={15}
-        showTotal
-        showDepth
-        onLevelClick={(d) => console.log(d.price)}
-      />
-    </>
-  );
-}`,
-  Vue: `<script setup>
-import { useOrderBook } from '@wick/vue';
-import { ref } from 'vue';
+      <SkipNav />
+      <FloatingNav />
 
-const data = ref({ bids: [], asks: [] });
-const { elRef } = useOrderBook(data);
-</script>
-
-<template>
-  <wick-order-book ref="elRef" :depth="15" show-total show-depth />
-</template>`,
-  Svelte: `<script>
-  import { orderBook } from '@wick/svelte';
-  let data = { bids: [], asks: [] };
-</script>
-
-<wick-order-book use:orderBook={data} depth={15} show-total show-depth />`,
-  Angular: `import { WickOrderBookDirective } from '@wick/angular';
-
-@Component({
-  standalone: true,
-  imports: [WickOrderBookDirective],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: \`
-    <wick-order-book
-      wickOrderBook
-      [wickData]="bookData"
-      (wickLevelClick)="onClick($event)"
-      depth="15" show-total show-depth
-    ></wick-order-book>
-  \`
-})`,
-};
-
-const exchanges = [
-  "Binance", "Coinbase", "Kraken", "Bybit", "OKX",
-  "dYdX", "Bitfinex", "Gate.io", "MEXC", "KuCoin",
-];
-
-const themes = [
-  { name: "Exchange", slug: "dark", desc: "Binance/Bybit inspired", colors: { ask: "#f6465d", bid: "#0ecb81", bg: "#12161c", askBg: "rgba(246,70,93,0.08)", bidBg: "rgba(14,203,129,0.08)", muted: "#5e6673" } },
-  { name: "Minimal", slug: "minimal", desc: "Monochrome, clean borders", colors: { ask: "#ef4444", bid: "#22c55e", bg: "#111113", askBg: "transparent", bidBg: "transparent", muted: "#52525b" } },
-  { name: "Glassmorphism", slug: "glass", desc: "Frosted panels, neon glow", colors: { ask: "#ff3860", bid: "#00ffa3", bg: "linear-gradient(135deg, rgba(15,12,41,0.9), rgba(48,43,99,0.6))", askBg: "transparent", bidBg: "transparent", muted: "#6a6a8a" } },
-];
-
-const mockRows = [
-  { price: "67,432.50", size: "1.2340" },
-  { price: "67,431.00", size: "0.8910" },
-  { price: "67,430.50", size: "2.1560" },
-  { price: "67,429.00", size: "0.5670" },
-  { price: "67,428.50", size: "1.8920" },
-  { price: "67,427.00", size: "3.4510" },
-];
-
-export default function Home() {
-  const [activeTab, setActiveTab] = useState("Vanilla");
-
-  return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Glow effects */}
-      <div className="fixed top-[-40%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(124,93,250,0.08)_0%,transparent_70%)] pointer-events-none" />
-      <div className="fixed bottom-[-30%] right-[-10%] w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(0,255,163,0.04)_0%,transparent_70%)] pointer-events-none" />
-
-      <div className="relative z-10 max-w-[1100px] mx-auto px-6">
-        {/* Nav */}
-        <nav className="flex items-center justify-between py-5">
-          <span className="text-xl font-extrabold tracking-tight">Wick</span>
-          <div className="hidden md:flex gap-8">
-            {["Components", "Exchanges", "Themes"].map((s) => (
-              <a key={s} href={`#${s.toLowerCase()}`} className="text-sm font-medium text-muted hover:text-foreground transition-colors">{s}</a>
-            ))}
-            <a href={REPO} target="_blank" className="text-sm font-medium text-muted hover:text-foreground transition-colors">GitHub</a>
-            <a href={DOCS} target="_blank" className="text-sm font-medium text-muted hover:text-foreground transition-colors">Docs</a>
-          </div>
-        </nav>
-
-        {/* Hero */}
-        <section className="pt-24 pb-20 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-surface-2 border border-border rounded-full text-sm text-text-2 mb-8">
-            <span className="w-1.5 h-1.5 bg-green rounded-full animate-pulse" />
-            v0.1.0-alpha
-          </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.05] tracking-[-0.04em] mb-6">
-            Trading UI<br />
-            <span className="bg-gradient-to-r from-accent-2 to-green bg-clip-text text-transparent">without the baggage</span>
-          </h1>
-          <p className="text-lg text-text-2 max-w-[560px] mx-auto mb-10 leading-relaxed">
-            Headless Web Components for order books, charts, trade feeds, and more. Framework-agnostic. Unstyled. Real-time first. Under 10KB.
-          </p>
-          <div className="flex gap-3 justify-center flex-wrap">
-            <a href={REPO} target="_blank" className="inline-flex items-center gap-2 px-7 py-3.5 bg-foreground text-background rounded-xl text-[15px] font-semibold hover:opacity-90 transition-opacity">
-              View on GitHub
-            </a>
-            <a href={DOCS} target="_blank" className="inline-flex items-center gap-2 px-7 py-3.5 bg-surface-2 border border-border text-foreground rounded-xl text-[15px] font-semibold hover:border-muted transition-colors">
-              Get Started
-            </a>
-          </div>
-          <div className="mt-8">
-            <code className="font-mono text-sm text-text-2 bg-surface border border-border px-5 py-3 rounded-xl select-all">
-              <span className="text-muted">$</span> npm install @wick/order-book @wick/trade-feed
-            </code>
-          </div>
-        </section>
-
-        {/* Stats */}
-        <div className="flex justify-center gap-12 md:gap-16 py-12 border-t border-b border-border mb-20 flex-wrap">
-          {[
-            { value: "5", label: "Components" },
-            { value: "10", label: "Exchanges" },
-            { value: "5", label: "Frameworks" },
-            { value: "3", label: "Themes" },
-            { value: "<10KB", label: "Core (gzip)" },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="font-mono text-4xl font-bold tracking-tight">{s.value}</div>
-              <div className="text-sm text-muted mt-1">{s.label}</div>
-            </div>
-          ))}
+      <main id="main-content" className="relative overflow-x-hidden">
+        {/* Ambient background glows */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <div
+            style={{
+              position: "absolute",
+              top: "-20%",
+              left: "60%",
+              width: "700px",
+              height: "700px",
+              background: "radial-gradient(circle, rgba(0,255,163,0.05) 0%, transparent 70%)",
+              transform: "translateX(-50%)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "40%",
+              left: "10%",
+              width: "500px",
+              height: "500px",
+              background: "radial-gradient(circle, rgba(124,93,250,0.04) 0%, transparent 70%)",
+            }}
+          />
         </div>
 
-        {/* Components */}
-        <section id="components" className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold tracking-tight mb-3">5 primitives, infinite possibilities</h2>
-            <p className="text-text-2">Everything you need to build a trading interface. Bring your own styles.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {components.map((c) => (
-              <div key={c.name} className="bg-surface border border-border rounded-2xl p-7 hover:border-muted hover:-translate-y-0.5 transition-all">
-                <span className="text-3xl mb-4 block">{c.icon}</span>
-                <h3 className="text-base font-semibold mb-2">{c.name}</h3>
-                <p className="text-sm text-text-2 leading-relaxed mb-3">{c.desc}</p>
-                <code className="font-mono text-xs bg-surface-2 px-2 py-1 rounded text-accent-2">{c.tag}</code>
-              </div>
-            ))}
-          </div>
-        </section>
+        <div className="relative z-10 max-w-[1180px] mx-auto px-6">
 
-        {/* Code examples */}
-        <section className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold tracking-tight mb-3">Works with your stack</h2>
-            <p className="text-text-2">Native Web Components + framework wrappers for the DX you expect.</p>
-          </div>
-          <div className="flex gap-1 pl-4">
-            {Object.keys(codeExamples).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`font-mono text-sm px-5 py-2.5 rounded-t-xl border border-b-0 transition-colors ${
-                  activeTab === tab
-                    ? "bg-surface-2 text-foreground border-border"
-                    : "bg-surface text-muted border-border hover:text-text-2"
-                }`}
+          {/* ── Hero ── */}
+          <section aria-labelledby="hero-heading" className="min-h-screen flex items-center pt-24 pb-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+
+              {/* Left — copy */}
+              <div className="space-y-8">
+                {/* Badge */}
+                <div
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium"
+                  style={{
+                    background: "rgba(0,255,163,0.06)",
+                    border: "1px solid rgba(0,255,163,0.18)",
+                    color: "var(--green)",
+                  }}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="w-1.5 h-1.5 rounded-full animate-pulse"
+                    style={{ background: "var(--green)" }}
+                  />
+                  Open Source · MIT License
+                </div>
+
+                {/* Headline */}
+                <h1
+                  id="hero-heading"
+                  className="font-extrabold leading-[1.04] tracking-[-0.04em]"
+                  style={{ fontSize: "clamp(44px, 5.5vw, 76px)" }}
+                >
+                  Build trading UIs
+                  <br />
+                  <span style={{ color: "var(--green)" }}>without the baggage.</span>
+                </h1>
+
+                {/* Subtext */}
+                <p
+                  className="text-lg leading-relaxed max-w-[460px]"
+                  style={{ color: "var(--text-2)", fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                >
+                  31 headless Web Components for order books, candlestick charts, trade feeds, and more.
+                  Framework-agnostic. Unstyled. Real-time first.
+                </p>
+
+                {/* CTAs */}
+                <div className="flex gap-3 flex-wrap">
+                  <a
+                    href={DOCS_BASE}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[15px] font-semibold transition-opacity hover:opacity-85"
+                    style={{ background: "var(--green)", color: "#06060a" }}
+                  >
+                    Get Started
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                  <a
+                    href={GITHUB}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[15px] font-semibold transition-colors"
+                    style={{
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      color: "var(--foreground)",
+                      background: "rgba(255,255,255,0.03)",
+                    }}
+                  >
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    View on GitHub
+                  </a>
+                </div>
+
+                {/* Install snippet */}
+                <div
+                  className="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl font-mono text-sm"
+                  style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                  }}
+                >
+                  <span aria-hidden="true" style={{ color: "var(--text-muted)" }}>$</span>
+                  <span style={{ color: "var(--text-2)" }}>
+                    npm install{" "}
+                    <span style={{ color: "var(--foreground)" }}>@wick/order-book</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Right — animated trading card */}
+              <div className="relative" aria-hidden="true">
+                <div
+                  className="absolute pointer-events-none"
+                  style={{
+                    inset: "-40px",
+                    background: "radial-gradient(ellipse at 50% 50%, rgba(0,255,163,0.06) 0%, transparent 65%)",
+                  }}
+                />
+                <AnimatedTradingCard />
+              </div>
+            </div>
+          </section>
+
+          {/* ── Bento stats ── */}
+          <BentoGrid />
+
+          {/* ── Component showcase ── */}
+          <ComponentCards />
+
+          {/* ── Framework code examples ── */}
+          <CodeTabs />
+
+          {/* ── Themes showcase ── */}
+          <ThemesShowcase />
+
+          {/* ── CTA ── */}
+          <section
+            aria-labelledby="cta-heading"
+            className="py-28 text-center"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+          >
+            <p className="text-sm font-medium mb-5" style={{ color: "var(--text-muted)" }}>
+              Ready to ship?
+            </p>
+            <h2
+              id="cta-heading"
+              className="font-extrabold tracking-tight mb-4"
+              style={{ fontSize: "clamp(36px, 4.5vw, 60px)" }}
+            >
+              Start building today.
+            </h2>
+            <p
+              className="text-lg mb-10 max-w-[380px] mx-auto leading-relaxed"
+              style={{ color: "var(--text-2)" }}
+            >
+              The trading UI community finally has the primitives it deserves. Open source. MIT licensed.
+            </p>
+            <div className="flex gap-3 justify-center flex-wrap">
+              <a
+                href={DOCS_BASE}
+                className="inline-flex items-center px-8 py-3.5 rounded-xl text-[15px] font-semibold transition-opacity hover:opacity-85"
+                style={{ background: "var(--green)", color: "#06060a" }}
               >
-                {tab}
-              </button>
-            ))}
-          </div>
-          <div className="bg-surface-2 border border-border rounded-b-2xl rounded-tr-2xl p-6 overflow-x-auto">
-            <pre className="font-mono text-sm leading-7 text-text-2 whitespace-pre">
-              {codeExamples[activeTab]}
-            </pre>
-          </div>
-        </section>
+                Read the Docs
+              </a>
+              <a
+                href={GITHUB}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-[15px] font-semibold transition-colors"
+                style={{
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "var(--foreground)",
+                  background: "rgba(255,255,255,0.03)",
+                }}
+              >
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+                Star on GitHub
+              </a>
+            </div>
+          </section>
 
-        {/* Exchanges */}
-        <section id="exchanges" className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold tracking-tight mb-3">10 exchanges. One parse call.</h2>
-            <p className="text-text-2">Drop-in adapters that map raw WebSocket messages to Wick types.</p>
-          </div>
-          <div className="flex flex-wrap gap-3 justify-center">
-            {exchanges.map((ex) => (
-              <span key={ex} className="bg-surface border border-border rounded-xl px-6 py-3 text-sm font-medium text-text-2 hover:border-muted hover:text-foreground transition-colors">
-                {ex}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        {/* Themes */}
-        <section id="themes" className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold tracking-tight mb-3">3 themes. Or bring your own.</h2>
-            <p className="text-text-2">Pure CSS. One import. Style per-component or globally.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {themes.map((t) => (
-              <div key={t.name} className="border border-border rounded-2xl overflow-hidden hover:border-muted hover:-translate-y-0.5 transition-all">
-                <div className="h-44 p-5 flex flex-col gap-1.5 font-mono text-xs" style={{ background: t.colors.bg }}>
-                  {mockRows.map((r, i) => (
-                    <div key={i} className="flex justify-between px-2 py-1 rounded" style={{ background: i < 3 ? t.colors.askBg : t.colors.bidBg }}>
-                      <span style={{ color: i < 3 ? t.colors.ask : t.colors.bid, textShadow: t.slug === "glass" ? `0 0 8px ${i < 3 ? t.colors.ask : t.colors.bid}40` : "none" }}>
-                        {r.price}
-                      </span>
-                      <span style={{ color: t.colors.muted }}>{r.size}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-5 bg-surface">
-                  <h3 className="text-[15px] font-semibold mb-1">{t.name}</h3>
-                  <p className="text-sm text-muted mb-2">{t.desc}</p>
-                  <code className="font-mono text-xs bg-surface-2 px-2 py-1 rounded text-accent-2">
-                    {`import '@wick/theme/${t.slug}'`}
-                  </code>
+          {/* ── Footer ── */}
+          <footer
+            className="py-10 flex flex-col sm:flex-row items-center justify-between gap-4"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+          >
+            {/* Author */}
+            <div className="flex items-center gap-3">
+              <div
+                aria-hidden="true"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+                style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.08)" }}
+              >
+                A
+              </div>
+              <div>
+                <a
+                  href="https://github.com/astralchemist"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium transition-colors hover:opacity-70"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  astralchemist
+                </a>
+                <div className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                  Creator of Wick
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
+            </div>
 
-        {/* CTA */}
-        <section className="text-center py-20 border-t border-border">
-          <h2 className="text-5xl font-extrabold tracking-tight mb-4">Start building.</h2>
-          <p className="text-text-2 mb-8">MIT licensed. Open source. Ship your trading UI today.</p>
-          <div className="flex gap-3 justify-center">
-            <a href={REPO} target="_blank" className="inline-flex items-center px-7 py-3.5 bg-foreground text-background rounded-xl text-[15px] font-semibold hover:opacity-90 transition-opacity">
-              GitHub
-            </a>
-            <a href={DOCS} target="_blank" className="inline-flex items-center px-7 py-3.5 bg-surface-2 border border-border text-foreground rounded-xl text-[15px] font-semibold hover:border-muted transition-colors">
-              Documentation
-            </a>
-          </div>
-        </section>
+            {/* Right side links */}
+            <div
+              className="flex items-center gap-4 text-sm flex-wrap justify-center"
+              style={{ color: "var(--text-muted)" }}
+            >
+              <span
+                className="font-mono text-[12px] px-2 py-1 rounded"
+                style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)" }}
+              >
+                v{VERSION}
+              </span>
+              <a
+                href={`${GITHUB}/blob/main/CHANGELOG.md`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:opacity-70"
+                style={{ color: "var(--text-muted)" }}
+              >
+                Changelog
+              </a>
+              <span aria-hidden="true">·</span>
+              <span>MIT License</span>
+              <span aria-hidden="true">·</span>
+              <a
+                href={GITHUB}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:opacity-70"
+                style={{ color: "var(--text-muted)" }}
+              >
+                GitHub
+              </a>
+            </div>
+          </footer>
 
-        {/* Footer */}
-        <footer className="py-8 border-t border-border text-center text-sm text-muted">
-          Built by <a href="https://github.com/astralchemist" target="_blank" className="text-text-2 hover:text-foreground transition-colors">astralchemist</a>
-          {" \u00B7 "}MIT License{" \u00B7 "}
-          <a href={REPO} target="_blank" className="text-text-2 hover:text-foreground transition-colors">GitHub</a>
-        </footer>
-      </div>
-    </div>
+        </div>
+      </main>
+    </>
   );
 }
