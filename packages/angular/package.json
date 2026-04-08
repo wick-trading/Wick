@@ -18,12 +18,12 @@
   },
   "sideEffects": true,
   "dependencies": {
-    "@wick/core": "0.0.1",
-    "@wick/order-book": "0.0.1",
-    "@wick/price-ticker": "0.0.1",
-    "@wick/trade-feed": "0.0.1",
-    "@wick/depth-chart": "0.0.1",
-    "@wick/candlestick-chart": "0.0.1"
+    "@wick/core": "*",
+    "@wick/order-book": "*",
+    "@wick/price-ticker": "*",
+    "@wick/trade-feed": "*",
+    "@wick/depth-chart": "*",
+    "@wick/candlestick-chart": "*"
   },
   "peerDependencies": {
     "@angular/core": ">=17",

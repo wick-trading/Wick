@@ -36,7 +36,7 @@
   "author": "astralchemist",
   "dependencies": {
     "lit": "^3.2.0",
-    "@wick/mini-chart": "^0.0.1"
+    "@wick/mini-chart": "*"
   },
   "license": "MIT"
 }

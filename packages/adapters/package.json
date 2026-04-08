@@ -79,7 +79,7 @@
   ],
   "author": "astralchemist",
   "dependencies": {
-    "@wick/core": "0.0.1"
+    "@wick/core": "*"
   },
   "license": "MIT"
 }
