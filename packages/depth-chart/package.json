@@ -1,6 +1,6 @@
 {
   "name": "@wick/depth-chart",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Headless Canvas-based depth chart Web Component",
   "type": "module",
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@wick/candlestick-chart",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Headless candlestick chart Web Component wrapping TradingView Lightweight Charts",
   "type": "module",
   "main": "./dist/index.js",

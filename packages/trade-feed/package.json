@@ -1,6 +1,6 @@
 {
   "name": "@wick/trade-feed",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Headless trade feed Web Component",
   "type": "module",
   "main": "./dist/index.js",

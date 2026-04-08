@@ -1,6 +1,6 @@
 {
   "name": "@wick/adapters",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Exchange adapters that map WebSocket feeds to Vela data types",
   "type": "module",
   "main": "./dist/index.js",

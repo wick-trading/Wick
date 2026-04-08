@@ -1,6 +1,6 @@
 {
   "name": "@wick/price-ticker",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Headless price ticker Web Component",
   "type": "module",
   "main": "./dist/index.js",
