@@ -26,6 +26,8 @@ import { formatPrice, formatSize } from '@wick/core';
  * @cssprop --wick-tf-row-height - Row height (default: 24px)
  * @cssprop --wick-tf-font-size - Font size (default: 13px)
  * @cssprop --wick-tf-max-height - Max height of the feed (default: 400px)
+ *
+ * @attr {sm|md|lg} size - Preset size: sm (compact 20px/11px), md (default 24px/13px), lg (spacious 32px/15px)
  */
 @customElement('wick-trade-feed')
 export class WickTradeFeed extends LitElement {

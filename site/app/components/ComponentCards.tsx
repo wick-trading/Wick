@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GREEN, RED } from "../lib/colors";
 import { DOCS_BASE } from "../lib/constants";
 
-// ── Existing detailed SVG previews ────────────────────────────────────────────
+// ── Detailed SVG previews ──────────────────────────────────────────────────────
 
 function OrderBookPreview() {
   const bids = [
@@ -50,7 +50,7 @@ function PriceTickerPreview() {
   return (
     <div className="w-full space-y-3">
       <div className="flex items-baseline justify-between">
-        <span className="font-mono text-[11px]" style={{ color: "var(--text-muted)" }}>BTC/USD</span>
+        <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.3)" }}>BTC/USD</span>
         <div className="flex items-center gap-2">
           <span className="font-mono text-xl font-bold" style={{ color: GREEN }}>$67,432.50</span>
           <span className="text-[10px] font-mono" style={{ color: GREEN }}>▲ +2.34%</span>
@@ -59,8 +59,8 @@ function PriceTickerPreview() {
       <div className="grid grid-cols-3 gap-2 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         {[{ label: "24h High", value: "$68,200" }, { label: "24h Low", value: "$66,100" }, { label: "Volume", value: "42.1K" }].map((s) => (
           <div key={s.label}>
-            <div className="text-[9px]" style={{ color: "var(--text-muted)" }}>{s.label}</div>
-            <div className="font-mono text-[11px] font-medium mt-0.5" style={{ color: "var(--foreground)" }}>{s.value}</div>
+            <div className="text-[9px]" style={{ color: "rgba(255,255,255,0.25)" }}>{s.label}</div>
+            <div className="font-mono text-[11px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.8)" }}>{s.value}</div>
           </div>
         ))}
       </div>
@@ -118,15 +118,15 @@ function FundingRatePreview() {
   return (
     <div className="w-full">
       <div className="flex items-center gap-4 pb-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <span className="font-mono text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>BTC-PERP</span>
+        <span className="font-mono text-[10px] uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>BTC-PERP</span>
         <span className="font-mono text-base font-semibold tabular-nums" style={{ color: GREEN }}>+0.0124%</span>
         <div className="flex flex-col gap-0.5 pl-3" style={{ borderLeft: "1px solid rgba(255,255,255,0.08)" }}>
-          <span className="text-[8px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Next funding</span>
-          <span className="font-mono text-[11px] tabular-nums" style={{ color: "var(--foreground)" }}>02:47:13</span>
+          <span className="text-[8px] uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>Next funding</span>
+          <span className="font-mono text-[11px] tabular-nums" style={{ color: "rgba(255,255,255,0.8)" }}>02:47:13</span>
         </div>
       </div>
       <div className="flex items-center gap-2 pt-2">
-        <span className="text-[9px] uppercase tracking-wider shrink-0" style={{ color: "var(--text-muted)" }}>8h history</span>
+        <span className="text-[9px] uppercase tracking-wider shrink-0" style={{ color: "rgba(255,255,255,0.25)" }}>8h history</span>
         <svg viewBox={`0 0 ${VB_W} ${VB_H}`} preserveAspectRatio="none" width="100%" height="22" style={{ display: "block" }}>
           <path d={areaPath} fill="rgba(0,255,163,0.10)" />
           <path d={linePath} fill="none" stroke={GREEN} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
@@ -160,7 +160,7 @@ function MiniChartPreview() {
         const lastY = parseFloat(lp.split(" ").pop()!.split(",")[1]);
         return (
           <div key={i} className="flex items-center gap-3">
-            <span className="font-mono text-[10px] w-8 shrink-0" style={{ color: "var(--text-muted)" }}>{label}</span>
+            <span className="font-mono text-[10px] w-8 shrink-0" style={{ color: "rgba(255,255,255,0.3)" }}>{label}</span>
             <svg viewBox={`0 0 ${VB_W} ${VB_H}`} preserveAspectRatio="none" width="100%" height="22" style={{ display: "block" }}>
               <path d={ap} fill={fill} />
               <path d={lp} fill="none" stroke={color} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
@@ -194,7 +194,7 @@ function CandlestickPreview() {
   );
 }
 
-// ── Placeholder preview for components without custom previews ─────────────────
+// ── Placeholder preview ────────────────────────────────────────────────────────
 
 function PlaceholderPreview({ tag, category }: { tag: string; category: string }) {
   const icons: Record<string, React.ReactNode> = {
@@ -252,19 +252,16 @@ function PlaceholderPreview({ tag, category }: { tag: string; category: string }
   };
 
   return (
-    <div
-      className="w-full h-full flex flex-col items-center justify-center gap-3 py-2"
-      style={{ color: "var(--text-muted)" }}
-    >
+    <div className="w-full h-full flex flex-col items-center justify-center gap-3 py-2">
       {icons[category] ?? null}
-      <code className="text-[9px] font-mono text-center" style={{ color: "var(--green)" }}>
+      <code className="text-[9px] font-mono text-center" style={{ color: GREEN }}>
         &lt;{tag}&gt;
       </code>
     </div>
   );
 }
 
-// ── Component data organized by category ──────────────────────────────────────
+// ── Component data ─────────────────────────────────────────────────────────────
 
 type ComponentEntry = {
   name: string;
@@ -282,70 +279,72 @@ const CATEGORIES: Category[] = [
   {
     label: "Market Data",
     components: [
-      { name: "Order Book",       tag: "wick-order-book",         desc: "Live bids & asks with cumulative depth bars. Supports delta streaming via applyDelta(), price grouping, and click events.", preview: <OrderBookPreview /> },
-      { name: "Price Ticker",     tag: "wick-price-ticker",       desc: "Flash-on-change with configurable up/down colors. 24h stats: high, low, volume, change. Fires wick-price-change events.", preview: <PriceTickerPreview /> },
-      { name: "Trade Feed",       tag: "wick-trade-feed",         desc: "Scrolling list of executed trades. Stream via addTrade(). Configurable max-trades, time formats, and side coloring.", preview: <TradeFeedPreview /> },
-      { name: "Depth Chart",      tag: "wick-depth-chart",        desc: "Canvas 2D cumulative bid/ask depth curves. Crosshair tooltip, hover events, 60fps via requestAnimationFrame.", preview: <DepthChartPreview /> },
-      { name: "Funding Rate",     tag: "wick-funding-rate",       desc: "Perpetual swap funding display with countdown loop. Fires tick and settled events. Composes wick-mini-chart for funding history.", preview: <FundingRatePreview /> },
-      { name: "Open Interest",    tag: "wick-open-interest",      desc: "Open interest over time with long/short ratio bar. Streams via addPoint(). Supports OI aggregation across exchanges." },
-      { name: "Liquidation Feed", tag: "wick-liquidation-feed",   desc: "Real-time liquidation events with side, size, and price. Flash-on-large-liq highlight, configurable threshold." },
-      { name: "DOM Ladder",       tag: "wick-dom-ladder",         desc: "Depth-of-market price ladder with bid/ask sizes, spread row, and one-click order placement events." },
+      { name: "Order Book",       tag: "wick-order-book",         desc: "Live bids & asks with cumulative depth bars. Stream via applyDelta(), configure grouping and depth.", preview: <OrderBookPreview /> },
+      { name: "Price Ticker",     tag: "wick-price-ticker",       desc: "Flash-on-change price display with 24h stats. Fires wick-price-change with direction on every update.", preview: <PriceTickerPreview /> },
+      { name: "Trade Feed",       tag: "wick-trade-feed",         desc: "Scrolling executed trades list. Stream via addTrade(). Configurable max rows, time format, and side coloring.", preview: <TradeFeedPreview /> },
+      { name: "Depth Chart",      tag: "wick-depth-chart",        desc: "Canvas 2D cumulative bid/ask curves. Crosshair tooltip, hover events, 60fps via requestAnimationFrame.", preview: <DepthChartPreview /> },
+      { name: "Funding Rate",     tag: "wick-funding-rate",       desc: "Perpetual swap funding display with countdown. Composes wick-mini-chart for 8h funding history.", preview: <FundingRatePreview /> },
+      { name: "Open Interest",    tag: "wick-open-interest",      desc: "Open interest over time with long/short ratio bar. Stream via addPoint()." },
+      { name: "Liquidation Feed", tag: "wick-liquidation-feed",   desc: "Real-time liquidation events with side and size. Flash highlight on large liquidations." },
+      { name: "DOM Ladder",       tag: "wick-dom-ladder",         desc: "Depth-of-market price ladder with one-click order placement events." },
     ],
   },
   {
     label: "Charts",
     components: [
-      { name: "Candlestick",        tag: "wick-candlestick-chart",  desc: "OHLCV candles via TradingView Lightweight Charts. Real-time updateCandle(). Volume histogram overlay. Auto-resize.", preview: <CandlestickPreview /> },
-      { name: "Mini Chart",         tag: "wick-mini-chart",         desc: "Pure SVG sparklines. Auto up/down coloring, area fill, baseline, smoothing, last/min/max dots. Zero dependencies, ~2 KB gzip.", preview: <MiniChartPreview /> },
-      { name: "Volume Profile",     tag: "wick-volume-profile",     desc: "Horizontal price × volume histogram rendered over a time range. Canvas 2D, configurable bucket count, value area highlight." },
-      { name: "Drawing Tools",      tag: "wick-drawing-overlay",    desc: "SVG overlay for trend lines, horizontal rays, rectangles, and text annotations. Snap-to-price, serialisable state." },
-      { name: "Correlation Matrix", tag: "wick-correlation-matrix", desc: "NxN correlation heatmap for up to 20 assets. Configurable color scale, diagonal labels, click-to-inspect events." },
-      { name: "Indicators",         tag: "wick-indicators",         desc: "EMA, SMA, RSI, MACD, and Bollinger Bands as composable overlay + panel components. Attach to any OHLCV data source." },
+      { name: "Candlestick",        tag: "wick-candlestick-chart",  desc: "OHLCV candles via TradingView Lightweight Charts. Real-time updateCandle(), volume histogram overlay.", preview: <CandlestickPreview /> },
+      { name: "Mini Chart",         tag: "wick-mini-chart",         desc: "Pure SVG sparklines. Auto up/down coloring, area fill, last/min/max dots. ~2 KB gzip.", preview: <MiniChartPreview /> },
+      { name: "Volume Profile",     tag: "wick-volume-profile",     desc: "Horizontal price × volume histogram. Canvas 2D, configurable bucket count and value area highlight." },
+      { name: "Drawing Tools",      tag: "wick-drawing-overlay",    desc: "SVG overlay for trend lines, rays, rectangles, and annotations. Snap-to-price, serialisable state." },
+      { name: "Correlation Matrix", tag: "wick-correlation-matrix", desc: "NxN correlation heatmap for up to 20 assets. Configurable color scale, click-to-inspect events." },
+      { name: "Indicators",         tag: "wick-indicators",         desc: "EMA, SMA, RSI, MACD, and Bollinger Bands as composable overlay and panel components." },
     ],
   },
   {
     label: "Heatmaps",
     components: [
-      { name: "Order Book Heatmap", tag: "wick-order-book-heatmap", desc: "Time-scrolling order book density map. Large walls visible as color bands. Canvas 2D, configurable color scale." },
-      { name: "Market Heatmap",     tag: "wick-market-heatmap",     desc: "Treemap of asset performance by 24h change %. Configurable size metric, color thresholds, and click events." },
+      { name: "Order Book Heatmap", tag: "wick-order-book-heatmap", desc: "Time-scrolling order book density map. Canvas 2D, configurable color scale." },
+      { name: "Market Heatmap",     tag: "wick-market-heatmap",     desc: "Asset performance treemap by 24h change. Configurable size metric and click events." },
     ],
   },
   {
     label: "Execution",
     components: [
-      { name: "Order Ticket",   tag: "wick-order-ticket",   desc: "Buy/sell form with market/limit/stop toggle, quantity input, margin calculation, and configurable fee display." },
-      { name: "Order Manager",  tag: "wick-order-manager",  desc: "Open orders table with cancel, modify, and fill events. Supports limit, stop, and conditional order types." },
-      { name: "Position Sizer", tag: "wick-position-sizer", desc: "Risk-based position size calculator. Takes account size, risk %, entry, and stop-loss — outputs quantity and dollar risk." },
+      { name: "Order Ticket",   tag: "wick-order-ticket",   desc: "Buy/sell form with market/limit/stop toggle, quantity input, margin calculation, and fee display." },
+      { name: "Order Manager",  tag: "wick-order-manager",  desc: "Open orders table with cancel, modify, and fill events. Supports limit, stop, and conditional types." },
+      { name: "Position Sizer", tag: "wick-position-sizer", desc: "Risk-based position calculator. Input account size, risk %, entry, and stop — outputs quantity and risk." },
     ],
   },
   {
     label: "Portfolio",
     components: [
-      { name: "Positions",     tag: "wick-positions",     desc: "Open positions table with live mark price, PnL, and liquidation price. Streaming via patch() for per-field updates." },
-      { name: "P&L",           tag: "wick-pnl",           desc: "PnL summary widget plus equity curve sparkline. Displays realised/unrealised split, daily/weekly/monthly views." },
-      { name: "Trade History", tag: "wick-trade-history", desc: "Closed trades log with filtering and sorting. Exports TradeRecord[]. Pagination and infinite-scroll modes." },
-      { name: "Risk Panel",    tag: "wick-risk-panel",    desc: "Portfolio risk metrics: margin usage, drawdown, Sharpe, win rate, avg R. Updates via streaming patch." },
+      { name: "Positions",     tag: "wick-positions",     desc: "Open positions table with live mark price, unrealised PnL, and liquidation price." },
+      { name: "P&L",           tag: "wick-pnl",           desc: "PnL summary with equity curve sparkline. Realised/unrealised split, daily/weekly/monthly views." },
+      { name: "Trade History", tag: "wick-trade-history", desc: "Closed trades log with filtering and sorting. Exports TradeRecord[]. Infinite-scroll mode." },
+      { name: "Risk Panel",    tag: "wick-risk-panel",    desc: "Portfolio risk metrics: margin usage, drawdown, Sharpe, win rate. Updates via streaming patch." },
     ],
   },
   {
     label: "Market Overview",
     components: [
-      { name: "Watchlist",     tag: "wick-watchlist",     desc: "Symbol list with live price, 24h change, and volume. Add/remove symbols, drag-to-reorder, click events." },
-      { name: "Screener",      tag: "wick-screener",      desc: "Multi-criteria symbol screener with filter row and sortable results table. Configurable column set." },
-      { name: "Symbol Search", tag: "wick-symbol-search", desc: "Fuzzy-search input with dropdown results. Supports exchange filter, symbol type filter, keyboard navigation." },
-      { name: "Market Clock",  tag: "wick-market-clock",  desc: "Global trading session clock. Shows open/closed status and local time for major exchanges. Self-ticking." },
+      { name: "Watchlist",     tag: "wick-watchlist",     desc: "Symbol list with live price, 24h change, and volume. Drag-to-reorder, click events." },
+      { name: "Screener",      tag: "wick-screener",      desc: "Multi-criteria symbol screener with filter row and sortable results. Configurable column set." },
+      { name: "Symbol Search", tag: "wick-symbol-search", desc: "Fuzzy-search input with dropdown results. Exchange filter, symbol type filter, keyboard navigation." },
+      { name: "Market Clock",  tag: "wick-market-clock",  desc: "Global trading session clock. Shows open/closed status for major exchanges. Self-ticking." },
     ],
   },
   {
     label: "Alerts & Intel",
     components: [
-      { name: "Alerts",            tag: "wick-alerts",            desc: "Price and condition alert manager. Create, activate, and dismiss alerts. Fires wick-alert-triggered events." },
-      { name: "News Feed",         tag: "wick-news-feed",         desc: "Real-time market news list. Stream via addItem(). Configurable source filter, keyword highlight, link-out." },
-      { name: "Economic Calendar", tag: "wick-economic-calendar", desc: "Macro event calendar with impact filter (high/med/low), actual vs forecast display, and countdown to next event." },
-      { name: "Connection Status", tag: "wick-connection-status", desc: "WebSocket health indicator with latency, reconnect count, and status badge. Fires connect/disconnect events." },
+      { name: "Alerts",            tag: "wick-alerts",            desc: "Price and condition alert manager. Create, activate, and dismiss alerts. Fires wick-alert-triggered." },
+      { name: "News Feed",         tag: "wick-news-feed",         desc: "Real-time market news list. Stream via addItem(). Configurable source filter, keyword highlight." },
+      { name: "Economic Calendar", tag: "wick-economic-calendar", desc: "Macro event calendar with impact filter, actual vs forecast, and countdown to next event." },
+      { name: "Connection Status", tag: "wick-connection-status", desc: "WebSocket health indicator with latency, reconnect count, and status badge." },
     ],
   },
 ];
+
+const PREVIEW_BG = "#0e0e18"; // always-dark preview area regardless of site theme
 
 // ── ComponentCards ─────────────────────────────────────────────────────────────
 
@@ -353,20 +352,50 @@ export function ComponentCards() {
   const [activeTab, setActiveTab] = useState(0);
   const activeCat = CATEGORIES[activeTab];
 
-  const totalComponents = CATEGORIES.reduce((n, c) => n + c.components.length, 0);
+  // Sync active tab from URL hash (e.g. #components?cat=charts) + scroll into view
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash;
+      if (!hash.startsWith('#components')) return;
+      const match = /cat=([a-z-]+)/.exec(hash);
+      if (match) {
+        const slug = match[1];
+        const idx = CATEGORIES.findIndex(
+          (c) => c.label.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '') === slug,
+        );
+        if (idx >= 0) setActiveTab(idx);
+      }
+      // Manually scroll since the hash isn't a valid element id
+      const el = document.getElementById('components');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
+  }, []);
+
+  // Show first 3 per category; surface previewed components first
+  const featuredFirst = [...activeCat.components].sort((a, b) => {
+    const aHas = a.preview ? 0 : 1;
+    const bHas = b.preview ? 0 : 1;
+    return aHas - bHas;
+  });
+  const shown = featuredFirst.slice(0, 3);
+  const hasMore = activeCat.components.length > 3;
 
   return (
     <section id="components" className="pb-24">
       {/* Section header */}
       <div className="text-center mb-10">
         <p className="text-sm font-medium mb-3" style={{ color: "var(--text-muted)" }}>
-          Components
+          Component Library
         </p>
         <h2 className="font-bold tracking-tight" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
-          {totalComponents} primitives. Infinite possibilities.
+          Build any trading interface.
         </h2>
         <p className="text-base mt-3 max-w-[480px] mx-auto" style={{ color: "var(--text-2)" }}>
-          Every component is headless — unstyled, fully composable, and ready for your design system.
+          31 headless primitives — unstyled, composable, ready to drop into any stack.
+          Use only what you need.
         </p>
       </div>
 
@@ -388,8 +417,8 @@ export function ComponentCards() {
               onClick={() => setActiveTab(i)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium transition-colors"
               style={{
-                background: isActive ? "rgba(0,255,163,0.1)" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${isActive ? "rgba(0,255,163,0.25)" : "rgba(255,255,255,0.06)"}`,
+                background: isActive ? "rgba(0,255,163,0.1)" : "rgba(128,128,180,0.05)",
+                border: `1px solid ${isActive ? "rgba(0,255,163,0.25)" : "var(--border)"}`,
                 color: isActive ? "var(--green)" : "var(--text-2)",
               }}
             >
@@ -397,7 +426,7 @@ export function ComponentCards() {
               <span
                 className="text-[10px] font-mono px-1.5 py-0.5 rounded-md"
                 style={{
-                  background: isActive ? "rgba(0,255,163,0.15)" : "rgba(255,255,255,0.06)",
+                  background: isActive ? "rgba(0,255,163,0.15)" : "rgba(128,128,180,0.06)",
                   color: isActive ? "var(--green)" : "var(--text-muted)",
                 }}
               >
@@ -408,7 +437,7 @@ export function ComponentCards() {
         })}
       </div>
 
-      {/* Component grid for active category */}
+      {/* Component grid — 3 per category */}
       {CATEGORIES.map((cat, i) => (
         <div
           key={cat.label}
@@ -417,8 +446,8 @@ export function ComponentCards() {
           aria-labelledby={`cat-tab-${i}`}
           hidden={i !== activeTab}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {cat.components.map((c) => {
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {shown.map((c) => {
               const hasPreview = !!c.preview;
               return (
                 <div
@@ -426,14 +455,14 @@ export function ComponentCards() {
                   className="rounded-2xl overflow-hidden flex flex-col"
                   style={{
                     background: "var(--surface)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    border: "1px solid var(--border)",
                   }}
                 >
-                  {/* Preview area */}
+                  {/* Preview — always dark */}
                   <div
                     className="p-5 flex items-center justify-center"
                     style={{
-                      background: "var(--surface-2)",
+                      background: PREVIEW_BG,
                       minHeight: "130px",
                       borderBottom: "1px solid rgba(255,255,255,0.05)",
                     }}
@@ -446,14 +475,14 @@ export function ComponentCards() {
 
                   {/* Info */}
                   <div className="p-5 flex flex-col flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-[15px] font-semibold">{c.name}</h3>
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <h3 className="text-[15px] font-semibold leading-tight">{c.name}</h3>
                       <code
-                        className="text-[10px] font-mono px-2 py-1 rounded-lg shrink-0 ml-2"
+                        className="text-[9px] font-mono px-2 py-1 rounded-lg shrink-0"
                         style={{
-                          background: "rgba(0,255,163,0.08)",
-                          color: GREEN,
-                          border: "1px solid rgba(0,255,163,0.15)",
+                          background: "rgba(0,255,163,0.06)",
+                          color: "var(--green)",
+                          border: "1px solid rgba(0,255,163,0.12)",
                         }}
                       >
                         &lt;{c.tag}&gt;
@@ -462,44 +491,77 @@ export function ComponentCards() {
                     <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-2)" }}>
                       {c.desc}
                     </p>
-                    <a
-                      href={`${DOCS_BASE}/${c.tag}`}
-                      className="inline-flex items-center gap-1 text-sm font-medium mt-4 transition-opacity hover:opacity-70"
-                      style={{ color: GREEN }}
-                      aria-label={`Explore ${c.name} documentation`}
-                    >
-                      Explore docs
-                      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </a>
+                    <div className="flex items-center gap-3 mt-4">
+                      <a
+                        href={`${DOCS_BASE}/${c.tag}`}
+                        className="inline-flex items-center gap-1 text-sm font-medium transition-opacity hover:opacity-70"
+                        style={{ color: "var(--green)" }}
+                        aria-label={`${c.name} documentation`}
+                      >
+                        Docs
+                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 14 14" fill="none">
+                          <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </a>
+                      <span aria-hidden="true" style={{ color: "var(--border)" }}>·</span>
+                      <a
+                        href={`/Wick/playground?c=${c.tag}`}
+                        className="inline-flex items-center gap-1 text-sm font-medium transition-opacity hover:opacity-70"
+                        style={{ color: "var(--text-2)" }}
+                        aria-label={`Try ${c.name} in playground`}
+                      >
+                        Try live
+                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 14 14" fill="none">
+                          <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
+
+          {/* View all link if category has more than 3 */}
+          {hasMore && (
+            <div className="mt-5 flex items-center justify-between">
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                Showing 3 of {cat.components.length} — explore the rest in the playground.
+              </p>
+              <a
+                href={`/Wick/playground?category=${encodeURIComponent(cat.label)}`}
+                className="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
+                style={{ color: "var(--green)" }}
+              >
+                View all {cat.components.length}
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            </div>
+          )}
         </div>
       ))}
 
-      {/* Adapters card — full width below the grid */}
+      {/* Exchange adapters strip */}
       <div
-        className="mt-4 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5"
-        style={{ background: "var(--surface)", border: "1px solid rgba(255,255,255,0.06)" }}
+        className="mt-8 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5"
+        style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
       >
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-[15px] font-semibold">Exchange Adapters</h3>
-            <code className="text-[10px] font-mono px-2 py-1 rounded-lg" style={{ background: "rgba(255,255,255,0.04)", color: "var(--text-2)", border: "1px solid rgba(255,255,255,0.08)" }}>
+            <h3 className="text-[15px] font-semibold">10 Exchange Adapters</h3>
+            <code className="text-[10px] font-mono px-2 py-1 rounded-lg" style={{ background: "rgba(128,128,180,0.06)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
               adapter.parse(msg)
             </code>
           </div>
           <p className="text-sm leading-relaxed" style={{ color: "var(--text-2)" }}>
-            Drop-in adapters that normalise raw WebSocket messages from 10 exchanges into Wick types. One interface, everywhere.
+            Drop-in adapters normalise raw WebSocket messages from 10 exchanges into Wick types. One interface — everywhere.
           </p>
         </div>
         <div className="flex flex-wrap gap-2 sm:max-w-[340px]">
           {["Binance","Coinbase","Kraken","Bybit","OKX","dYdX","Bitfinex","Gate.io","MEXC","KuCoin"].map((ex) => (
-            <span key={ex} className="px-3 py-1.5 rounded-lg text-[13px] font-medium" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-2)" }}>
+            <span key={ex} className="px-3 py-1.5 rounded-lg text-[13px] font-medium" style={{ background: "rgba(128,128,180,0.05)", border: "1px solid var(--border)", color: "var(--text-2)" }}>
               {ex}
             </span>
           ))}

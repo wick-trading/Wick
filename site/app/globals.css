@@ -1,6 +1,9 @@
 @import "tailwindcss";
+@import "./styles/wick-components.css";
 
-:root {
+/* ── Dark theme (default) ──────────────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
   --background: #06060a;
   --foreground: #f0f0f8;
   --surface: #0d0d14;
@@ -12,6 +15,21 @@
   --red: #ff3860;
   --accent: #7c5dfa;
   --accent-2: #a78bfa;
+}
+
+/* ── Light theme ───────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --background: #f4f4f8;
+  --foreground: #09090e;
+  --surface: #ffffff;
+  --surface-2: #ebebf2;
+  --border: #d1d1dc;
+  --text-2: #52526a;
+  --text-muted: #9090a8;
+  --green: #008f6b;
+  --red: #c91f49;
+  --accent: #6040e0;
+  --accent-2: #8060f0;
 }
 
 @theme inline {
@@ -33,4 +51,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  transition: background 0.2s ease, color 0.15s ease;
 }

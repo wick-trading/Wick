@@ -28,6 +28,8 @@ import { applyOrderBookDelta, cumulativeTotals, formatPrice, formatSize } from '
  * @cssprop --wick-ob-bid-depth-color - Bid depth bar color (default: rgba(77,255,77,0.15))
  * @cssprop --wick-ob-row-height - Row height (default: 24px)
  * @cssprop --wick-ob-font-size - Font size (default: 13px)
+ *
+ * @attr {sm|md|lg} size - Preset size: sm (compact 20px/11px), md (default 24px/13px), lg (spacious 32px/15px)
  */
 @customElement('wick-order-book')
 export class WickOrderBook extends LitElement {
@@ -58,6 +60,21 @@ export class WickOrderBook extends LitElement {
   /** Grouping/tick size (e.g. 0.01, 0.1, 1, 10) */
   @property({ type: Number })
   grouping = 0;
+
+  /**
+   * Preset size variant. Sets --wick-ob-row-height and --wick-ob-font-size.
+   * - sm: 20px rows, 11px font
+   * - md: 24px rows, 13px font (default)
+   * - lg: 32px rows, 15px font
+   */
+  @property({ type: String })
+  size: 'sm' | 'md' | 'lg' = 'md';
+
+  private _sizeVars(): string {
+    if (this.size === 'sm') return '--wick-ob-row-height: 20px; --wick-ob-font-size: 11px;';
+    if (this.size === 'lg') return '--wick-ob-row-height: 32px; --wick-ob-font-size: 15px;';
+    return '';
+  }
 
   /**
    * Apply a delta update to the current order book state.
@@ -168,7 +185,7 @@ export class WickOrderBook extends LitElement {
     const maxTotal = Math.max(askMaxTotal, bidMaxTotal);
 
     return html`
-      <div part="container" role="region" aria-label="Order Book">
+      <div part="container" role="region" aria-label="Order Book" style=${this._sizeVars()}>
         <table part="table" style="width: 100%; border-collapse: collapse;" role="grid" aria-label="Order book price levels">
           <thead>
             <tr part="header" role="row">

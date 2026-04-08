@@ -1,0 +1,30 @@
+{
+  "name": "@wick/volume-profile",
+  "version": "0.0.1",
+  "description": "Headless volume-by-price histogram — VPVR with VAH/VAL/POC overlay",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/volume-profile"
+  },
+  "homepage": "https://github.com/astralchemist/wick#readme",
+  "keywords": ["trading", "web-components", "headless", "volume-profile", "vpvr"],
+  "author": "astralchemist",
+  "dependencies": { "lit": "^3.2.0" },
+  "license": "MIT"
+}

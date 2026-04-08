@@ -1,0 +1,80 @@
+# Wick — Code Owners
+#
+# Each category in packages/CATEGORIES.md is owned by one squad. Pull requests
+# touching files inside a category automatically request review from that squad.
+#
+# Replace the @wick/* placeholder teams with real GitHub teams or usernames as
+# the org grows. Until then, all teams are aliased to @astralchemist as the
+# sole maintainer.
+#
+# Order matters: later patterns override earlier ones. Always end with the
+# most specific overrides at the bottom.
+
+# ── Default ────────────────────────────────────────────────
+*                                       @astralchemist
+
+# ── Infrastructure (Platform squad) ────────────────────────
+/packages/core/                         @astralchemist
+/packages/adapters/                     @astralchemist
+/packages/theme/                        @astralchemist
+/packages/CATEGORIES.md                 @astralchemist
+/packages/THEMING.md                    @astralchemist
+
+# ── Framework wrappers (Platform squad) ────────────────────
+/packages/react/                        @astralchemist
+/packages/vue/                          @astralchemist
+/packages/svelte/                       @astralchemist
+/packages/angular/                      @astralchemist
+
+# ── Category 1 — Market Data (Streaming squad) ─────────────
+/packages/order-book/                   @astralchemist
+/packages/price-ticker/                 @astralchemist
+/packages/trade-feed/                   @astralchemist
+/packages/depth-chart/                  @astralchemist
+/packages/funding-rate/                 @astralchemist
+/packages/open-interest/                @astralchemist
+/packages/liquidation-feed/             @astralchemist
+/packages/dom-ladder/                   @astralchemist
+
+# ── Category 2 — Charts (Visualisation squad) ──────────────
+/packages/candlestick-chart/            @astralchemist
+/packages/indicators/                   @astralchemist
+/packages/volume-profile/               @astralchemist
+/packages/drawing-tools/                @astralchemist
+/packages/mini-chart/                   @astralchemist
+/packages/correlation-matrix/           @astralchemist
+
+# ── Category 3 — Heatmaps (Visualisation squad) ────────────
+/packages/order-book-heatmap/           @astralchemist
+/packages/market-heatmap/               @astralchemist
+
+# ── Category 4 — Execution (Trading squad) ─────────────────
+/packages/order-ticket/                 @astralchemist
+/packages/order-manager/                @astralchemist
+/packages/position-sizer/               @astralchemist
+
+# ── Category 5 — Portfolio (Trading squad) ─────────────────
+/packages/positions/                    @astralchemist
+/packages/pnl/                          @astralchemist
+/packages/trade-history/                @astralchemist
+/packages/risk-panel/                   @astralchemist
+
+# ── Category 6 — Market Overview (Discovery squad) ─────────
+/packages/watchlist/                    @astralchemist
+/packages/screener/                     @astralchemist
+/packages/symbol-search/                @astralchemist
+/packages/market-clock/                 @astralchemist
+
+# ── Category 7 — Alerts & Intel (Discovery squad) ──────────
+/packages/alerts/                       @astralchemist
+/packages/news-feed/                    @astralchemist
+/packages/economic-calendar/            @astralchemist
+/packages/connection-status/            @astralchemist
+
+# ── Site & docs ────────────────────────────────────────────
+/site/                                  @astralchemist
+/docs/                                  @astralchemist
+/README.md                              @astralchemist
+
+# ── CI / repo plumbing ─────────────────────────────────────
+/.github/                               @astralchemist

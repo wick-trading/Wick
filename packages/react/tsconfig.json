@@ -16,6 +16,27 @@
     { "path": "../price-ticker" },
     { "path": "../trade-feed" },
     { "path": "../depth-chart" },
-    { "path": "../candlestick-chart" }
+    { "path": "../candlestick-chart" },
+    { "path": "../connection-status" },
+    { "path": "../position-sizer" },
+    { "path": "../risk-panel" },
+    { "path": "../market-clock" },
+    { "path": "../economic-calendar" },
+    { "path": "../liquidation-feed" },
+    { "path": "../news-feed" },
+    { "path": "../alerts" },
+    { "path": "../trade-history" },
+    { "path": "../open-interest" },
+    { "path": "../pnl" },
+    { "path": "../positions" },
+    { "path": "../correlation-matrix" },
+    { "path": "../watchlist" },
+    { "path": "../symbol-search" },
+    { "path": "../order-ticket" },
+    { "path": "../order-manager" },
+    { "path": "../screener" },
+    { "path": "../volume-profile" },
+    { "path": "../dom-ladder" },
+    { "path": "../drawing-tools" }
   ]
 }
