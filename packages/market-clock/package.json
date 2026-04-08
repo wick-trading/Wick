@@ -1,0 +1,38 @@
+{
+  "name": "@wick/market-clock",
+  "version": "0.0.2",
+  "description": "Headless multi-market session clock with countdowns",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/market-clock"
+  },
+  "homepage": "https://github.com/astralchemist/wick#readme",
+  "keywords": [
+    "trading",
+    "web-components",
+    "headless",
+    "market-hours",
+    "session-clock"
+  ],
+  "author": "astralchemist",
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.2.0"
+  }
+}
