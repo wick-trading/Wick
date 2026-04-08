@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Wick — Headless Trading Components",
-  description: "Framework-agnostic Web Components for trading interfaces. Order books, candlestick charts, trade feeds. 5 components, 10 exchanges, 5 frameworks.",
+  description: "31 headless Web Components for trading interfaces. Order books, candlestick charts, trade feeds, and more. Framework-agnostic, unstyled, real-time first. 10 exchange adapters, 4 framework wrappers, MIT licensed.",
 };
 
 export default function RootLayout({
