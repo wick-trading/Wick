@@ -1,0 +1,38 @@
+{
+  "name": "@wick/indicators",
+  "version": "0.0.2",
+  "description": "Headless technical indicator overlays for @wick/candlestick-chart — EMA, SMA, Bollinger, MACD, RSI, VWAP",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/indicators"
+  },
+  "keywords": [
+    "trading", "web-components", "headless", "indicators",
+    "EMA", "SMA", "MACD", "RSI", "VWAP", "bollinger"
+  ],
+  "author": "astralchemist",
+  "license": "MIT",
+  "dependencies": {
+    "@wick/core": "0.0.1",
+    "lit": "^3.2.0"
+  },
+  "peerDependencies": {
+    "lightweight-charts": ">=5"
+  }
+}
