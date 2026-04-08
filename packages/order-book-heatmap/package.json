@@ -1,0 +1,31 @@
+{
+  "name": "@wick/order-book-heatmap",
+  "version": "0.0.2",
+  "description": "Headless canvas order book liquidity heatmap — resting limit orders as color intensity over time",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "sideEffects": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/astralchemist/wick",
+    "directory": "packages/order-book-heatmap"
+  },
+  "keywords": ["trading", "web-components", "headless", "order-book", "heatmap", "canvas", "liquidity"],
+  "author": "astralchemist",
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.2.0"
+  }
+}
