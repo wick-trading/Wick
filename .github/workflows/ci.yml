@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check invariants
+        run: node scripts/check-invariants.mjs
+
       - name: Build all packages
         run: npm run build
 
