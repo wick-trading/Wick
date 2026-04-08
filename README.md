@@ -2,11 +2,11 @@
 
 Headless Web Components for trading interfaces. Framework-agnostic, unstyled, real-time ready.
 
-> **Status:** early. Wick is currently maintained by a single person. 30+
-> components exist in the monorepo (`🚧 Built`), but **none are yet published
-> to npm**. The immediate roadmap is to harden `@wick/order-book` end-to-end
-> as the first genuine `✅ Shipped` component. See
-> [`packages/CATEGORIES.md`](packages/CATEGORIES.md) for the honest status map.
+> **Status:** early. Wick is built by one person (@astralchemist). 30+
+> components exist in the monorepo as `🚧 Built`. Zero are published to npm.
+> The next milestone is shipping `@wick/order-book` end-to-end as the first
+> real `✅`. See [`MILESTONES.md`](MILESTONES.md) for the full plan and
+> [`packages/CATEGORIES.md`](packages/CATEGORIES.md) for the status map.
 
 ## Documentation
 
