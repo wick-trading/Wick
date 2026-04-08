@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "astralchemist/vela" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "wick-trading/Wick" }],
   "commit": false,
   "fixed": [
     [
@@ -17,5 +17,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["vela-demo"]
+  "ignore": ["wick-demo"]
 }

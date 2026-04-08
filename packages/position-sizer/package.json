@@ -19,10 +19,10 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/astralchemist/wick",
+    "url": "https://github.com/wick-trading/Wick",
     "directory": "packages/position-sizer"
   },
-  "homepage": "https://github.com/astralchemist/wick#readme",
+  "homepage": "https://github.com/wick-trading/Wick#readme",
   "keywords": [
     "trading",
     "web-components",

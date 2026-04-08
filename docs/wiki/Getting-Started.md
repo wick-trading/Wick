@@ -111,8 +111,8 @@ ws.onmessage = (event) => {
 ## Running the Demo
 
 ```bash
-git clone https://github.com/astralchemist/vela.git
-cd vela
+git clone https://github.com/wick-trading/Wick.git
+cd Wick
 npm install
 npm run dev
 ```

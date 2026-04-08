@@ -1,7 +1,7 @@
 {
   "name": "@wick/core",
   "version": "0.0.1",
-  "description": "Shared types and utilities for Vela trading components",
+  "description": "Shared types and utilities for Wick trading components",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,10 +21,10 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/astralchemist/vela",
+    "url": "https://github.com/wick-trading/Wick",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/astralchemist/vela#readme",
+  "homepage": "https://github.com/wick-trading/Wick#readme",
   "keywords": [
     "trading",
     "web-components",
